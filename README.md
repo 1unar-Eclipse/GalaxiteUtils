@@ -20,6 +20,9 @@ Future Plans:
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
 - **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 
+## Notes
+`/whereami` will be ran a lot, even without the module on. This is since it gives a pretty good amount of information; it's one of the key ways for the script to know the game.
+
 ## Issues
 I'm expecting a lot of desync-related bugs, so please include steps to reproduce anything weird you may find. Otherwise, just be clear.
 
@@ -31,7 +34,7 @@ I'll probably accept PRs for the following fairly quickly:
 - Bug fixes
 - Correcting random inconsistencies
 
-I'll take a bit longer with modules, don't want them to be doing anything harmful, but I'm not against them. If you want to make a new module, in addition to normal Latite module things, make sure to add the following to the start of any file:
+I'll take a bit longer with modules, don't want them to be doing anything harmful, but I'm not against them being a part of a PR. If you want to make a new module, in addition to normal Latite module things, make sure to add the following to the start of any file:
 ```ts
 import notOnGalaxite from "index";
 ```
@@ -42,8 +45,8 @@ if(notOnGalaxite()) return;
 Those will make the remainder of your code only occur on Galaxite. Beyond that, my only criteria is that it works and adds a new, useful feature; I'd especially be happy with modules for games I don't play a lot.
 
 ## Building
-This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned. Just make sure to download the Node modules first (I think that's `npm i`?).
+This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned. Just make sure to download the Node modules first with `npm i`.
 
 The terminal command `npx tsc -b` in the root folder also works.
 
-Uhh...is that everything? Am I GitHub-ing right?
+I don't know how to GitHub, if something else should be here please open an issue
