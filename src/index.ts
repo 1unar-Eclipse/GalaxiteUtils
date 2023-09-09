@@ -45,7 +45,6 @@ let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule")
 // let modBossbarUI = require("modBossbarUI");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
-// let modGameUI = require("modGameUI");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
