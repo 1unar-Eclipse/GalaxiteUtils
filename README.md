@@ -42,7 +42,7 @@ if(notOnGalaxite()) return;
 Those will make the remainder of your code only occur on Galaxite. Beyond that, my only criteria is that it works and adds a new, useful feature; I'd especially be happy with modules for games I don't play a lot.
 
 ## Building
-This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned.
+This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned. Just make sure to download the Node modules first (I think that's `npm i`?).
 
 The terminal command `npx tsc -b` in the root folder also works.
 
