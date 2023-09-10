@@ -12,18 +12,44 @@ interface Script {
 }
 declare var script: Script;
 
+interface EngineLibraries {
+    "filesystem": include.Filesystem
+    "network": include.Network
+}
+
+/**
+ * Load a specified library.
+ * @param path The filepath, HTTP or HTTPS link to the JS file.
+ * @throws Invalid filepath or Non-OK HTTP/HTTPS error code
+ */
+declare function require<K extends keyof EngineLibraries>(path: K): EngineLibraries[K];
 /**
  * Load a specified script from filesystem or web.
  * @param path The filepath, HTTP or HTTPS link to the JS file.
  * @throws Invalid filepath or Non-OK HTTP/HTTPS error code
- * @returns Whatever the loaded script exports (through script_exports)
  */
 declare function require(path: string): object;
 
 /**
  * Stops execution for a specified amount of time.
  * 
- * **Warning**: This stops execution of both the JavaScript runtime and the game thread. Be careful when using this.
+ * **Warning**: This stops execution of both the JavaScript runtime and the game thread. This is only for specific use cases (use setTimeout instead.)
  * @param ms The amount of time to sleep.
  */
 declare function sleep(ms: number): void;
+
+/**
+ * Delays a function call.
+ * @param func The function to call
+ * @param timeout The time in milliseconds
+ * @returns The Timeout ID
+ */
+declare function setTimeout(func: () => void, timeout: number): number;
+
+/**
+ * Calls a function every x milliseconds.
+ * @param func The function to call
+ * @param timeout The time in milliseconds
+ * @returns The Timeout ID
+ */
+declare function setInterval(func: () => void, timeout: number): number;

@@ -1,25 +1,39 @@
 // AutoGG: Automatically sends "gg" on game end
 
+/* TO-DO:
+- Add the title-gg games
+*/
+
 import notOnGalaxite from "index";
 
 // Module setup
 let mod = new Module(
     "AutoGG",
     "Galaxite AutoGG",
-    'Automatically says "gg" when a game finishes. (not supported for CW, FTG, and PH right now)',
+    'Automatically says "gg" when a game finishes.',
     KeyCode.None
 );
 client.getModuleManager().registerModule(mod);
 
-let chru = mod.addBoolSetting(
-    "chru",
-    "Chronos/Rush",
-    "Chronos and Rush support"
+let ch = mod.addBoolSetting(
+    "ch",
+    "Chronos",
+    "Chronos support"
+);
+let ru = mod.addBoolSetting(
+    "ru",
+    "Rush",
+    "Rush support"
 );
 let hr = mod.addBoolSetting(
     "hr",
     "Hyper Racers",
     "Hyper Racers support"
+);
+let cw = mod.addBoolSetting(
+    "cw",
+    "Core Wars",
+    "Core Wars support"
 );
 
 /* Galaxite Game End Messages:
@@ -32,9 +46,10 @@ let hr = mod.addBoolSetting(
 No other modes have gg rewards */
 
 // cache regex
-let rgxChrRush = /(is|(t|T)eam are) (t|T)he (Chronos|Rush) Champion(|s)!/;
+let rgxChronos = /(is|(t|T)eam are) (t|T)he Chronos Champion(|s)!/;
+let rgxRush = /(is|(t|T)eam are) (t|T)he Rush Champion(|s)!/;
 
-// Chronos, Rush, and Hyper Racers
+// Chronos, Rush, and Hyper Racers all use chat
 client.on("receive-chat", msg => {
     // account for the escape case
     if(notOnGalaxite()) return;
@@ -42,8 +57,13 @@ client.on("receive-chat", msg => {
     // cache message
     let message = msg.message;
 
-    // Chronos and Rush
-    if(chru.getValue() && rgxChrRush.test(message)) {
+    // Chronos
+    if(ch.getValue() && rgxChronos.test(message)) {
+        game.sendChatMessage("gg");
+    }
+
+    // Rush
+    if(ru.getValue() && rgxRush.test(message)) {
         game.sendChatMessage("gg");
     }
 
@@ -51,10 +71,9 @@ client.on("receive-chat", msg => {
     if(hr.getValue() && message.includes("Race Finished!")) {
         game.sendChatMessage("gg");
     }
-
-    // Core Wars/Fill the Gaps
-    // no titles
-
-    // Prop Hunt:
-    // ?????
 });
+
+// Core Wars, Fill the Gaps, and Prop Hunt all use titles
+client.on("title", title => {
+    if(notOnGalaxite()) return;
+})

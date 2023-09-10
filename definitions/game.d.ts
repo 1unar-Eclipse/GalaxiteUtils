@@ -22,24 +22,36 @@ interface Game {
     /**
      * Get your player. This will return null if you are not in a game.
      */
-    getLocalPlayer(): Player | null;
+    getLocalPlayer(): LocalPlayer | null;
 
     /**
      * Gets the server you are connected to. This will return null if you are not in a server.
      */
-    getConnectedServer(): string | null;
+    getServer(): string | null;
 
     /**
      * Gets the featured server name you are connected to. This will return null if you are not in a featured server.
      * 
      * Featured server examples: "The Hive" "CubeCraft" "InPvP" "Mineplex"
      */
-    getConnectedFeaturedServer(): string | null;
+    getFeaturedServer(): string | null;
 
     /**
      * Get the current world that you're in.
      */
     getWorld() : World | null;
+
+    isInUI(): boolean;
+
+    /**
+     * Get the open screen name
+     */
+    getScreen(): string;
+
+    /**
+     * Get the mouse position.
+     */
+    getMousePos(): Vector2;
 }
 
 declare const game: Game;

@@ -1,5 +1,3 @@
-type EventName = 'world-tick' | 'leave-game' | 'receive-chat' | 'send-chat' | 'render2d';
-
 interface LatiteEvent {
 }
 
@@ -11,13 +9,46 @@ interface SendChatEvent extends CancellableEvent {
     message: string;
 }
 
-interface ReceiveChatEvent extends LatiteEvent {
+type MessageType = 
+    "raw" |
+    "chat" |
+    "translation" |
+    "popup" |
+    "jukebox" |
+    "tip" |
+    "system_message" |
+    "whisper" |
+    "announcement" |
+    "text_object" |
+    "object_whisper";
+
+interface MessageEvent extends CancellableEvent {
+    type: MessageType;
+    /**
+     * Whether or not the message type is a chat message.
+     */
+    isChat: boolean;
     message: string;
+
+    /**
+     * The sender of the message (if applicable)
+     */
     sender: string;
+    /**
+     * The Xbox User ID of the sender (if applicable)
+     */
     xuid: string;
 }
 
+declare const enum MouseButton {
+    Left = 1,
+    Right = 2,
+    Middle = 3,
+    Scroll = 4
+}
+
 interface ClickEvent extends CancellableEvent {
+    button: MouseButton;
     isDown: boolean;
     mouseX: number;
     mouseY: number;
@@ -35,21 +66,147 @@ interface ScriptEvent extends LatiteEvent {
     scriptAuthor: string
 }
 
+type TitleType =
+    "clear" |
+    "reset" |
+    "title" |
+    "subtitle" |
+    "actionbar" |
+    "titleraw" |
+    "subtitleraw" |
+    "actionbarraw" |
+    "times";
+
+interface TitleEvent extends CancellableEvent {
+    type: TitleType;
+    text: string;
+}
+
 interface ClientEvents {
+    /**
+    * Called on every tick.
+    */
     "world-tick": LatiteEvent,
+    /**
+     * 
+     */
+    "join-game": LatiteEvent,
+
+    /**
+    * Called on the user leaving a world.
+    */
     "leave-game": LatiteEvent,
-    "receive-chat": ReceiveChatEvent,
+    /**
+    * Called on every message received.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   type: MessageType;
+    *   isChat: boolean;
+    *   message: string;
+    *   sender: string;
+    *   xuid: string;
+    * }
+    * ```
+    */
+    "receive-chat": MessageEvent,
+    /**
+    * Called on every chat message sent. Cancellable - setting `cancel` to true will make the game not see the event.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   message: string,
+    *   cancel: boolean
+    * }
+    * ```
+    */
     "send-chat": SendChatEvent,
+    /**
+    * Called on every frame; use this for 2D rendering.
+    */
     "render2d": LatiteEvent,
+    /**
+    * Called on every frame; use this for DirectX rendering.
+    */
+    "renderDX": LatiteEvent,
+    /**
+    * Called on every keyboard input. Cancellable - setting `cancel` to true will make the game not see the event.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   isDown: boolean,
+    *   keyCode: KeyCode,
+    *   keyAsChar: string,
+    *   cancel: boolean
+    * }
+    * ```
+    */
     "key-press": KeyEvent,
+    /**
+    * Called on every (non-move) mouse input. Cancellable - setting `cancel` to true will make the game not see the event.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   button: MouseButton,
+    *   isDown: boolean,
+    *   mouseX: number,
+    *   mouseY: number,
+    *   cancel: boolean
+    * }
+    * ```
+    */
     "click": ClickEvent,
+    /**
+    * Called on every frame; use this for 3D rendering.
+    */
     "render3d": LatiteEvent,
     /**
-     * Whenever the game gets minimized or closed.
-     */
+    * Called on the game being minimized/closed.
+    */
     "app-suspended": LatiteEvent,
+    /**
+    * Called on any script being loaded.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   scriptName: string,
+    *   scriptVersion: string,
+    *   scriptAuthor: string
+    * }
+    * ```
+    */
     "load-script": ScriptEvent,
+    /**
+    * Called on any script being unloaded.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   scriptName: string,
+    *   scriptVersion: string,
+    *   scriptAuthor: string
+    * }
+    * ```
+    */
     "unload-script": ScriptEvent,
+
+    /**
+    * Called whenever you receive a title from the server.
+    * 
+    * Listener:
+    * ```ts
+    * {
+    *   type: TitleType,
+    *   text: string
+    * }
+    * ```
+    */
+    "title": TitleEvent;
 }
 
 interface Latite {
@@ -74,12 +231,17 @@ interface Latite {
     /**
      * Gets the module manager. Use this to register modules.
      */
-    getModuleManager() : ModuleManager;
+    getModuleManager(): ModuleManager;
 
-     /**
-     * The Latite Client version. Example: v1.4.0 (release), b1.4.0 (beta)
+    /**
+     * Gets the command manager. Use this to register commands.
      */
-     version: string;
+    getCommandManager(): CommandManager;
+
+    /**
+    * The Latite Client version. Example: "v2.0.0"
+    */
+    readonly version: string;
 }
 
 declare const client: Latite;

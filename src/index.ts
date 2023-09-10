@@ -37,7 +37,7 @@ client.on("unload-script", scr => {
 */
 export default function notOnGalaxite(): boolean {
     // return true if you are on anything BUT galaxite. this way i can just do `if(notOnGalaxite()) return;` on every client.on()
-    return (game.getConnectedFeaturedServer() != "Galaxite");
+    return (game.getFeaturedServer() != "Galaxite");
 }
 
 // Import other modules
