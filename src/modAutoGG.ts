@@ -76,4 +76,9 @@ client.on("receive-chat", msg => {
 // Core Wars, Fill the Gaps, and Prop Hunt all use titles
 client.on("title", title => {
     if(notOnGalaxite()) return;
-})
+});
+
+// Prop Hunt is immensely scuffed
+client.on("join-game", e => {
+    
+});
