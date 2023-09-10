@@ -12,8 +12,8 @@ Module list:
 Future Plans:
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
   - Toggle Sprint in The Entity, and Coordinates in Chronos.
-- **Bossbar -> UI:** Not a fan of the bossbar? This makes it a standard module instead!
 - **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
+- **Bossbar -> UI:** Not a fan of the bossbar? This makes it a standard module instead
 - **The Entity Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.
   - There's also an Advanced option that can add useful details, like time until item regeneration!
