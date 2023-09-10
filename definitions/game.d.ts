@@ -22,7 +22,7 @@ interface Game {
     /**
      * Get your player. This will return null if you are not in a game.
      */
-    getLocalPlayer(): LocalPlayer | null;
+    getLocalPlayer(): Player | null;
 
     /**
      * Gets the server you are connected to. This will return null if you are not in a server.
@@ -40,18 +40,6 @@ interface Game {
      * Get the current world that you're in.
      */
     getWorld() : World | null;
-
-    isInUI(): boolean;
-
-    /**
-     * Get the open screen name
-     */
-    getScreen(): string;
-
-    /**
-     * Get the mouse position.
-     */
-    getMousePos(): Vector2;
 }
 
 declare const game: Game;

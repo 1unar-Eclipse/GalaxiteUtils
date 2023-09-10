@@ -12,21 +12,11 @@ interface Script {
 }
 declare var script: Script;
 
-interface EngineLibraries {
-    "filesystem": include.Filesystem
-    "network": include.Network
-}
-
-/**
- * Load a specified library.
- * @param path The filepath, HTTP or HTTPS link to the JS file.
- * @throws Invalid filepath or Non-OK HTTP/HTTPS error code
- */
-declare function require<K extends keyof EngineLibraries>(path: K): EngineLibraries[K];
 /**
  * Load a specified script from filesystem or web.
  * @param path The filepath, HTTP or HTTPS link to the JS file.
  * @throws Invalid filepath or Non-OK HTTP/HTTPS error code
+ * @returns Whatever the loaded script exports (through script_exports)
  */
 declare function require(path: string): object;
 
