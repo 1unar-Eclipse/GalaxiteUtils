@@ -32,12 +32,26 @@ client.on("unload-script", scr => {
     }
 });
 
+let debugMode = mod.addBoolSetting(
+    "debugMode",
+    "Debug Mode",
+    "Logs some more information"
+);
+
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.
 */
-export default function notOnGalaxite(): boolean {
+export function notOnGalaxite(): boolean {
     // return true if you are on anything BUT galaxite. this way i can just do `if(notOnGalaxite()) return;` on every client.on()
     return (game.getFeaturedServer() != "Galaxite");
+}
+
+/**
+ * Logs something when debug mode is on.
+ */
+export function debugLog(log: string) {
+    if(debugMode.getValue())
+        script.log(log);
 }
 
 // Import other modules

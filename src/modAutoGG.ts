@@ -4,7 +4,7 @@
 - Add the title-gg games
 */
 
-import notOnGalaxite from "index";
+import { notOnGalaxite, debugLog } from "./index";
 
 // Module setup
 let mod = new Module(
