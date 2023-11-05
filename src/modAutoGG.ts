@@ -4,7 +4,7 @@
 - Add the title-gg games
 */
 
-import notOnGalaxite from "index";
+import {debugLog, notOnGalaxite} from "index";
 
 // Module setup
 let mod = new Module(
@@ -35,6 +35,16 @@ let cw = mod.addBoolSetting(
     "Core Wars",
     "Core Wars support"
 );
+let ftg = mod.addBoolSetting(
+    "ftg",
+    "Fill the Gaps",
+    "Fill the Gaps support"
+);
+let ph = mod.addBoolSetting(
+    "ph",
+    "Prop Hunt",
+    "Prop Hunt support"
+);
 
 /* Galaxite Game End Messages:
 - Prop Hunt: None, titles AND world join needed (this mode's weird)
@@ -48,6 +58,7 @@ No other modes have gg rewards */
 // cache regex
 let rgxChronos = /(is|(t|T)eam are) (t|T)he Chronos Champion(|s)!/;
 let rgxRush = /(is|(t|T)eam are) (t|T)he Rush Champion(|s)!/;
+let message: string;
 
 // Chronos, Rush, and Hyper Racers all use chat
 client.on("receive-chat", msg => {
@@ -55,7 +66,7 @@ client.on("receive-chat", msg => {
     if(notOnGalaxite()) return;
 
     // cache message
-    let message = msg.message;
+    message = msg.message;
 
     // Chronos
     if(ch.getValue() && rgxChronos.test(message)) {
@@ -80,5 +91,5 @@ client.on("title", title => {
 
 // Prop Hunt is immensely scuffed
 client.on("join-game", e => {
-    
+
 });
