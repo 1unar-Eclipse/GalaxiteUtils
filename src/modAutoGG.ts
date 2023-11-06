@@ -35,6 +35,11 @@ let cw = mod.addBoolSetting(
     "Core Wars",
     "Core Wars support"
 );
+let ftg = mod.addBoolSetting(
+    "ftg",
+    "Fill the Gaps",
+    "Fill the Gaps support"
+);
 
 /* Galaxite Game End Messages:
 - Prop Hunt: None, titles AND world join needed (this mode's weird)

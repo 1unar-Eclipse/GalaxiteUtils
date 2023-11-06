@@ -1,52 +1,108 @@
 // WhereAmIHUD: Allows showing various details from the /whereami command, like game or region.
-// Dependencies: server join event
 
-import { notOnGalaxite } from "./index";
+import { notOnGalaxite, debugLog } from "./index";
 
 // Initialization
-let mod = new HudModule(
+let mod = new TextModule(
     "WhereAmIHUD",
     "WhereAmIHUD",
     "Automatically runs /whereami on every server join, and shows selected details",
     KeyCode.None,
-    true
 );
 client.getModuleManager().registerModule(mod);
 
+client.on("unload-script", scr => {
+    if(scr.scriptName === script.name) {
+        client.getModuleManager().deregisterModule(mod);
+    }
+});
+
 // Settings
-let serverName = mod.addBoolSetting(
+let optionServerName = mod.addBoolSetting(
     "ServerName",
-    "GameName",
+    "Server Name",
     "Show the ServerName (game name) field"
 );
-let region = mod.addBoolSetting(
+let optionRegion = mod.addBoolSetting(
     "Region",
     "Region",
     "Show the Region field"
 );
-let privacy = mod.addBoolSetting(
+let optionPrivacy = mod.addBoolSetting(
     "Privacy",
     "Privacy",
     "Show the Privacy (public/private game) field"
 );
-let hideResponse = mod.addBoolSetting(
+let optionDevFields = mod.addBoolSetting(
+    "DevFields",
+    "Developer Fields",
+    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID)"
+);
+let optionHideResponse = mod.addBoolSetting(
     "HideResponse",
     "Hide Response",
-    "Runs the command in the background without a chat message (might break standard command uses)"
+    "Runs command in the background without a chat message (may cause potential issues)"
 );
 
-// Declare a variable for cross-event communication
-let whereAmISent = false;
+/* Field list:
+- ServerUUID (devFields)
+- PodName (devFields)
+- ServerName (serverName)
+- CommitID (devFields)
+- ShulkerID (devFields)
+- Region (region)
+- Privacy (privacy)
+
+Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID
+*/
+
+// Initialize storage strings (i love weakly typed languages)
+let serverUUID: string,
+    podName: string,
+    serverName: string,
+    commitID: string,
+    shulkerID: string,
+    region: string,
+    privacy: string;
 
 // Send /whereami every time a server is joined
 client.on("join-game", e => {
     if(notOnGalaxite()) return;
     game.executeCommand("/whereami");
-    whereAmISent = true;
+    debugLog("whereami run");
 });
 
-// If the command was sent, get the response
+// Handle the response
 client.on("receive-chat", msg => {
-    if(notOnGalaxite() || !whereAmISent) return;
-    game.executeCommand("/a");
+    if(notOnGalaxite()) return;
+
+    // TODO: figure out how galaxite sends the whereami anyway
+});
+
+// cache new line (very important) (i use it a lot here)
+const NL = "\n";
+
+// Actually render stuff
+mod.on("text", (isPreview = true, isEditor = true) => {
+    if(notOnGalaxite()) return("");
+
+    // initialize render variable
+    let render = "";
+
+    // consider options and build text
+    if(optionServerName.getValue())
+        render = render.concat(serverName, NL);
+    if(optionRegion.getValue())
+        render = render.concat(region, NL);
+    if(optionPrivacy.getValue())
+        render = render.concat(privacy, NL);
+    if(optionDevFields.getValue()) {
+        render = render.concat(serverUUID, NL, podName, NL, commitID, NL, shulkerID); // no final NL since that's always the last data point
+    }
+
+    // remove possible trailing \n
+    render = render.trim();
+
+    // return finalized text
+    return render;
 });
