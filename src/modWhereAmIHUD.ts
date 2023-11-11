@@ -1,6 +1,7 @@
 // WhereAmIHUD: Allows showing various details from the /whereami command, like game or region.
 
 import { notOnGalaxite, debugLog } from "./index";
+// require("./index");
 
 // Initialization
 let mod = new TextModule(
@@ -36,7 +37,7 @@ let optionPrivacy = mod.addBoolSetting(
 let optionDevFields = mod.addBoolSetting(
     "DevFields",
     "Developer Fields",
-    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID)"
+    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)"
 );
 let optionHideResponse = mod.addBoolSetting(
     "HideResponse",
@@ -53,7 +54,7 @@ let optionHideResponse = mod.addBoolSetting(
 - Region (region)
 - Privacy (privacy)
 
-Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID
+Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID, ParkourUUID (if applicable)
 */
 
 // Initialize storage strings (i love weakly typed languages)
@@ -63,7 +64,8 @@ let serverUUID: string,
     commitID: string,
     shulkerID: string,
     region: string,
-    privacy: string;
+    privacy: string,
+    parkourUUID: string;
 
 // Send /whereami every time a server is joined
 client.on("join-game", e => {
@@ -79,7 +81,7 @@ client.on("receive-chat", msg => {
     // TODO: figure out how galaxite sends the whereami anyway
 });
 
-// cache new line (very important) (i use it a lot here)
+// Cache new line (very important) (i use it a lot here)
 const NL = "\n";
 
 // Actually render stuff
@@ -97,7 +99,7 @@ mod.on("text", (isPreview = true, isEditor = true) => {
     if(optionPrivacy.getValue())
         render = render.concat(privacy, NL);
     if(optionDevFields.getValue()) {
-        render = render.concat(serverUUID, NL, podName, NL, commitID, NL, shulkerID); // no final NL since that's always the last data point
+        render = render.concat(serverUUID, NL, podName, NL, commitID, NL, shulkerID, NL, parkourUUID); // no final NL since that's always the last data point
     }
 
     // remove possible trailing \n

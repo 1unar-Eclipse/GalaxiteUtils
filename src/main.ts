@@ -3,12 +3,6 @@
 
 // Main file for non-module settings.
 
-// Initialization
-script.name = "GalaxiteUtils";
-script.description = "Various Galaxite-related modules";
-script.version = "0.0.0";
-script.author = "1unar_Eclipse";
-
 let mod = new Module(
     "GalaxiteUtils",
     "GalaxiteUtils",
@@ -38,6 +32,10 @@ let debugMode = mod.addBoolSetting(
     "Logs some more information"
 );
 
+// funny logs
+script.log("trans rights");
+debugLog("...imply the existence of trans lefts [debug mode on!]")
+
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.
 */
@@ -62,4 +60,4 @@ let modAutoGG = require("modAutoGG");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
-// let modWhereAmIHUD = require("modWhereAmIHUD");
+let modWhereAmIHUD = require("modWhereAmIHUD");

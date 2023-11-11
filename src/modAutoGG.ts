@@ -40,6 +40,17 @@ let ftg = mod.addBoolSetting(
     "Fill the Gaps",
     "Fill the Gaps support"
 );
+let ph = mod.addBoolSetting(
+    "ph",
+    "Prop Hunt",
+    "Prop Hunt support (experimental)"
+);
+
+client.on("unload-script", scr => {
+    if(scr.scriptName === script.name) {
+        client.getModuleManager().deregisterModule(mod);
+    }
+});
 
 /* Galaxite Game End Messages:
 - Prop Hunt: None, titles AND world join needed (this mode's weird)
