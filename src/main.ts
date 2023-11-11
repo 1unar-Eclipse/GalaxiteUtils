@@ -29,7 +29,8 @@ client.on("unload-script", scr => {
 let debugMode = mod.addBoolSetting(
     "debugMode",
     "Debug Mode",
-    "Logs some more information"
+    "Logs some more information",
+    false
 );
 
 // funny logs

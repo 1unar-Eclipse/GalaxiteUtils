@@ -4,7 +4,7 @@
 - Add the title-gg games
 */
 
-import { notOnGalaxite, debugLog } from "./index";
+import { notOnGalaxite, debugLog } from "./main";
 
 // Module setup
 let mod = new Module(
@@ -18,32 +18,38 @@ client.getModuleManager().registerModule(mod);
 let ch = mod.addBoolSetting(
     "ch",
     "Chronos",
-    "Chronos support"
+    "Chronos support",
+    true
 );
 let ru = mod.addBoolSetting(
     "ru",
     "Rush",
-    "Rush support"
+    "Rush support",
+    true
 );
 let hr = mod.addBoolSetting(
     "hr",
     "Hyper Racers",
-    "Hyper Racers support"
+    "Hyper Racers support",
+    true
 );
 let cw = mod.addBoolSetting(
     "cw",
     "Core Wars",
-    "Core Wars support"
+    "Core Wars support",
+    true
 );
 let ftg = mod.addBoolSetting(
     "ftg",
     "Fill the Gaps",
-    "Fill the Gaps support"
+    "Fill the Gaps support",
+    true
 );
 let ph = mod.addBoolSetting(
     "ph",
     "Prop Hunt",
-    "Prop Hunt support (experimental)"
+    "Prop Hunt support (experimental)",
+    false
 );
 
 client.on("unload-script", scr => {

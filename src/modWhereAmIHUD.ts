@@ -1,6 +1,6 @@
 // WhereAmIHUD: Allows showing various details from the /whereami command, like game or region.
 
-import { notOnGalaxite, debugLog } from "./index";
+import { notOnGalaxite, debugLog } from "./main";
 // require("./index");
 
 // Initialization
@@ -18,31 +18,42 @@ client.on("unload-script", scr => {
     }
 });
 
-// Settings
+// Initialize Settings
 let optionServerName = mod.addBoolSetting(
     "ServerName",
     "Server Name",
-    "Show the ServerName (game name) field"
+    "Show the ServerName (game name) field",
+    true
+);
+let optionFormatServerName = mod.addBoolSetting(
+    "FormatServerName",
+    "Format Server Name",
+    "Makes the server name field use proper formatting",
+    true
 );
 let optionRegion = mod.addBoolSetting(
     "Region",
     "Region",
-    "Show the Region field"
+    "Show the Region field",
+    true
 );
 let optionPrivacy = mod.addBoolSetting(
     "Privacy",
     "Privacy",
-    "Show the Privacy (public/private game) field"
+    "Show the Privacy (public/private game) field",
+    true
 );
 let optionDevFields = mod.addBoolSetting(
     "DevFields",
     "Developer Fields",
-    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)"
+    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)",
+    false
 );
 let optionHideResponse = mod.addBoolSetting(
     "HideResponse",
     "Hide Response",
-    "Runs command in the background without a chat message (may cause potential issues)"
+    "Runs command in the background without a chat message (may cause potential issues)",
+    false
 );
 
 /* Field list:
