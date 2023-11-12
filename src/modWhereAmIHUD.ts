@@ -1,7 +1,6 @@
 // WhereAmIHUD: Allows showing various details from the /whereami command, like game or region.
 
-export { }; // this is so a bandage fix
-let notOnGalaxite = require("./exports");
+import { notOnGalaxite } from "./exports";
 
 // Initialization
 let whereAmIHUD = new TextModule(

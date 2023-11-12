@@ -17,5 +17,4 @@
 - Game over (lose): 
 */
 
-// export { }; // this is so a bandage fix
-// let notOnGalaxite = require("./exports");
+// import { notOnGalaxite } from "./exports";

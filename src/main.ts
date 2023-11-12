@@ -3,8 +3,7 @@
 
 // Main file for non-module settings.
 
-export { }; // this is so a bandage fix
-let notOnGalaxite = require("./exports");
+import { notOnGalaxite } from "./exports";
 
 let mod = new Module(
     "GalaxiteUtils",
