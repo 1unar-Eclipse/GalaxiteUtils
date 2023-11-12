@@ -1,13 +1,14 @@
 <h1 align="center">GalaxiteUtils</h1>
 
 # WARNING: THIS IS SUPER WIP
-I'm waiting on a lot of scripting features to make this even better, namely titles. Then I have 0 JS/TS experience (the first proper build caused a crash lol), so any PRs for efficiency or anything would be much appreciated.
+I have very little free time and no JS experience outside of this project and FreeCodeCamp. Any PRs to help are greatly appreciated.
 
-## A Latite script that adds a variety of Galaxite-related modules.
+## A Latite plugin that adds a variety of Galaxite-related modules.
 Don't want to say gg after every game? Want to show your viewers what perk you're using? Don't like the bossbar? This is for you - all of those and more are actual modules!
 
 Module list:
 - **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
+- **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 
 Future Plans:
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
@@ -19,10 +20,9 @@ Future Plans:
   - There's also an Advanced option that can add useful details, like time until item regeneration!
 - **Parkour Builders Attempt Counter:** Insert Geometry Dash soundbyte here
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
-- **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 
 ## Notes
-`/whereami` will be ran a lot, even without the module on. This is since it gives a pretty good amount of information; it's one of the key ways for the script to know the game.
+`/whereami` will be ran a lot, even without the module on. This is since it gives a pretty good amount of information; it's one of the key ways for the plugin to know the game.
 
 ## Issues
 I'm expecting a lot of desync-related bugs, so please include steps to reproduce anything weird you may find. Otherwise, just be clear.
@@ -34,10 +34,12 @@ I'll probably accept PRs for the following fairly quickly:
 - Code cleanup
 - Bug fixes
 - Correcting random inconsistencies
+- Fixing my syntax and other issues from lack of experience
 
 I'll take a bit longer with modules, don't want them to be doing anything harmful, but I'm not against them being submitted. If you want to make a new module, in addition to normal Latite module things, make sure to add the following to the start of any file:
 ```ts
-import notOnGalaxite from "index";
+export { }; // This fixes a weird error with names of stuff. Bandage fix needed by Latite's end
+let notOnGalaxite = require("./exports");
 ```
 as well as add this line of code to any event:
 ```ts
