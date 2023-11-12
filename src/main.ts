@@ -3,6 +3,9 @@
 
 // Main file for non-module settings.
 
+export { }; // this is so a bandage fix
+const notOnGalaxite = require("./exports");
+
 let mod = new Module(
     "GalaxiteUtils",
     "GalaxiteUtils",
@@ -14,50 +17,24 @@ client.getModuleManager().registerModule(mod);
 // Obligatory module stuff
 mod.on("enable", () => {
     client.showNotification("GalaxiteUtils enabled!");
-    script.log("GalaxiteUtils enabled!");
+    clientMessage("GalaxiteUtils enabled!");
 });
 mod.on("disable", () => {
     client.showNotification("GalaxiteUtils disabled!");
-    script.log("GalaxiteUtils disabled!");
+    clientMessage("GalaxiteUtils disabled!");
 });
 client.on("unload-script", scr => {
-    if(scr.scriptName === script.name) {
+    if(scr.scriptName === "GalaxiteUtils") {
         client.getModuleManager().deregisterModule(mod);
     }
 });
-
-let debugMode = mod.addBoolSetting(
-    "debugMode",
-    "Debug Mode",
-    "Logs some more information",
-    false
-);
-
-// funny logs
-script.log("trans rights");
-debugLog("...imply the existence of trans lefts [debug mode on!]")
-
-/**
-* Returns `true` if the player is not on Galaxite; `false` if they are.
-*/
-export function notOnGalaxite(): boolean {
-    // return true if you are on anything BUT galaxite. this way i can just do `if(notOnGalaxite()) return;` on every client.on()
-    return (game.getFeaturedServer() != "Galaxite");
-}
-
-/**
- * Logs something when debug mode is on.
- */
-export function debugLog(log: string) {
-    if(debugMode.getValue())
-        script.log(log);
-}
 
 // Import other modules
 let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule")
 // let modBossbarUI = require("modBossbarUI");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
+// let modExtraThingsPrevent = require("modExtraThingsPrevent");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");

@@ -1,59 +1,58 @@
 // WhereAmIHUD: Allows showing various details from the /whereami command, like game or region.
 
-import { notOnGalaxite, debugLog } from "./main";
-// require("./index");
+import { notOnGalaxite } from "./exports";
 
 // Initialization
-let mod = new TextModule(
-    "WhereAmIHUD",
+let whereAmIHUD = new TextModule(
+    "whereAmIHUD",
     "WhereAmIHUD",
     "Automatically runs /whereami on every server join, and shows selected details",
     KeyCode.None,
 );
-client.getModuleManager().registerModule(mod);
+client.getModuleManager().registerModule(whereAmIHUD);
 
 client.on("unload-script", scr => {
-    if(scr.scriptName === script.name) {
-        client.getModuleManager().deregisterModule(mod);
+    if(scr.scriptName === "GalaxiteUtils") {
+        client.getModuleManager().deregisterModule(whereAmIHUD);
     }
 });
 
 // Initialize Settings
-let optionServerName = mod.addBoolSetting(
+let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
     "Server Name",
-    "Show the ServerName (game name) field",
+    "Shows the ServerName (game name) field",
     true
 );
-let optionFormatServerName = mod.addBoolSetting(
+let optionFormatServerName = whereAmIHUD.addBoolSetting(
     "FormatServerName",
     "Format Server Name",
     "Makes the server name field use proper formatting",
     true
 );
-let optionRegion = mod.addBoolSetting(
+let optionRegion = whereAmIHUD.addBoolSetting(
     "Region",
     "Region",
-    "Show the Region field",
+    "Shows the Region field",
     true
 );
-let optionPrivacy = mod.addBoolSetting(
+let optionPrivacy = whereAmIHUD.addBoolSetting(
     "Privacy",
     "Privacy",
-    "Show the Privacy (public/private game) field",
+    "Shows the Privacy (public/private game) field",
     true
 );
-let optionDevFields = mod.addBoolSetting(
+let optionDevFields = whereAmIHUD.addBoolSetting(
     "DevFields",
     "Developer Fields",
     "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)",
     false
 );
-let optionHideResponse = mod.addBoolSetting(
+let optionHideResponse = whereAmIHUD.addBoolSetting(
     "HideResponse",
     "Hide Response",
-    "Runs command in the background without a chat message (may cause potential issues)",
-    false
+    "Runs command in the background without a chat message (disable if normal /whereami doesn't work)",
+    true
 );
 
 /* Field list:
@@ -82,7 +81,6 @@ let serverUUID: string,
 client.on("join-game", e => {
     if(notOnGalaxite()) return;
     game.executeCommand("/whereami");
-    debugLog("whereami run");
 });
 
 // Handle the response
@@ -96,7 +94,7 @@ client.on("receive-chat", msg => {
 const NL = "\n";
 
 // Actually render stuff
-mod.on("text", (isPreview = true, isEditor = true) => {
+whereAmIHUD.on("text", (isPreview = true, isEditor = true) => {
     if(notOnGalaxite()) return("");
 
     // initialize render variable

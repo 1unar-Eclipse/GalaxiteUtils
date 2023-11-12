@@ -4,48 +4,48 @@
 - Add the title-gg games
 */
 
-import { notOnGalaxite, debugLog } from "./main";
+import { notOnGalaxite } from "./exports";
 
 // Module setup
-let mod = new Module(
-    "AutoGG",
+let autoGG = new Module(
+    "autoGG",
     "Galaxite AutoGG",
     'Automatically says "gg" when a game finishes.',
     KeyCode.None
 );
-client.getModuleManager().registerModule(mod);
+client.getModuleManager().registerModule(autoGG);
 
-let ch = mod.addBoolSetting(
+let ch = autoGG.addBoolSetting(
     "ch",
     "Chronos",
     "Chronos support",
     true
 );
-let ru = mod.addBoolSetting(
+let ru = autoGG.addBoolSetting(
     "ru",
     "Rush",
     "Rush support",
     true
 );
-let hr = mod.addBoolSetting(
+let hr = autoGG.addBoolSetting(
     "hr",
     "Hyper Racers",
     "Hyper Racers support",
     true
 );
-let cw = mod.addBoolSetting(
+let cw = autoGG.addBoolSetting(
     "cw",
     "Core Wars",
     "Core Wars support",
     true
 );
-let ftg = mod.addBoolSetting(
+let ftg = autoGG.addBoolSetting(
     "ftg",
     "Fill the Gaps",
     "Fill the Gaps support",
     true
 );
-let ph = mod.addBoolSetting(
+let ph = autoGG.addBoolSetting(
     "ph",
     "Prop Hunt",
     "Prop Hunt support (experimental)",
@@ -53,8 +53,8 @@ let ph = mod.addBoolSetting(
 );
 
 client.on("unload-script", scr => {
-    if(scr.scriptName === script.name) {
-        client.getModuleManager().deregisterModule(mod);
+    if(scr.scriptName === "GalaxiteUtils") {
+        client.getModuleManager().deregisterModule(autoGG);
     }
 });
 
@@ -102,5 +102,5 @@ client.on("title", title => {
 
 // Prop Hunt is immensely scuffed
 client.on("join-game", e => {
-    
+    if(notOnGalaxite()) return;
 });
