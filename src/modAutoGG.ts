@@ -4,7 +4,8 @@
 - Add the title-gg games
 */
 
-import { notOnGalaxite } from "./exports";
+export { }; // this is so a bandage fix
+let notOnGalaxite = require("./exports");
 
 // Module setup
 let autoGG = new Module(
