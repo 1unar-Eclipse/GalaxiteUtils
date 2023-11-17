@@ -37,4 +37,4 @@ let modAutoGG = require("modAutoGG");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
-let modWhereAmIHUD = require("modWhereAmIHUD");
+// let modWhereAmIHUD = require("modWhereAmIHUD"); // <- textmodules not supported rn

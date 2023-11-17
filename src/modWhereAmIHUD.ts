@@ -84,10 +84,57 @@ client.on("join-game", e => {
 });
 
 // Handle the response
+
+/* Sample response:
+â€œî¼ Â§cServerUUID: Â§abf600766-140c-4295-9afe-1a83522ec741
+Â§cPodName: Â§amainhub-b-86c8c98c6f-b7rhv
+Â§cServerName: Â§aMainHub
+Â§cCommitID: Â§acb6ce9c5
+Â§cShulkerID: Â§ac384c47e-ba18-4007-8194-eb84e379a857
+Â§cRegion: Â§aus
+Â§cPrivacy: Â§aPublicâ€
+
+equivalent to:
+ServerUUID: bf600766-140c-4295-9afe-1a83522ec741
+PodName: mainhub-b-86c8c98c6f-b7rhv
+ServerName: MainHub
+CommitID: cb6ce9c5
+ShulkerID: c384c47e-ba18-4007-8194-eb84e379a857
+Region: us
+Privacy: Public
+
+0: ServerUUID
+1: PodName
+2: ServerName
+3: CommitID
+4. ShulkerID
+5: Region
+6: Privacy
+7?: ParkourUUID
+
+â€œî¼ = INFO opener
+Â = ??? seems to show up everywhere colors are involved
+*/
 client.on("receive-chat", msg => {
     if(notOnGalaxite()) return;
 
-    // TODO: figure out how galaxite sends the whereami anyway
+    if(msg.message.includes("â€œî¼ Â§cServerUUID:")) { // there is no shot a user can send that
+        let formattedMessage = msg.message.replace("â€", ""); // Remove the ending random characters
+        let entries = formattedMessage.split(": Â§a"); // Split up the response at this substring
+        for(let i = 0; i < entries.length; i++) {
+            entries[i] = entries[i].split("\nÂ§c")[0]; // Remove everything past the line split
+        }
+
+        // could i have cleaned this up? probably
+        serverUUID = entries[0];
+        podName = entries[1];
+        serverName = entries[2];
+        commitID = entries[3];
+        shulkerID = entries[4];
+        region = entries[5];
+        privacy = entries[6];
+        parkourUUID = (entries.length > 6) ? entries[7] : "";
+    }
 });
 
 // Cache new line (very important) (i use it a lot here)
