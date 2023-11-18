@@ -1,5 +1,4 @@
 // Kit UI: Shows your selected perk (Chronos), engine (Hyper Racers), loot modifier (Rush), or kit (Kit PvP).
-// Dependencies: Advanced Mode for Chronos/Kits will need a few assorted things, though it is not the most needed.
 
 /*
 Chronos: Icon + perk name

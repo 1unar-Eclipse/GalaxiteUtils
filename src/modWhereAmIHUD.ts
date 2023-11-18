@@ -122,7 +122,7 @@ client.on("receive-chat", msg => {
         let formattedMessage = msg.message.replace("â€", ""); // Remove the ending random characters
         let entries = formattedMessage.split(": Â§a"); // Split up the response at this substring
         for(let i = 0; i < entries.length; i++) {
-            entries[i] = entries[i].split("\nÂ§c")[0]; // Remove everything past the line split
+            entries[i] = entries[i].split("\nÂ§c")[0]; // Remove everything past the line split by splitting it at the line split, then only keeping the first entry
         }
 
         // could i have cleaned this up? probably

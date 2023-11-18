@@ -4,7 +4,7 @@
 I have very little free time and no JS experience outside of this project and FreeCodeCamp. Any PRs to help are greatly appreciated.
 
 ## A Latite plugin that adds a variety of Galaxite-related modules.
-Don't want to say gg after every game? Want to show your viewers what perk you're using? Don't like the bossbar? This is for you - all of those and more are actual modules!
+Don't want to say gg after every game? Want to show your viewers what perk you're using? Need to know how many times you've died in a Parkour Builders run? This is for you - all of those and more are actual modules!
 
 Module list:
 - **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
@@ -16,7 +16,7 @@ Future Plans:
 - **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
 - **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.
-- **Parkour Builders Attempt Counter:** Insert Geometry Dash soundbyte here
+- **Parkour Builders: Attempt Counter:** Insert Geometry Dash soundbyte here
 - **Mythic Chest Timers:** For Rush and Chronos, automatically know when mythic chests will arrive!
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
 
