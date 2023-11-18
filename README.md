@@ -14,11 +14,10 @@ Future Plans:
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
   - Toggle Sprint in The Entity, and Coordinates in Chronos.
 - **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
-- **Bossbar -> UI:** Not a fan of the bossbar? This makes it a standard module instead
-- **The Entity Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
+- **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.
-  - There's also an Advanced option that can add useful details, like time until item regeneration!
 - **Parkour Builders Attempt Counter:** Insert Geometry Dash soundbyte here
+- **Mythic Chest Timers:** For Rush and Chronos, automatically know when mythic chests will arrive!
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
 
 ## Notes
@@ -38,8 +37,7 @@ I'll probably accept PRs for the following fairly quickly:
 
 I'll take a bit longer with modules, don't want them to be doing anything harmful, but I'm not against them being submitted. If you want to make a new module, in addition to normal Latite module things, make sure to add the following to the start of any file:
 ```ts
-export { }; // This fixes a weird error with names of stuff. Bandage fix needed by Latite's end
-let notOnGalaxite = require("./exports");
+import { notOnGalaxite } from "./exports";
 ```
 as well as add this line of code to any event:
 ```ts
