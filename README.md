@@ -14,6 +14,7 @@ Future Plans:
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
   - Toggle Sprint in The Entity, and Coordinates in Chronos.
 - **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
+- **Chat Debloat:** Reduces some spammy hub messages, instead allowing them to be put into a HUD module.
 - **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.
 - **Parkour Builders: Attempt Counter:** Insert Geometry Dash soundbyte here
