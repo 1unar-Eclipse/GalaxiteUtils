@@ -52,3 +52,7 @@ This uses [the template found here](https://github.com/LatiteScripting/Template)
 The terminal command `npm run build` in the root folder also works.
 
 I don't know how to GitHub, if something else should be here please open an issue
+
+## Credits
+- Mojang, Blockception, and the Latite dev team, obviously
+- MelodicCatgirl for the Chronos perk images as seen in her tier list
