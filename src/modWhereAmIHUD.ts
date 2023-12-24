@@ -133,7 +133,7 @@ client.on("receive-chat", msg => {
         shulkerID = entries[4];
         region = entries[5];
         privacy = entries[6];
-        parkourUUID = (entries.length > 6) ? entries[7] : "";
+        parkourUUID = (entries.length > 7) ? entries[7] : "";
     }
 });
 
