@@ -125,15 +125,16 @@ client.on("receive-chat", msg => {
             entries[i] = entries[i].split("\nÂ§c")[0]; // Remove everything past the line split by splitting it at the line split, then only keeping the first entry
         }
 
-        // could i have cleaned this up? probably
-        serverUUID = entries[0];
-        podName = entries[1];
-        serverName = entries[2];
-        commitID = entries[3];
-        shulkerID = entries[4];
-        region = entries[5];
-        privacy = entries[6];
-        parkourUUID = (entries.length > 7) ? entries[7] : "";
+        // serverUUID = entries[0];
+        // podName = entries[1];
+        // serverName = entries[2];
+        // commitID = entries[3];
+        // shulkerID = entries[4];
+        // region = entries[5];
+        // privacy = entries[6];
+
+        [serverUUID, podName, serverName, commitID, shulkerID, region, privacy] = entries;
+        parkourUUID = (entries.length > 7) ? entries[7] : ""; // is this needed?
     }
 });
 
