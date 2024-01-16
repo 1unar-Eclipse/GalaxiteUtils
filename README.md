@@ -7,13 +7,13 @@ I have very little free time and no JS experience outside of this project and Fr
 Don't want to say gg after every game? Want to show your viewers what perk you're using? Need to know how many times you've died in a Parkour Builders run? This is for you - all of those and more are actual modules!
 
 Module list:
-- **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
+- **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
 - **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 
 Future Plans:
+- **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
   - Toggle Sprint in The Entity and Alien Blast, and Coordinates in Chronos.
-- **Accidental Extra Things Prevent:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
 - **Chat Debloat:** Reduces some spammy hub messages, instead allowing them to be put into a HUD module.
 - **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.

@@ -1,7 +1,7 @@
 // AutoGG: Automatically sends "gg" on game end
 
 /* TO-DO:
-- Add the title-gg games
+- Significant overhauls (I'll need to redo this whole thing tbh)
 */
 
 import { notOnGalaxite } from "./exports";
