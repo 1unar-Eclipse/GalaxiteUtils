@@ -29,12 +29,12 @@ client.on("unload-script", scr => {
 });
 
 // Import other modules
-let modAutoGG = require("modAutoGG");
+// let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule")
 // let modBossbarUI = require("modBossbarUI");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
-// let modExtraThingsPrevent = require("modExtraThingsPrevent");
+let modExtraThingsPrevent = require("modExtraThingsPrevent");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
-// let modWhereAmIHUD = require("modWhereAmIHUD"); // <- textmodules not supported rn
+let modWhereAmIHUD = require("modWhereAmIHUD");
