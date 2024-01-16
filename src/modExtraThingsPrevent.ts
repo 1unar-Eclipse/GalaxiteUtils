@@ -39,7 +39,7 @@ let timePrev: number = 0; // the first click will always be cancelled, might as 
 let timeCurrent: number;
 function prevent(button: number, eventCancel: boolean) {
     // default return cases
-    if(notOnGalaxite()) return;
+    if(notOnGalaxite()) return; // are you on galaxite
     if(game.getLocalPlayer()?.getSelectedSlot() != 9) return; // are you on slot 9 (i am not finding out the extra things item id)
 
     // get use button - not cached because it might change mid-game
@@ -57,7 +57,7 @@ function prevent(button: number, eventCancel: boolean) {
     else { // otherwise,
         eventCancel = true; // cancel it
         if(optionNotif.getValue()) {
-            client.showNotification("Click again to confirm Extra Things usage");
+            client.showNotification("Click again to confirm using Extra Things");
         }
     }
 
