@@ -118,7 +118,7 @@ Privacy: Public
 client.on("receive-chat", msg => {
     if(notOnGalaxite()) return;
 
-    if(msg.message.includes("â€œî¼ Â§cServerUUID:")) { // there is no shot a user can send that
+    if(msg.message.includes("œî¼ Â§cServerUUID:")) { // there is no shot a user can send that
         let formattedMessage = msg.message.replace("â€", ""); // Remove the ending random characters
         let entries = formattedMessage.split(": Â§a"); // Split up the response at this substring
         for(let i = 0; i < entries.length; i++) {

@@ -37,11 +37,11 @@ let optionNotif = extraThingsPrevent.addBoolSetting(
 // the actual function
 let timePrev: number = 0; // the first click will always be cancelled, might as well make it all use the same code
 let timeCurrent: number;
-function prevent(button: number, eventCancel: boolean) {
+function prevent(button: number): boolean {
     // default return cases
-    if(notOnGalaxite()) return; // are you on galaxite
-    if(game.getLocalPlayer() === null) return; // are you in a game
-    if(game.getLocalPlayer()?.getSelectedSlot() != 9) return; // are you on slot 9 (i am not finding out the extra things item id)
+    if(notOnGalaxite()) return false; // are you on galaxite
+    if(!game.getLocalPlayer()) return false; // are you in a game
+    if(game.getLocalPlayer()!.getSelectedSlot() != 9) return false; // are you on slot 9 (i am not finding out the extra things item id)
 
     // get use button - not cached because it might change mid-game
     let bind = game.getInputBinding("use"); // right label?
@@ -49,17 +49,17 @@ function prevent(button: number, eventCancel: boolean) {
         bind += 100; // fix mouse button oddities
 
     // actual prevention code
-    if(bind != button) return;
+    if(bind != button) return false;
 
     timeCurrent = Date.now(); // get current time
     if(timeCurrent - timePrev <= optionInterval.getValue()) { // if the difference between the times is less than or equal to the interval specified by the player,
-        eventCancel = false; // do not cancel the event
+        return false; // do not cancel the event
     }
     else { // otherwise,
-        eventCancel = true; // cancel it
         if(optionNotif.getValue()) {
             client.showNotification("Click again to confirm using Extra Things");
         }
+        return true; // cancel it
     }
 
     timePrev = timeCurrent; // update previous click time
@@ -67,8 +67,8 @@ function prevent(button: number, eventCancel: boolean) {
 
 // listen for potential inputs
 client.on("key-press", e => {
-    prevent(e.keyCode, e.cancel)
+    e.cancel = prevent(e.keyCode);
 });
 client.on("click", e => {
-    prevent(e.button, e.cancel)
+    e.cancel = prevent(e.button);
 });
