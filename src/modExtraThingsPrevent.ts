@@ -53,16 +53,16 @@ function prevent(button: number): boolean {
 
     timeCurrent = Date.now(); // get current time
     if(timeCurrent - timePrev <= optionInterval.getValue()) { // if the difference between the times is less than or equal to the interval specified by the player,
+        timePrev = timeCurrent; // update previous click time
         return false; // do not cancel the event
     }
     else { // otherwise,
+        timePrev = timeCurrent; // update previous click time
         if(optionNotif.getValue()) {
             client.showNotification("Click again to confirm using Extra Things");
         }
         return true; // cancel it
     }
-
-    timePrev = timeCurrent; // update previous click time
 }
 
 // listen for potential inputs
