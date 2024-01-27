@@ -11,12 +11,6 @@ let extraThingsPrevent = new Module(
 );
 client.getModuleManager().registerModule(extraThingsPrevent);
 
-client.on("unload-script", scr => {
-    if(scr.scriptName === "GalaxiteUtils") {
-        client.getModuleManager().deregisterModule(extraThingsPrevent);
-    }
-});
-
 // initialize settings
 let optionInterval = extraThingsPrevent.addNumberSetting(
     "interval",

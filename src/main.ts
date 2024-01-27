@@ -22,11 +22,6 @@ mod.on("disable", () => {
     client.showNotification("GalaxiteUtils disabled!");
     clientMessage("GalaxiteUtils disabled!");
 });
-client.on("unload-script", scr => {
-    if(scr.scriptName === "GalaxiteUtils") {
-        client.getModuleManager().deregisterModule(mod);
-    }
-});
 
 // Import other modules
 // let modAutoGG = require("modAutoGG");

@@ -11,12 +11,6 @@ let whereAmIHUD = new TextModule(
 );
 client.getModuleManager().registerModule(whereAmIHUD);
 
-client.on("unload-script", scr => {
-    if(scr.scriptName === "GalaxiteUtils") {
-        client.getModuleManager().deregisterModule(whereAmIHUD);
-    }
-});
-
 // Initialize Settings
 let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
@@ -86,13 +80,7 @@ client.on("join-game", e => {
 // Handle the response
 
 /* Sample response:
-â€œî¼ Â§cServerUUID: Â§abf600766-140c-4295-9afe-1a83522ec741
-Â§cPodName: Â§amainhub-b-86c8c98c6f-b7rhv
-Â§cServerName: Â§aMainHub
-Â§cCommitID: Â§acb6ce9c5
-Â§cShulkerID: Â§ac384c47e-ba18-4007-8194-eb84e379a857
-Â§cRegion: Â§aus
-Â§cPrivacy: Â§aPublicâ€
+
 
 equivalent to:
 ServerUUID: bf600766-140c-4295-9afe-1a83522ec741

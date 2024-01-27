@@ -52,12 +52,6 @@ let ph = autoGG.addBoolSetting(
     false
 );
 
-client.on("unload-script", scr => {
-    if(scr.scriptName === "GalaxiteUtils") {
-        client.getModuleManager().deregisterModule(autoGG);
-    }
-});
-
 /* Galaxite Game End Messages:
 - Prop Hunt: None, titles AND world join needed (this mode's weird)
 - Core Wars: None, titles needed
