@@ -15,12 +15,11 @@
 import { notOnGalaxite } from "./exports";
 
 // initialize
-let chatDebloat = new HudModule(
+let chatDebloat = new Module(
     "chatDebloat",
     "Chat Debloat",
     "Hides some spammy chat messages, with the added capability to move invisibility to its own module",
     KeyCode.None,
-    true
 );
 let optionHideJoins = chatDebloat.addBoolSetting(
     "hideJoin",
@@ -40,27 +39,11 @@ let optionHideMelvin = chatDebloat.addBoolSetting(
     "Hides chat messages relating to Melvin's Mine",
     false
 );
-let optionHideInvisible = chatDebloat.addBoolSetting(
-    "hideInvisible",
-    "Hide Invisible Messages",
-    "Hides messages indicating your invisiblity state",
-    true
-);
-let optionInvisibleModule = chatDebloat.addBoolSetting(
-    "useInvisibleModule",
-    "Use Invisible Module",
-    "Shows invisiblity status in a module",
-    false
-);
-optionInvisibleModule.setCondition("hideInvisible");
 client.getModuleManager().registerModule(chatDebloat);
-
-// store invisible bool
-let invisible: boolean = false;
 
 // hook
 client.on("receive-chat", msg => {
-    if(notOnGalaxite()) return;
+    if(notOnGalaxite() || !chatDebloat.isEnabled()) return;
 
     // cache message for ease of reference
     let message = msg.message;
@@ -72,23 +55,5 @@ client.on("receive-chat", msg => {
     }
     if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
         msg.cancel = true;
-    }
-    if(message.startsWith("\u00ba\u0020You are now") && optionHideInvisible.getValue()) { // invisible
-        invisible = message.includes("invisible"); // sync the plugin's invisibility status to whether the message contains it
-        msg.cancel = true;
-    }
-});
-
-// render text
-chatDebloat.on("text", () => {
-    if(notOnGalaxite() || (optionInvisibleModule.getValue() == false))
-        return "";
-
-    switch(invisible) {
-        case true:
-            return "Invisible";
-        default:
-        case false:
-            return "";
     }
 });

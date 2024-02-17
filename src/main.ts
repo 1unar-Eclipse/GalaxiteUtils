@@ -12,6 +12,7 @@ import { notOnGalaxite } from "./exports";
 let modChatDebloat = require("modChatDebloat");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modExtraThingsPrevent = require("modExtraThingsPrevent");
+let modInvisibleIndicator = require("modInvisibleIndicator");
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
