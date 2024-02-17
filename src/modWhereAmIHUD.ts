@@ -9,9 +9,6 @@ let whereAmIHUD = new TextModule(
     "Automatically runs /whereami on every server join, and shows selected details",
     KeyCode.None,
 );
-client.getModuleManager().registerModule(whereAmIHUD);
-
-// Initialize Settings
 let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
     "Server Name",
@@ -48,6 +45,7 @@ let optionHideResponse = whereAmIHUD.addBoolSetting(
     "Runs command in the background without a chat message (disable if normal /whereami doesn't work)",
     true
 );
+client.getModuleManager().registerModule(whereAmIHUD);
 
 /* Field list:
 - ServerUUID (devFields)
@@ -78,20 +76,22 @@ let whereAmISent: boolean = false;
 client.on("join-game", e => {
     if(notOnGalaxite()) return;
     whereAmISent = true;
-    game.executeCommand("/whereami");
+    setTimeout(() => {
+        game.executeCommand("/whereami");
+    }, 2000)
 });
 
 // Handle the response
 
 /* Sample response:
 
-\xbc\x20\xa7cServerUUID: \xa7a93e0a641-bc66-4e34-b918-e0ff23684997
-\xa7cPodName: \xa7amainhub-b-665d8f7bf-kqrjq
-\xa7cServerName: \xa7aMainHub
-\xa7cCommitID: \xa7a975198ad
-\xa7cShulkerID: \xa7afd53c2d3-8ed9-4d2d-a850-3938b1109dc5
-\xa7cRegion: \xa7aus
-\xa7cPrivacy: \xa7aPublic
+\u00bc\u0020\u00a7cServerUUID: \u00a7a93e0a641-bc66-4e34-b918-e0ff23684997
+\u00a7cPodName: \u00a7amainhub-b-665d8f7bf-kqrjq
+\u00a7cServerName: \u00a7aMainHub
+\u00a7cCommitID: \u00a7a975198ad
+\u00a7cShulkerID: \u00a7afd53c2d3-8ed9-4d2d-a850-3938b1109dc5
+\u00a7cRegion: \u00a7aus
+\u00a7cPrivacy: \u00a7aPublic
 
 equivalent to:
 ServerUUID: 93e0a641-bc66-4e34-b918-e0ff23684997
@@ -117,11 +117,11 @@ Privacy: Public
 client.on("receive-chat", msg => {
     if(notOnGalaxite()) return;
 
-    if(msg.message.includes("\xbc\x20\xa7cServerUUID: ")) { // there is no shot a user can send that
-        let formattedMessage = msg.message.replace("\xbc\x20", ""); // cache message
-        let entries = formattedMessage.split("\n\xa7c"); // Split up the response at this substring, in the process splitting by line
+    if(msg.message.includes("ServerUUID: ") && msg.message.includes("\n")) { // Check for message (users can't send \n)
+        let formattedMessage = msg.message.replace("\u00bc\u0020", ""); // cache message
+        let entries = formattedMessage.split("\n\u00a7c"); // Split up the response at this substring, in the process splitting by line
         for(let i = 0; i < entries.length; i++) { // For each entry:
-            entries[i] = entries[i].split(" \xa7a")[1]; // Save only the part of the response after the category name
+            entries[i] = entries[i].split(" \u00a7a")[1]; // Save only the part of the response after the category name
         }
 
         // serverUUID = entries[0];
@@ -158,7 +158,9 @@ whereAmIHUD.on("text", () => {
     if(optionServerName.getValue())
         render = render.concat(serverName, NL); // todo: manage format option
     if(optionRegion.getValue())
-        render = render.concat(region.toUpperCase(), NL); // Uppercase region, as the server sends it lowercase
+        render = render.concat((
+            region != null ? region.toUpperCase() : region // Uppercase region, as the server sends it lowercase
+        ), NL);
     if(optionPrivacy.getValue())
         render = render.concat(privacy + " Game", NL);
     if(optionDevFields.getValue()) {

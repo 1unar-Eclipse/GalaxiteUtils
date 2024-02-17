@@ -4,12 +4,12 @@
 // https://github.com/OnixClient-Scripts/OnixClient_Scripts/blob/bee9a02abc5469c3bb5aea4402ab4b0813c40fa7/Modules/gxt.lua
 
 /* NOTES:
-- Join: \xba\x20
-- Info (ex. invisible): \xbc\x20
+- Join: \u00ba\u0020
+- Info (ex. invisible): \u00bc\u0020
   Note: only apply this to invisible messages, Info has some useful stuff + invisible is the module anyway
-- Notice (ex. hub messages): \xb9\x20
+- Notice (ex. hub messages): \u00b9\u0020
 - Warn: (intentionally omitted)
-- Melvin: \xad\x20\xa7\x6c\xa7\x36Miner
+- Melvin: \u00ad\u0020\u00a7\u006c\u00a7\u0036Miner
 */
 
 import { notOnGalaxite } from "./exports";
@@ -22,9 +22,6 @@ let chatDebloat = new HudModule(
     KeyCode.None,
     true
 );
-client.getModuleManager().registerModule(chatDebloat);
-
-// settings
 let optionHideJoins = chatDebloat.addBoolSetting(
     "hideJoin",
     "Hide Joins",
@@ -55,7 +52,8 @@ let optionInvisibleModule = chatDebloat.addBoolSetting(
     "Shows invisiblity status in a module",
     false
 );
-optionInvisibleModule.setCondition("hideInvisible", true);
+optionInvisibleModule.setCondition("hideInvisible");
+client.getModuleManager().registerModule(chatDebloat);
 
 // store invisible bool
 let invisible: boolean = false;
@@ -66,16 +64,16 @@ client.on("receive-chat", msg => {
 
     // cache message for ease of reference
     let message = msg.message;
-    if(message.startsWith("\xba\x20") && optionHideJoins.getValue()) { // join
+    if(message.startsWith("\u00ba\u0020") && optionHideJoins.getValue()) { // join
         msg.cancel = true;
     }
-    if(message.startsWith("\xb9\x20") && optionHideNotices.getValue()) { // notices
+    if(message.startsWith("\u00b9\u0020") && optionHideNotices.getValue()) { // notices
         msg.cancel = true;
     }
-    if(message.startsWith("\xad\x20\xa7\x6c\xa7\x36Miner") && optionHideMelvin.getValue()) { // melvin
+    if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
         msg.cancel = true;
     }
-    if(message.startsWith("\xba\x20You are now") && optionHideInvisible.getValue()) { // invisible
+    if(message.startsWith("\u00ba\u0020You are now") && optionHideInvisible.getValue()) { // invisible
         invisible = message.includes("invisible"); // sync the plugin's invisibility status to whether the message contains it
         msg.cancel = true;
     }
@@ -83,7 +81,7 @@ client.on("receive-chat", msg => {
 
 // render text
 chatDebloat.on("text", () => {
-    if(notOnGalaxite() || optionInvisibleModule.getValue() == false)
+    if(notOnGalaxite() || (optionInvisibleModule.getValue() == false))
         return "";
 
     switch(invisible) {
