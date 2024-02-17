@@ -9,13 +9,13 @@ let invisibleIndicator = new HudModule(
     KeyCode.None,
     true
 );
-
 let optionHideInvisible = invisibleIndicator.addBoolSetting(
     "hideInvisible",
     "Hide Invisible Messages",
     "Hides messages indicating your invisiblity state",
     true
 );
+client.getModuleManager().registerModule(invisibleIndicator);
 
 // store invisible bool
 let invisible: boolean = false;
@@ -23,7 +23,7 @@ let invisible: boolean = false;
 // hook
 client.on("receive-chat", msg => {
     if(notOnGalaxite()) return;
-    
+
     // cache message for ease of reference
     let message = msg.message;
 
