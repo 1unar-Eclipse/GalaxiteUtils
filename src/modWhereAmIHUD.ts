@@ -3,16 +3,26 @@
 import { notOnGalaxite } from "./exports";
 
 // Initialization
+
+// Core
 let whereAmIHUD = new TextModule(
     "whereAmIHUD",
     "WhereAmIHUD",
     "Automatically runs /whereami on every server join, and shows selected details",
     KeyCode.None,
 );
+let optionHideResponse = whereAmIHUD.addBoolSetting(
+    "HideResponse",
+    "Hide Response",
+    "Runs command in the background without a chat message (disable if normal /whereami doesn't work)",
+    true
+);
+
+// Server Name
 let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
     "Server Name",
-    "Shows the ServerName (game name) field",
+    "Shows the ServerName (game/lobby name) field",
     true
 );
 let optionFormatServerName = whereAmIHUD.addBoolSetting(
@@ -21,31 +31,155 @@ let optionFormatServerName = whereAmIHUD.addBoolSetting(
     "Makes the server name field use proper formatting (currently does nothing)",
     true
 );
+optionFormatServerName.setCondition("ServerName");
+let optionServerNamePrefix = whereAmIHUD.addTextSetting(
+    "ServerNamePrefix",
+    "Prefix (Server Name)",
+    "Text to display before the server name entry",
+    "Server Name: "
+);
+optionServerNamePrefix.setCondition("ServerName");
+let optionServerNameSuffix = whereAmIHUD.addTextSetting(
+    "ServerNameSuffix",
+    "Suffix (Server Name)",
+    "Text to display after the server name entry",
+    ""
+);
+optionServerNameSuffix.setCondition("ServerName");
+
+// Region
 let optionRegion = whereAmIHUD.addBoolSetting(
     "Region",
     "Region",
     "Shows the Region field",
     true
 );
+let optionRegionPrefix = whereAmIHUD.addTextSetting(
+    "RegionPrefix",
+    "Prefix (Region)",
+    "Text to display before the region entry",
+    "Region: "
+);
+optionRegionPrefix.setCondition("Region");
+let optionRegionSuffix = whereAmIHUD.addTextSetting(
+    "RegionSuffix",
+    "Suffix (Region)",
+    "Text to display after the region entry",
+    ""
+);
+optionRegionSuffix.setCondition("Region");
+
+// Privacy
 let optionPrivacy = whereAmIHUD.addBoolSetting(
     "Privacy",
     "Privacy",
     "Shows the Privacy (public/private game) field",
     true
 );
+let optionPrivacyPrefix = whereAmIHUD.addTextSetting(
+    "PrivacyPrefix",
+    "Prefix (Privacy)",
+    "Text to display before the Privacy entry",
+    ""
+);
+optionPrivacyPrefix.setCondition("Privacy")
+let optionPrivacySuffix = whereAmIHUD.addTextSetting(
+    "PrivacySuffix",
+    "Suffix (Privacy)",
+    "Text to display after the Privacy entry",
+    " Game"
+);
+optionPrivacySuffix.setCondition("Privacy");
+
+// Dev Fields
 let optionDevFields = whereAmIHUD.addBoolSetting(
     "DevFields",
     "Developer Fields",
     "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)",
     false
 );
-let optionHideResponse = whereAmIHUD.addBoolSetting(
-    "HideResponse",
-    "Hide Response",
-    "Runs command in the background without a chat message (disable if normal /whereami doesn't work)",
-    true
+
+// Server UUID
+let optionServerUUIDPrefix = whereAmIHUD.addTextSetting(
+    "ServerUUIDPrefix",
+    "Prefix (Server UUID)",
+    "Text to display before the Server UUID entry",
+    "Server UUID: "
 );
-client.getModuleManager().registerModule(whereAmIHUD);
+optionServerUUIDPrefix.setCondition("DevFields");
+let optionServerUUIDSuffix = whereAmIHUD.addTextSetting(
+    "ServerUUIDSuffix",
+    "Suffix (Server UUID)",
+    "Text to display after the Suffix entry",
+    ""
+);
+optionServerUUIDSuffix.setCondition("DevFields");
+
+// Pod Name
+let optionPodNamePrefix = whereAmIHUD.addTextSetting(
+    "PodNamePrefix",
+    "Prefix (Pod Name)",
+    "Text to display before the Pod Name entry",
+    "Pod Name: "
+);
+optionPodNamePrefix.setCondition("DevFields");
+let optionPodNameSuffix = whereAmIHUD.addTextSetting(
+    "PodNameSuffix",
+    "Suffix (Pod Name)",
+    "Text to display after the Pod Name entry",
+    ""
+);
+optionPodNameSuffix.setCondition("DevFields");
+
+// Commit ID
+let optionCommitIDPrefix = whereAmIHUD.addTextSetting(
+    "CommitIDPrefix",
+    "Prefix (Commit ID)",
+    "Text to display before the Commit ID entry",
+    "CommitID: "
+);
+optionCommitIDPrefix.setCondition("DevFields");
+let optionCommitIDSuffix = whereAmIHUD.addTextSetting(
+    "CommitIDSuffix",
+    "Suffix (Commit ID)",
+    "Text to display after the Commit ID entry",
+    ""
+);
+optionCommitIDSuffix.setCondition("DevFields");
+
+// Shulker ID
+let optionShulkerIDPrefix = whereAmIHUD.addTextSetting(
+    "ShulkerIDPrefix",
+    "Prefix (Shulker ID)",
+    "Text to display before the Shulker ID entry",
+    "ShulkerID: "
+);
+optionShulkerIDPrefix.setCondition("DevFields");
+let optionShulkerIDSuffix = whereAmIHUD.addTextSetting(
+    "ShulkerIDSuffix",
+    "Suffix (Shulker ID)",
+    "Text to display after the Shulker ID entry",
+    ""
+);
+optionShulkerIDSuffix.setCondition("DevFields");
+
+// Parkour UUID
+let optionParkourUUIDPrefix = whereAmIHUD.addTextSetting(
+    "ParkourUUIDPrefix",
+    "Prefix (Parkour UUID)",
+    "Text to display before the Parkour UUID entry",
+    "ParkourUUID: "
+);
+optionParkourUUIDPrefix.setCondition("DevFields");
+let optionParkourUUIDSuffix = whereAmIHUD.addTextSetting(
+    "ParkourUUIDSuffix",
+    "Suffix (Parkour UUID)",
+    "Text to display after the Parkour UUID entry",
+    ""
+);
+optionParkourUUIDSuffix.setCondition("DevFields");
+
+client.getModuleManager().registerModule(whereAmIHUD); // Putting this after settings makes the custom settings appear first
 
 /* Field list:
 - ServerUUID (devFields)
@@ -59,15 +193,15 @@ client.getModuleManager().registerModule(whereAmIHUD);
 Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID, ParkourUUID (if applicable)
 */
 
-// Initialize storage strings (i love weakly typed languages)
-let serverUUID: string,
-    podName: string,
-    serverName: string,
-    commitID: string,
-    shulkerID: string,
-    region: string,
-    privacy: string,
-    parkourUUID: string;
+// Initialize storage strings
+let serverUUID: string = "Unknown", // internal identifier
+    podName: string = "Unknown", // internal identifier
+    serverName: string = "Unknown", // name of lobby (game name)
+    commitID: string = "Unknown", // internal identifier (latest update?)
+    shulkerID: string = "Unknown", // internal identifier
+    region: string = "Unknown", // region of lobby
+    privacy: string = "Unknown", // public game/private game
+    parkourUUID: string = "Unknown"; // parkour id
 
 // Cache whether /whereami was sent automatically
 let whereAmISent: boolean = false;
@@ -78,30 +212,26 @@ client.on("join-game", e => {
     whereAmISent = true;
     setTimeout(() => {
         game.executeCommand("/whereami");
-    }, 2000)
+    }, 5000)
 });
 
 // Handle the response
-
 /* Sample response:
-
-\u00bc\u0020\u00a7cServerUUID: \u00a7a93e0a641-bc66-4e34-b918-e0ff23684997
-\u00a7cPodName: \u00a7amainhub-b-665d8f7bf-kqrjq
-\u00a7cServerName: \u00a7aMainHub
-\u00a7cCommitID: \u00a7a975198ad
-\u00a7cShulkerID: \u00a7afd53c2d3-8ed9-4d2d-a850-3938b1109dc5
-\u00a7cRegion: \u00a7aus
-\u00a7cPrivacy: \u00a7aPublic
-
+    \u00bc\u0020\u00a7cServerUUID: \u00a7a93e0a641-bc66-4e34-b918-e0ff23684997
+    \u00a7cPodName: \u00a7amainhub-b-665d8f7bf-kqrjq
+    \u00a7cServerName: \u00a7aMainHub
+    \u00a7cCommitID: \u00a7a975198ad
+    \u00a7cShulkerID: \u00a7afd53c2d3-8ed9-4d2d-a850-3938b1109dc5
+    \u00a7cRegion: \u00a7aus
+    \u00a7cPrivacy: \u00a7aPublic
 equivalent to:
-ServerUUID: 93e0a641-bc66-4e34-b918-e0ff23684997
-PodName: mainhub-b-665d8f7bf-kqrjq
-ServerName: MainHub
-CommitID: 975198ad
-ShulkerID: fd53c2d3-8ed9-4d2d-a850-3938b1109dc5
-Region: us
-Privacy: Public
-
+    ServerUUID: 93e0a641-bc66-4e34-b918-e0ff23684997
+    PodName: mainhub-b-665d8f7bf-kqrjq
+    ServerName: MainHub
+    CommitID: 975198ad
+    ShulkerID: fd53c2d3-8ed9-4d2d-a850-3938b1109dc5
+    Region: us
+    Privacy: Public
 0: ServerUUID
 1: PodName
 2: ServerName
@@ -110,7 +240,6 @@ Privacy: Public
 5: Region
 6: Privacy
 7?: ParkourUUID
-
 */
 
 // hook
