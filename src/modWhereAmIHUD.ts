@@ -285,15 +285,23 @@ whereAmIHUD.on("text", () => {
 
     // consider options and build text
     if(optionServerName.getValue())
-        render = render.concat(serverName, NL); // todo: manage format option
+        render = render.concat(optionServerNamePrefix.getValue(), serverName, optionServerNameSuffix.getValue(), NL); // todo: manage format option
     if(optionRegion.getValue())
-        render = render.concat((
-            region != null ? region.toUpperCase() : region // Uppercase region, as the server sends it lowercase
-        ), NL);
+        render = render.concat(optionRegionPrefix.getValue(), (region.toUpperCase()), optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
     if(optionPrivacy.getValue())
-        render = render.concat(privacy + " Game", NL);
+        render = render.concat(optionPrivacyPrefix.getValue(), privacy, optionPrivacySuffix.getValue(), NL);
     if(optionDevFields.getValue()) {
-        render = render.concat(serverUUID, NL, podName, NL, commitID, NL, shulkerID, NL, parkourUUID); // no final NL since that's always the last data point
+        render = render.concat(
+            optionServerUUIDPrefix.getValue(), serverUUID, optionServerUUIDSuffix.getValue(),
+            NL,
+            optionPodNamePrefix.getValue(), podName, optionPodNameSuffix.getValue(),
+            NL,
+            optionCommitIDPrefix.getValue(), commitID, optionCommitIDSuffix.getValue(),
+            NL,
+            optionShulkerIDPrefix.getValue(), shulkerID, optionShulkerIDSuffix.getValue(),
+            NL,
+            optionParkourUUIDPrefix.getValue(), parkourUUID, optionParkourUUIDSuffix.getValue()
+        ); // no final NL since that's always the last data point
     }
 
     // remove possible trailing \n
