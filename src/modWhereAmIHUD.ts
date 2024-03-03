@@ -298,9 +298,11 @@ whereAmIHUD.on("text", () => {
             NL,
             optionCommitIDPrefix.getValue(), commitID, optionCommitIDSuffix.getValue(),
             NL,
-            optionShulkerIDPrefix.getValue(), shulkerID, optionShulkerIDSuffix.getValue(),
-            NL,
-            optionParkourUUIDPrefix.getValue(), parkourUUID, optionParkourUUIDSuffix.getValue()
+            optionShulkerIDPrefix.getValue(), shulkerID, optionShulkerIDSuffix.getValue(), (
+                parkourUUID != ""
+                ? (NL + optionParkourUUIDPrefix.getValue(), parkourUUID, optionParkourUUIDSuffix.getValue())
+                : ""
+            )
         ); // no final NL since that's always the last data point
     }
 
