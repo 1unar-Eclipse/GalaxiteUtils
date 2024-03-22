@@ -297,10 +297,12 @@ whereAmIHUD.on("text", () => {
             optionPodNamePrefix.getValue(), podName, optionPodNameSuffix.getValue(),
             NL,
             optionCommitIDPrefix.getValue(), commitID, optionCommitIDSuffix.getValue(),
+            NL,
             optionShulkerIDPrefix.getValue(), shulkerID, optionShulkerIDSuffix.getValue(), (
-                parkourUUID != ""
-                ? (NL + optionParkourUUIDPrefix.getValue(), parkourUUID, optionParkourUUIDSuffix.getValue()) // NL in here to reduce potential trim
-                : ""
+                (parkourUUID != "")
+                ? (
+                    NL + optionParkourUUIDPrefix.getValue(), parkourUUID, optionParkourUUIDSuffix.getValue()  // NL in here to reduce potential trim
+                ) : ""
             )
         ); // no final NL since that's always the last data point
     }
