@@ -8,9 +8,8 @@
 // Import other modules
 
 // let modAutoGG = require("modAutoGG");
-// let modAutoModule = require("modAutoModule")
-// let modBossbarUI = require("modBossbarUI");
-let modChatDebloat = require("modChatDebloat"); // Not functional - cues are wrong
+// let modAutoModule = require("modAutoModule");
+// let modChatDebloat = require("modChatDebloat"); // Not functional - cues are wrong
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modExtraThingsPrevent = require("modExtraThingsPrevent"); // Not functional - Latite bug
 let modInvisibleIndicator = require("modInvisibleIndicator"); // Not functional - cues are wrong
