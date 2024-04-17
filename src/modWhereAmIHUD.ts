@@ -206,13 +206,20 @@ let serverUUID: string = "Unknown", // internal identifier
 // Cache whether /whereami was sent automatically
 let whereAmISent: boolean = false;
 
-// Send /whereami every time a server is joined
-client.on("join-game", e => {
+function runWhereAmI() {
     if(notOnGalaxite()) return;
     whereAmISent = true;
     setTimeout(() => {
         game.executeCommand("/whereami");
     }, 5000)
+}
+
+// Send /whereami every time a new server is joined
+client.on("world-change", e => {
+    runWhereAmI();
+});
+client.on("join-game", e => {
+    runWhereAmI();
 });
 
 // Handle the response

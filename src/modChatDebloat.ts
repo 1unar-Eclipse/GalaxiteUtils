@@ -4,10 +4,10 @@
 // https://github.com/OnixClient-Scripts/OnixClient_Scripts/blob/bee9a02abc5469c3bb5aea4402ab4b0813c40fa7/Modules/gxt.lua
 
 /* NOTES:
-- Join: \u00ba\u0020
-- Info (ex. invisible): \u00bc\u0020
+- Join: \ue0ba
+- Info (ex. invisible): \ue0bc
   Note: only apply this to invisible messages, Info has some useful stuff + invisible is the module anyway
-- Notice (ex. hub messages): \u00b9\u0020
+- Notice (ex. hub messages): \ue0b9
 - Warn: (intentionally omitted)
 - Melvin: \u00ad\u0020\u00a7\u006c\u00a7\u0036Miner
 */
@@ -47,12 +47,14 @@ client.on("receive-chat", msg => {
 
     // cache message for ease of reference
     let message = msg.message;
-    if(message.startsWith("\u00ba\u0020") && optionHideJoins.getValue()) { // join
+    if(message.startsWith("\ue0b9") && optionHideNotices.getValue()) { // notices
         msg.cancel = true;
     }
-    if(message.startsWith("\u00b9\u0020") && optionHideNotices.getValue()) { // notices
+    if(message.startsWith("\ue0ba") && optionHideJoins.getValue()) { // join
         msg.cancel = true;
     }
+    // interestingly, gala does use \ue0bb - this is the warning emote, from the looks of things
+    // are all gala emotes \ue0--?
     if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
         msg.cancel = true;
     }

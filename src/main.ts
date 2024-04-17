@@ -1,6 +1,8 @@
 // if you're reading this and know what you're doing please open a pr to fix my garbage ts
 // i learned this language with freecodecamp, miniscule c#/python knowledge, and looking at the script examples lol
 
+import { notOnGalaxite } from "./exports";
+
 // Main file for non-module settings (currently unused).
 
 // import { notOnGalaxite } from "./exports";
@@ -9,11 +11,21 @@
 
 // let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
-// let modChatDebloat = require("modChatDebloat"); // Not functional - cues are wrong
+let modChatDebloat = require("modChatDebloat");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modExtraThingsPrevent = require("modExtraThingsPrevent"); // Not functional - Latite bug
 let modInvisibleIndicator = require("modInvisibleIndicator"); // Not functional - cues are wrong
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
-let modWhereAmIHUD = require("modWhereAmIHUD"); // Partially functional - join-game doesn't trigger on moving servers
+let modWhereAmIHUD = require("modWhereAmIHUD");
+
+client.on("key-press", k => {
+    if(k.isDown && k.keyCode == KeyCode.Plus && !notOnGalaxite()) {
+        let str: string = "";
+        for(let i = 0; i < 256; i++) {
+            str += String.fromCharCode(0xe000 + i) + ", ";
+        }
+        clientMessage(str);
+    }
+});
