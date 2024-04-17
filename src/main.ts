@@ -13,7 +13,7 @@ import { notOnGalaxite } from "./exports";
 // let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
-let modExtraThingsPrevent = require("modExtraThingsPrevent"); // Not functional - Latite bug
+// let modExtraThingsPrevent = require("modExtraThingsPrevent"); // Not functional - Latite bug
 let modInvisibleIndicator = require("modInvisibleIndicator"); // Not functional - cues are wrong
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
@@ -23,8 +23,8 @@ let modWhereAmIHUD = require("modWhereAmIHUD");
 client.on("key-press", k => {
     if(k.isDown && k.keyCode == KeyCode.Plus && !notOnGalaxite()) {
         let str: string = "";
-        for(let i = 0; i < 256; i++) {
-            str += String.fromCharCode(0xe000 + i) + ", ";
+        for(let i = 0xe000; i < 0xe300; i++) { // gala uses 0xe0?? - 0xe2??
+            str += i.toString(10) + ": " + String.fromCharCode(i) + ", ";
         }
         clientMessage(str);
     }
