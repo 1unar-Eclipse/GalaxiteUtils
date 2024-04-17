@@ -215,9 +215,9 @@ function runWhereAmI() {
 }
 
 // Send /whereami every time a new server is joined
-// client.on("world-change", e => {
-//     runWhereAmI();
-// });
+client.on("change-dimension", e => {
+    runWhereAmI();
+});
 client.on("join-game", e => {
     runWhereAmI();
 });

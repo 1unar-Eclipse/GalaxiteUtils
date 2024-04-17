@@ -25,7 +25,7 @@ client.on("key-press", k => {
     if(k.isDown && k.keyCode == KeyCode.Plus && !notOnGalaxite()) {
         let str: string = "";
         for(let i = 0xe000; i < 0xe300; i++) { // gala uses 0xe0?? - 0xe2??
-            str += i.toString(10) + ": " + String.fromCharCode(i) + ", ";
+            str += (i - 0xe000).toString(16) + ": " + String.fromCharCode(i) + ", ";
         }
         clientMessage(str);
     }
