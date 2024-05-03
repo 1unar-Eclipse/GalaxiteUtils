@@ -5,7 +5,7 @@ import { notOnGalaxite } from "./exports";
 // initialization
 let extraThingsPrevent = new Module(
     "etprevent",
-    "Accidental Extra Things Prevent",
+    "Confirm Extra Things",
     "Adds a confirmation click before using Extra Things",
     KeyCode.None
 );

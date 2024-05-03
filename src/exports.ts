@@ -10,4 +10,9 @@ export function notOnGalaxite(): boolean {
     return (game.getFeaturedServer() != "Galaxite");
 }
 
+/**
+ * Debug mode
+ */
+export let debug: boolean = false;
+
 // module.exports = notOnGalaxite;

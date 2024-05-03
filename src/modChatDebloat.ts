@@ -48,14 +48,15 @@ client.on("receive-chat", msg => {
     // cache message for ease of reference
     let message = msg.message;
     if(message.startsWith("\ue0b9") && optionHideNotices.getValue()) { // notices
+        clientMessage("Notice");
         msg.cancel = true;
     }
     if(message.startsWith("\ue0ba") && optionHideJoins.getValue()) { // join
+        clientMessage("Join");
         msg.cancel = true;
     }
-    // interestingly, gala does use \ue0bb - this is the warning emote, from the looks of things
-    // are all gala emotes \ue0--?
     if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
+        clientMessage("Melvin");
         msg.cancel = true;
     }
 });

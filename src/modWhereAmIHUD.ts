@@ -211,7 +211,7 @@ function runWhereAmI() {
     whereAmISent = true;
     setTimeout(() => {
         game.executeCommand("/whereami");
-    }, 5000)
+    }, 5000);
 }
 
 // Send /whereami every time a new server is joined
