@@ -36,7 +36,7 @@ function prevent(button: number): boolean {
     if(notOnGalaxite()) return false; // are you on galaxite
     if(!game.getLocalPlayer()) return false; // are you in a game
     if(game.getLocalPlayer()!.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
-    if(game.getScreen() == "") return false;
+    if(game.isInUI()) return false; // this may have issues. if necessary use game.getScreen()
 
     // get use button - not cached because it might change mid-game
     let bind = game.getInputBinding("use");
