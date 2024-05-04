@@ -211,6 +211,7 @@ function runWhereAmI() {
     whereAmISent = true;
     setTimeout(() => {
         game.executeCommand("/whereami");
+        return 1;
     }, 5000);
 }
 
