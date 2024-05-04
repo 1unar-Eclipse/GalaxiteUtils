@@ -14,7 +14,7 @@ import { debug, notOnGalaxite } from "./exports";
 let modChatDebloat = require("modChatDebloat");
 let modCompactBadges = require("modCompactBadges");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
-let modExtraThingsPrevent = require("modExtraThingsPrevent"); // Not functional - Latite bug
+let modExtraThingsPrevent = require("modExtraThingsPrevent");
 let modInvisibleIndicator = require("modInvisibleIndicator"); // Not functional - cues are wrong
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
