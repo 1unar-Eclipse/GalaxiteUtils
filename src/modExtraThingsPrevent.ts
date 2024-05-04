@@ -35,10 +35,11 @@ function prevent(button: number): boolean {
     // default return cases
     if(notOnGalaxite()) return false; // are you on galaxite
     if(!game.getLocalPlayer()) return false; // are you in a game
-    if(game.getLocalPlayer()!.getSelectedSlot() != 8) return false; // are you on slot 9 (i am not finding out the extra things item id)
+    if(game.getLocalPlayer()!.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
+    if(game.getScreen() == "") return false;
 
     // get use button - not cached because it might change mid-game
-    let bind = game.getInputBinding("use"); // right label?
+    let bind = game.getInputBinding("use");
     if(bind < 0)
         bind += 100; // fix mouse button oddities
 

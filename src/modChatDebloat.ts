@@ -33,12 +33,12 @@ let optionHideNotices = chatDebloat.addBoolSetting(
     "Hides notice messages (ex. hub messages)",
     true
 );
-let optionHideMelvin = chatDebloat.addBoolSetting(
-    "hideMelvin",
-    "Hide Melvin Messages",
-    "Hides chat messages relating to Melvin's Mine",
-    false
-);
+// let optionHideMelvin = chatDebloat.addBoolSetting( // Melvin is currently broken (idk the cue)
+//     "hideMelvin",
+//     "Hide Melvin Messages",
+//     "Hides chat messages relating to Melvin's Mine",
+//     false
+// );
 client.getModuleManager().registerModule(chatDebloat);
 
 // hook
@@ -48,15 +48,14 @@ client.on("receive-chat", msg => {
     // cache message for ease of reference
     let message = msg.message;
     if(message.startsWith("\ue0b9") && optionHideNotices.getValue()) { // notices
-        clientMessage("Notice");
         msg.cancel = true;
     }
     if(message.startsWith("\ue0ba") && optionHideJoins.getValue()) { // join
         clientMessage("Join");
         msg.cancel = true;
     }
-    if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
-        clientMessage("Melvin");
-        msg.cancel = true;
-    }
+    // if(message.startsWith("\u00ad\u0020\u00a7\u006c\u00a7\u0036Miner") && optionHideMelvin.getValue()) { // melvin
+    //     clientMessage("Melvin");
+    //     msg.cancel = true;
+    // }
 });
