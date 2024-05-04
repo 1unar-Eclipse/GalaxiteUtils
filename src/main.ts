@@ -1,7 +1,7 @@
 // if you're reading this and know what you're doing please open a pr to fix my garbage ts
 // i learned this language with freecodecamp, miniscule c#/python knowledge, and looking at the script examples lol
 
-import { notOnGalaxite } from "./exports";
+import { debug, notOnGalaxite } from "./exports";
 
 // Main file for non-module settings (currently unused).
 
@@ -22,7 +22,12 @@ let modInvisibleIndicator = require("modInvisibleIndicator"); // Not functional 
 let modWhereAmIHUD = require("modWhereAmIHUD");
 
 client.on("key-press", k => {
-    if(k.isDown && k.keyCode == KeyCode.Plus && !notOnGalaxite()) {
+    if(
+        k.isDown &&
+        k.keyCode == KeyCode.Plus &&
+        !notOnGalaxite() &&
+        debug
+    ) {
         let str: string = "";
         for(let i = 0xe000; i < 0xe300; i++) { // gala uses 0xe0?? - 0xe2??
             str += (i - 0xe000).toString(16) + ": " + String.fromCharCode(i) + ", ";
