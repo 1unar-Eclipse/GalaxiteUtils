@@ -13,6 +13,6 @@ export function notOnGalaxite(): boolean {
 /**
  * Debug mode
  */
-export let debug: boolean = false;
+export let debug: boolean = true;
 
 // module.exports = notOnGalaxite;
