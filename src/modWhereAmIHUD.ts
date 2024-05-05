@@ -36,7 +36,7 @@ let optionServerNamePrefix = whereAmIHUD.addTextSetting(
     "ServerNamePrefix",
     "Prefix (Server Name)",
     "Text to display before the server name entry",
-    "Server Name: "
+    ""
 );
 optionServerNamePrefix.setCondition("ServerName");
 let optionServerNameSuffix = whereAmIHUD.addTextSetting(
@@ -262,9 +262,9 @@ function runWhereAmI() {
 }
 
 // Send /whereami every time a new server is joined
-// client.on("change-dimension", e => {
-//     runWhereAmI();
-// });
+client.on("change-dimension", e => {
+    runWhereAmI();
+});
 client.on("join-game", e => {
     runWhereAmI();
 });

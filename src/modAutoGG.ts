@@ -53,48 +53,43 @@ let ph = autoGG.addBoolSetting(
 );
 
 /* Galaxite Game End Messages:
-- Prop Hunt: None, titles AND world join needed (this mode's weird)
-- Core Wars: None, titles needed
-- Fill the Gaps: None, titles needed
-- Chronos: "(is/Team are) the Chronos Champion(s)!"
-- Hyper Racers: "Race Finished!"
-- Rush: "(is/Team are) the Rush Champion(s)"!
+hr            - "Finished!", "Out of Time!"
+ftg           - "\u00a7l<team> Team\u00a7r\u00a7a won the game!"
+ch (subtitle) - "Is The \u00a76\u00a7lChronos Champion!", "Are The \u00a76\u00a7lChronos Champions!"
+ru (subtitle) - "Is The \u00a76\u00a7lRush Champion!", "Are The \u00a76\u00a7lRush Champions!"
+cw            - "\u00a7l<team> Team\u00a7r\u00a7a won the game!"
+ph            - "\u00a7bHiders\u00a7r\u00a7f Win", "\u00a7eSeekers\u00a7r\u00a7f Win"
 No other modes have gg rewards */
 
 // cache regex
-let rgxChronos = /(is|(t|T)eam are) (t|T)he Chronos Champion(|s)!/;
-let rgxRush = /(is|(t|T)eam are) (t|T)he Rush Champion(|s)!/;
+let rgxFtgCw = /Team\u00a7r\u00a7a won the game!/; // does it work like this?
+let rgxChRu = /(Is|Are) The \u00a76\u00a7l(Chronos|Rush) Champion(|s)!/;
+let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
 
-// Chronos, Rush, and Hyper Racers all use chat
-client.on("receive-chat", msg => {
-    // account for the escape case
-    if(notOnGalaxite()) return;
+function sendGG() {
+    clientMessage("GG should've been sent");
+    game.sendChatMessage("gg");
+}
 
-    // cache message
-    let message = msg.message;
+let phGG: boolean = false;
 
-    // Chronos
-    if(ch.getValue() && rgxChronos.test(message)) {
-        game.sendChatMessage("gg");
-    }
-
-    // Rush
-    if(ru.getValue() && rgxRush.test(message)) {
-        game.sendChatMessage("gg");
-    }
-
-    // Hyper Racers
-    if(hr.getValue() && message.includes("Race Finished!")) {
-        game.sendChatMessage("gg");
-    }
-});
-
-// Core Wars, Fill the Gaps, and Prop Hunt all use titles
+// All games have a title
 client.on("title", title => {
     if(notOnGalaxite()) return;
+    if(!autoGG.isEnabled()) return;
+
+    let text = title.text; // cache title
+
+    if(hr.getValue()) {
+        if(text == "Finished" || text == "Out of Time!")
+            sendGG();
+    }
+    if(ftg.getValue()) {
+
+    }
 });
 
 // Prop Hunt is immensely scuffed
-client.on("join-game", e => {
+client.on("change-dimension", e => {
     if(notOnGalaxite()) return;
 });

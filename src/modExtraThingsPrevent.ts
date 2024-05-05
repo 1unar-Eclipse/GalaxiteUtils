@@ -1,4 +1,5 @@
 // Extra Things Prevent: Makes you need to click twice to use Extra Things.
+// TO-DO: Add a cooldown to the notification
 
 import { notOnGalaxite } from "./exports";
 
