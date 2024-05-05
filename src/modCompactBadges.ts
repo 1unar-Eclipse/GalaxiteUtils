@@ -6,7 +6,7 @@ import { notOnGalaxite } from "./exports";
 
 let compactBadges = new Module(
     "compactbadges",
-    "Compact Badges",
+    "GXU: Compact Badges",
     "Adds options to trim or remove the chat badges",
     KeyCode.None
 );

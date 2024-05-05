@@ -17,7 +17,7 @@ import { notOnGalaxite } from "./exports";
 // initialize
 let chatDebloat = new Module(
     "chatDebloat",
-    "Chat Debloat",
+    "GXU: Chat Debloat",
     "Hides some spammy chat messages",
     KeyCode.None,
 );

@@ -7,7 +7,7 @@ import { notOnGalaxite } from "./exports";
 // Core
 let whereAmIHUD = new TextModule(
     "whereAmIHUD",
-    "WhereAmIHUD",
+    "GXU: WhereAmIHUD",
     "Automatically runs /whereami on every server join, and shows selected details as a module",
     KeyCode.None,
 );

@@ -9,7 +9,7 @@ import { notOnGalaxite } from "./exports";
 // Module setup
 let autoGG = new Module(
     "autoGG",
-    "Galaxite AutoGG",
+    "GXU: AutoGG",
     'Automatically says "gg" when a game finishes.',
     KeyCode.None
 );

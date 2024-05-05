@@ -4,7 +4,7 @@ import { notOnGalaxite } from "./exports";
 
 let invisibleIndicator = new HudModule(
     "invisibleIndicator",
-    "Invisible Indicator",
+    "GXU: Invisible Indicator",
     "Moves the invisible chat messages in hubs to a UI element",
     KeyCode.None,
     true

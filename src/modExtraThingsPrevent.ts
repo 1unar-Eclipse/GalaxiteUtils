@@ -5,7 +5,7 @@ import { notOnGalaxite } from "./exports";
 // initialization
 let extraThingsPrevent = new Module(
     "etprevent",
-    "Confirm Extra Things",
+    "GXU: Confirm Extra Things",
     "Adds a confirmation click before using Extra Things",
     KeyCode.None
 );
