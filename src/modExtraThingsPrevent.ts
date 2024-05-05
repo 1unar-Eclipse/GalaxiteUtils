@@ -15,7 +15,7 @@ client.getModuleManager().registerModule(extraThingsPrevent);
 let optionInterval = extraThingsPrevent.addNumberSetting(
     "interval",
     "Max Interval (ms)",
-    "Maximum amount of time between uses",
+    "Maximum amount of time between a click and the confirmation click",
     0,
     1000,
     50,
