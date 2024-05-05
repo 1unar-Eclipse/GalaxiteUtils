@@ -54,7 +54,7 @@ function prevent(button: number): boolean {
     else { // otherwise,
         timePrev = timeCurrent; // update previous click time
         if(optionNotif.getValue()) {
-            client.showNotification("Click again to confirm using Extra Things");
+            client.showNotification("Click again to confirm using Extra Things"); // show a notif if wanted
         }
         return true; // cancel it
     }
