@@ -191,7 +191,53 @@ client.getModuleManager().registerModule(whereAmIHUD); // Putting this after set
 - Privacy (privacy)
 
 Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID, ParkourUUID (if applicable)
+
+Internal game names (for formatting):
+- RushSolo, RushDouble, RushQuad                            Rush (Solos), Rush (Doubles), Rush (Quads)
+- PlanetsSolo, PlanetsDouble, PlanetsQuad, PlanetsPush      Core Wars (Solos), Core Wars (Doubles), Core Wars (Quads), Core Wars Push
+- ChronosSolo, ChronosDouble. ChronosMega                   Chronos (Solos), Chronos (Doubles), Chronos (Mega)
+- FillTheGapsSolo, FillTheGapsDouble, FillTheGapsQuad       Fill the Gaps (Solos), Fill the Gaps (Doubles), Fill the Gaps (Quads)
+- PropHunt                                                  Prop Hunt
+- HyperRacersSingle                                         Hyper Racers
+- Playground                                                Playground
+- Parkour<Lobby/Build/Play>                                 Parkour Builders (Lobby), Parkour Builders (Building), Parkour Builders (Playing)
+- AlienBlast                                                Alien Blast
+- Spooky                                                    The Entity
+- Farming                                                   My Farm Life
 */
+
+let formatMap = new Map([ // make the map for the formatservername option
+    ["MainHub", "Main Hub"],
+
+    ["RushSolo", "Rush (Solos)"],
+    ["RushDouble", "Rush (Doubles)"],
+    ["RushQuad", "Rush (Quads)"],
+
+    ["PlanetsSolo", "Core Wars (Solo)"],
+    ["PlanetsDouble", "Core Wars (Doubles)"],
+    ["PlanetsQuad", "Core Wars (Quads)"],
+    ["PlanetsPush", "Core Wars Push"],
+
+    ["ChronosSolo", "Chronos (Solo)"],
+    ["ChronosDouble", "Chronos (Doubles)"],
+    ["ChronosMega", "Chronos (Mega)"],
+
+    ["FillTheGapsSolo", "Fill the Gaps (Solos)"],
+    ["FillTheGapsDouble", "Fill the Gaps (Doubles)"],
+    ["FillTheGapsQuad", "Fill the Gaps (Quads)"],
+
+    ["PropHunt", "Prop Hunt"],
+    ["HyperRacersSingle", "Hyper Racers"],
+    
+    ["Playground", "Playground"],
+    ["AlienBlast", "Alien Blast"],
+    ["Spooky", "The Entity"],
+    ["Farming", "My Farm Life"],
+
+    ["ParkourLobby", "Parkour Builders (Lobby)"],
+    ["ParkourBuild", "Parkour Builders (Building)"],
+    ["ParkourPlay", "Parkour Builders (Playing)"]
+]);
 
 // Initialize storage strings
 let serverUUID: string = "Unknown", // internal identifier
@@ -293,7 +339,12 @@ whereAmIHUD.on("text", () => {
 
     // consider options and build text
     if(optionServerName.getValue())
-        render = render.concat(optionServerNamePrefix.getValue(), serverName, optionServerNameSuffix.getValue(), NL); // todo: manage format option
+        render = render.concat(
+            optionServerNamePrefix.getValue(),
+            optionFormatServerName.getValue() ? (formatMap.get(serverName) ?? serverName) : serverName, // ?? is "choose the first defined value"
+            optionServerNameSuffix.getValue(),
+            NL
+        );
     if(optionRegion.getValue())
         render = render.concat(optionRegionPrefix.getValue(), (region.toUpperCase()), optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
     if(optionPrivacy.getValue())
