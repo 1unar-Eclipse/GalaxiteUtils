@@ -10,7 +10,7 @@ import { notOnGalaxite } from "./exports";
 let autoGG = new Module(
     "autoGG",
     "GXU: AutoGG",
-    'Automatically says "gg" when a game finishes. (Prop Hunt unsupported due to a Galaxite bug)',
+    'Automatically says "gg" when a game finishes. (Prop Hunt currently unsupported)',
     KeyCode.None
 );
 client.getModuleManager().registerModule(autoGG);
