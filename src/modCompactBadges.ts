@@ -17,6 +17,12 @@ let optionRemoveBadges = compactBadges.addBoolSetting(
     // Hides Player, Ultra, Elite, Elite + Ultra, VIP, and Influencer
     false
 );
+let optionHidePrestigeIcons = compactBadges.addBoolSetting(
+    "hideprestige",
+    "Hide Prestige Badges",
+    "Hides all battlepass prestige badges.",
+    false
+)
 let optionComboToggle = compactBadges.addBoolSetting(
     "combotoggle",
     "Combination Badge Acts as Elite",
@@ -25,43 +31,49 @@ let optionComboToggle = compactBadges.addBoolSetting(
 );
 client.getModuleManager().registerModule(compactBadges);
 
-let playerBadges = [
-    0xE096, // elite + ultra
-    0xE099, // elite
-    0xE09A, // player
-    0xE09D, // vip
-    0xE09E, // ultra
-    0xE09F  // influencer
-];
+// respectively: elite & ultra, elite, player, vip, ultra, influencer
+let rgxPlayerBadges = /\uE096|\uE099|\uE09A|\uE09D|\uE09E|\uE09F/;
+
+// elite, player, staff, helper, vip, ultra, influencer. combo badge excluded for its own test
+let rgxBadges = /\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F/;
+
+// p1-p5 respectively
+let rgxPrestiges = /\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD/;
 
 client.on("receive-chat", c => {
     if(notOnGalaxite() || !compactBadges.isEnabled()) return;
 
-    let badge = c.message.charCodeAt(0); // badge
-    let editedMessage = c.message;
-    if(optionRemoveBadges.getValue()) {
-        if(playerBadges.includes(badge)) {
+    let editedMessage = c.message; // cache a message to edit and resend later
+
+    if(optionHidePrestigeIcons.getValue()) { // if the user wants to hide prestige icons:
+        if(rgxPrestiges.test(editedMessage)) { // check if message has a prestige icon
             c.cancel = true;
-            editedMessage = editedMessage.replace(c.message[0], ""); // badge is always the first character
+            editedMessage = editedMessage.replace(rgxPlayerBadges, ""); // delete the prestige icon
         }
     }
-    else {
-        if(0xE099 <= badge && badge <= 0xE09F) { // any badge except elite + ultra
+
+    if(optionRemoveBadges.getValue()) { // if the user wants to delete player badges:
+        if(rgxPlayerBadges.test(editedMessage)) { // check if message has a player badge
             c.cancel = true;
-            editedMessage = editedMessage.replace( // make the edited message replace the badge (likely first character) with the short badge 0x10 characters behind
-                c.message[0], String.fromCharCode(badge - 0x10)
-            );
+            editedMessage = editedMessage.replace(rgxPlayerBadges, ""); // delete the player badge
         }
-        if(badge == 0xE096) { // elite + ultra
+    }
+    else { // if user wants to just shorten badges:
+        if(editedMessage.includes("\uE096")) { // check for elite & ultra
             c.cancel = true;
             editedMessage = editedMessage.replace(
-                c.message[0], String.fromCharCode( // the badge thankfully only appears once
-                    optionComboToggle.getValue() ? 0xE099 : 0xE09E // elite if option is on, ultra if off
-                )
+                "\uE096", optionComboToggle.getValue() ? "\uE089" : "\uE08E" // replace combo badge with short elite if option is on, short ultra if off
             )
+        }
+        if(rgxBadges.test(editedMessage)) { // check for any badge except elite & ultra
+            c.cancel = true;
+            editedMessage = editedMessage.replace(rgxBadges, (substring) => { // get the matching badge
+                // take the badge, turn it into a number, subtract 0x10 from that number to make it a short badge, then turn it back into a string
+                return String.fromCharCode(substring.charCodeAt(0) - 0x10);
+            });
         }
     }
 
     if(c.cancel)
-        clientMessage(editedMessage);
+        clientMessage(editedMessage.trim()); // if the message was changed, cancel the source message and resend the edited one
 });
