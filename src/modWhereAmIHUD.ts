@@ -8,7 +8,7 @@ import { notOnGalaxite } from "./exports";
 let whereAmIHUD = new TextModule(
     "whereAmIHUD",
     "WhereAmIHUD",
-    "Automatically runs /whereami on every server join, and shows selected details",
+    "Automatically runs /whereami on every server join, and shows selected details as a module",
     KeyCode.None,
 );
 let optionHideResponse = whereAmIHUD.addBoolSetting(

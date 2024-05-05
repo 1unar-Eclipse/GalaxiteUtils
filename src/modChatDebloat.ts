@@ -18,7 +18,7 @@ import { notOnGalaxite } from "./exports";
 let chatDebloat = new Module(
     "chatDebloat",
     "Chat Debloat",
-    "Hides some spammy chat messages, with the added capability to move invisibility to its own module",
+    "Hides some spammy chat messages",
     KeyCode.None,
 );
 let optionHideJoins = chatDebloat.addBoolSetting(
