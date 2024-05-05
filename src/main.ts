@@ -9,7 +9,7 @@ import { debug, notOnGalaxite } from "./exports";
 
 // Import other modules
 
-// let modAutoGG = require("modAutoGG");
+let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
 let modCompactBadges = require("modCompactBadges");

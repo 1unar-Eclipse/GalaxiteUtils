@@ -10,7 +10,7 @@ import { notOnGalaxite } from "./exports";
 let autoGG = new Module(
     "autoGG",
     "GXU: AutoGG",
-    'Automatically says "gg" when a game finishes.',
+    'Automatically says "gg" when a game finishes. (Prop Hunt unsupported due to a Galaxite bug)',
     KeyCode.None
 );
 client.getModuleManager().registerModule(autoGG);
@@ -45,12 +45,12 @@ let ftg = autoGG.addBoolSetting(
     "Fill the Gaps support",
     true
 );
-let ph = autoGG.addBoolSetting(
-    "ph",
-    "Prop Hunt",
-    "Prop Hunt support (experimental)",
-    false
-);
+// let ph = autoGG.addBoolSetting(
+//     "ph",
+//     "Prop Hunt",
+//     "Prop Hunt support (experimental)",
+//     false
+// );
 
 /* Galaxite Game End Messages:
 hr            - "Finished!", "Out of Time!"
@@ -67,11 +67,9 @@ let rgxChRu = /(Is|Are) The \u00a76\u00a7l(Chronos|Rush) Champion(|s)!/;
 let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
 
 function sendGG() {
-    clientMessage("GG should've been sent");
+    clientMessage("GG should've been sent.");
     game.sendChatMessage("gg");
 }
-
-let phGG: boolean = false;
 
 // All games have a title
 client.on("title", title => {
@@ -84,12 +82,12 @@ client.on("title", title => {
         if(text == "Finished" || text == "Out of Time!")
             sendGG();
     }
-    if(ftg.getValue()) {
-
+    if(ftg.getValue() || cw.getValue()) {
+        if(rgxFtgCw.test(text))
+            sendGG();
     }
-});
-
-// Prop Hunt is immensely scuffed
-client.on("change-dimension", e => {
-    if(notOnGalaxite()) return;
+    if(ch.getValue() || ru.getValue()) {
+        if(rgxChRu.test(text))
+            sendGG();
+    }
 });
