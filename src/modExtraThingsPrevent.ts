@@ -54,7 +54,7 @@ function prevent(button: number): boolean {
     }
     else { // otherwise,
         timePrev = timeCurrent; // update previous click time
-        game.playSoundUI("item.shield.block", 0.5, 0.8); // play a sound effect to indicate the block
+        game.playSoundUI("item.shield.block", 0.25, 0.8); // play a sound effect to indicate the block
         if(optionNotif.getValue()) {
             sendGXUMessage("Click again to confirm using Extra Things"); // show a notif if wanted
         }
