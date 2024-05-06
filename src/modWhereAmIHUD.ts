@@ -261,9 +261,20 @@ function runWhereAmI() {
     }, 5000);
 }
 
+// the change-dimension event fires twice, this works around it
+let changeDimensionBandage = true;
+
 // Send /whereami every time a new server is joined
 client.on("change-dimension", e => {
-    runWhereAmI();
+    // runWhereAmI(); // Uncomment this when the bug is fixed
+
+    if(changeDimensionBandage) { // if the dimension changes an odd number of times, the dimension has actually been changed
+        runWhereAmI();
+        changeDimensionBandage = false;
+    }
+    else { // even, ghost fire
+        changeDimensionBandage = true;
+    }
 });
 client.on("join-game", e => {
     runWhereAmI();

@@ -103,12 +103,20 @@ client.on("title", title => {
     }
 });
 
+let changeDimensionBandage = true; // exact same bandage fix as whereamihud
+
 // prop hunt requires entering the postgame first
 client.on("change-dimension", e => {
     if(sendWhereAmI) {
-        sendWhereAmI = false;
-        game.executeCommand("/whereami");
-        awaitWhereAmI = true;
+        if(changeDimensionBandage) {
+            changeDimensionBandage = false;
+            sendWhereAmI = false;
+            game.executeCommand("/whereami");
+            awaitWhereAmI = true;
+        }
+        else {
+            changeDimensionBandage = true;
+        }
     }
 });
 
