@@ -48,8 +48,8 @@ let ftg = autoGG.addBoolSetting(
 let ph = autoGG.addBoolSetting(
     "ph",
     "Prop Hunt",
-    "Prop Hunt support (experimental)",
-    false
+    "Prop Hunt support",
+    true
 );
 
 /* Galaxite Game End Messages:
