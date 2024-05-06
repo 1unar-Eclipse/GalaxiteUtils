@@ -54,8 +54,9 @@ function prevent(button: number): boolean {
     }
     else { // otherwise,
         timePrev = timeCurrent; // update previous click time
+        game.playSoundUI("item.shield.block", 1, 0.8); // play a sound effect to indicate the block
         if(optionNotif.getValue()) {
-            client.showNotification("Click again to confirm using Extra Things"); // show a notif if wanted
+            clientMessage("\xa78[\xa7tGalaxite\xa7uUtils\xa78]\xa7r Click again to confirm using Extra Things"); // show a notif if wanted
         }
         return true; // cancel it
     }
