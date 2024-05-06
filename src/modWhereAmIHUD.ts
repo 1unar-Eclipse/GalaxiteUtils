@@ -318,10 +318,10 @@ client.on("receive-chat", msg => {
         [serverUUID, podName, serverName, commitID, shulkerID, region, privacy] = entries; // Store the entries to cache
         parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
 
-        if(optionHideResponse.getValue()) { // if the user chooses to hide the response
-            if(whereAmISent) { // if the plugin has already sent /whereami
+        if(whereAmISent) {
+            whereAmISent = false;
+            if(optionHideResponse.getValue()) {
                 msg.cancel = true;
-                whereAmISent = false;
             }
         }
     }
