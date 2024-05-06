@@ -10,7 +10,7 @@ import { notOnGalaxite } from "./exports";
 let autoGG = new Module(
     "autoGG",
     "GXU: AutoGG",
-    'Automatically says "gg" when a game finishes. (Prop Hunt currently unsupported)',
+    'Automatically says "gg" when a game finishes.',
     KeyCode.None
 );
 client.getModuleManager().registerModule(autoGG);
@@ -45,12 +45,12 @@ let ftg = autoGG.addBoolSetting(
     "Fill the Gaps support",
     true
 );
-// let ph = autoGG.addBoolSetting(
-//     "ph",
-//     "Prop Hunt",
-//     "Prop Hunt support (experimental)",
-//     false
-// );
+let ph = autoGG.addBoolSetting(
+    "ph",
+    "Prop Hunt",
+    "Prop Hunt support (experimental)",
+    false
+);
 
 /* Galaxite Game End Messages:
 hr            - "Finished!", "Out of Time!"
@@ -71,6 +71,9 @@ function sendGG() {
     game.sendChatMessage("gg");
 }
 
+let sendWhereAmI: boolean = false,
+    awaitWhereAmI: boolean = false;
+
 // All games have a title
 client.on("title", title => {
     if(notOnGalaxite()) return;
@@ -78,6 +81,7 @@ client.on("title", title => {
 
     let text = title.text; // cache title
 
+    // gg conditions
     if(hr.getValue()) {
         if(text == "Finished" || text == "Out of Time!")
             sendGG();
@@ -89,5 +93,32 @@ client.on("title", title => {
     if(ch.getValue() || ru.getValue()) {
         if(rgxChRu.test(text))
             sendGG();
+    }
+
+    // prop hunt
+    if(ph.getValue()) {
+        if(rgxPh.test(text)) {
+            sendWhereAmI = true;
+        }
+    }
+});
+
+// prop hunt requires entering the postgame first
+client.on("change-dimension", e => {
+    if(sendWhereAmI) {
+        sendWhereAmI = false;
+        game.executeCommand("/whereami");
+        awaitWhereAmI = true;
+    }
+});
+
+// take in a whereami to confirm 
+client.on("receive-chat", msg => {
+    if(awaitWhereAmI) {
+        if(msg.message.includes("ServerUUID: ") && msg.message.includes("\n")) { // if message actually is a whereami response
+            awaitWhereAmI = false;
+            if(msg.message.includes("PropHunt"))
+                game.sendChatMessage("gg"); // gg
+        }
     }
 });

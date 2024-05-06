@@ -47,6 +47,7 @@ client.on("receive-chat", msg => {
 
     // cache message for ease of reference
     let message = msg.message;
+
     if(message.startsWith("\ue0b9") && optionHideNotices.getValue()) { // notices
         msg.cancel = true;
     }
