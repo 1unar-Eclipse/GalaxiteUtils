@@ -1,7 +1,7 @@
 // Extra Things Prevent: Makes you need to click twice to use Extra Things.
 // TO-DO: Add a cooldown to the notification
 
-import { notOnGalaxite } from "./exports";
+import { notOnGalaxite, sendGXUMessage } from "./exports";
 
 // initialization
 let extraThingsPrevent = new Module(
@@ -54,9 +54,9 @@ function prevent(button: number): boolean {
     }
     else { // otherwise,
         timePrev = timeCurrent; // update previous click time
-        game.playSoundUI("item.shield.block", 1, 0.8); // play a sound effect to indicate the block
+        game.playSoundUI("item.shield.block", 0.5, 0.8); // play a sound effect to indicate the block
         if(optionNotif.getValue()) {
-            clientMessage("\xa78[\xa7tGalaxite\xa7uUtils\xa78]\xa7r Click again to confirm using Extra Things"); // show a notif if wanted
+            sendGXUMessage("Click again to confirm using Extra Things"); // show a notif if wanted
         }
         return true; // cancel it
     }
