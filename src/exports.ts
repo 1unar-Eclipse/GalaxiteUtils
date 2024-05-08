@@ -11,11 +11,6 @@ export function notOnGalaxite(): boolean {
 }
 
 /**
- * Debug mode
- */
-export let debug: boolean = true;
-
-/**
  * Sends a formatted message to chat.
  * @param message The message to use.
  */
