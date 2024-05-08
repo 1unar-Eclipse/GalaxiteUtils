@@ -32,10 +32,11 @@ let optionNotif = extraThingsPrevent.addBoolSetting(
 // the actual function
 let timePrev: number = 0; // the first click will always be cancelled, might as well make it all use the same code
 let timeCurrent: number;
-function prevent(button: number): boolean {
+function prevent(button: number, down: boolean): boolean {
     // return cases
     if(notOnGalaxite()) return false; // are you on galaxite
     if(!extraThingsPrevent.isEnabled()) return false; // is the module enabled
+    if(!down) return false;
     if(!game.getLocalPlayer()) return false; // are you in a game
     if(game.getLocalPlayer()!.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
     if(game.isInUI()) return false; // this may have issues. if necessary use game.getScreen()
@@ -64,8 +65,8 @@ function prevent(button: number): boolean {
 
 // listen for potential inputs
 client.on("key-press", e => {
-    e.cancel = prevent(e.keyCode);
+    e.cancel = prevent(e.keyCode, e.isDown);
 });
 client.on("click", e => {
-    e.cancel = prevent(e.button);
+    e.cancel = prevent(e.button, e.isDown);
 });
