@@ -15,7 +15,7 @@ export function notOnGalaxite(): boolean {
  * @param message The message to use.
  */
 export function sendGXUMessage(message: string) {
-    clientMessage("\xa78[\xa7tGalaxite\xa7uUtils\xa78]\xa7r ${message}");
+    clientMessage(`\xa78[\xa7tGalaxite\xa7uUtils\xa78]\xa7r ${message}`);
 }
 
 // module.exports = notOnGalaxite;
