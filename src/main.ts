@@ -15,7 +15,6 @@ let modChatDebloat = require("modChatDebloat");
 let modCompactBadges = require("modCompactBadges");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modExtraThingsPrevent = require("modExtraThingsPrevent");
-// let modInvisibleIndicator = require("modInvisibleIndicator"); // Galaxite removed a lot of invisibility cues
 // let modKitUI = require("modKitUI");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
