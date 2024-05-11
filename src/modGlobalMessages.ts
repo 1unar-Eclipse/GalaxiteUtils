@@ -49,7 +49,7 @@ client.on("join-game", e => {
     }, 2000);
 });
 
-client.on("key-press", e => {
+client.on("key-press", e => { // debug function comment this for release
     if(!e.isDown) return;
     if(e.keyCode == KeyCode.K)
         sendGXUMessage(getSplash());
@@ -67,7 +67,6 @@ let gxuSplashes = [
     ":blameseb:",
     ":blamecallun:",
     ":blamealex:",
-    "Less spammy than hub messages!",
     "GalaxiteUtils active!",
     "HiveUtils active..?",
     "CubeCraftUtils active..?",
@@ -90,7 +89,6 @@ let gxuSplashes = [
     "Controller isn't a bad input method y'all just don't know how to use steam input",
     "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
     "252+ SpA Choice Specs Beads of Ruin Chi-Yu Overheat vs. 0 HP / 0 SpD Sniper Main in Sun: 18120-21316 (12496.5 - 14700.6%) -- guaranteed OHKO",
-    "noqvniuwbvibvioqwavbqoinvcoanvoiadncv",
     "What's a meta, anyway?",
     "Does not help with escaping the Entity",
     "Sonic Snowballs were such a good item Mojang added them officially",
@@ -110,7 +108,16 @@ let gxuSplashes = [
     "!bsr 25f",
     `When \xa76server\xa7r is selected, destroy previously sent splash text and permanently add \xa76double\xa7r its character length to your \xa7bGems\xa7r next login \xa78(Currently \xa7b+${
         Math.round(Math.random() * 10)
-        }\xa78 Gems)\xa7r`
+        }\xa78 Gems)\xa7r`,
+    "Allays are just Orbi stop hiding the truth Mojang",
+    "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
+    `${() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the dephs of javascript. no i do not care
+        let str = ""; // initialize empty string
+        for(let i = 0; i < Math.floor(Math.random() * 10) + 10; i++) { // for 10-20 characters
+            str = str.concat(String.fromCharCode(Math.floor(Math.random() * 26) + 97)); // append a random alphabetical character
+        }
+        return str;
+    }}`
 ];
 function getSplash(): string {
     return gxuSplashes[
