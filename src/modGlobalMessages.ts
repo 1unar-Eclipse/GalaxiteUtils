@@ -49,6 +49,12 @@ client.on("join-game", e => {
     }, 2000);
 });
 
+client.on("key-press", e => {
+    if(!e.isDown) return;
+    if(e.keyCode == KeyCode.K)
+        sendGXUMessage(getSplash());
+})
+
 let gxuSplashes = [
     "Now with more utils!",
     "pve game",
