@@ -111,7 +111,7 @@ let gxuSplashes = [
         }\xa78 Gems)\xa7r`,
     "Allays are just Orbi stop hiding the truth Mojang",
     "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
-    `${(() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the dephs of javascript. no i do not care
+    `${(() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the depths of javascript. no i do not care
         let str = ""; // initialize empty string
         for(let i = 0; i < Math.floor(Math.random() * 11) + 10; i++) { // for 10-20 characters (*11 because floor removes the chance for 10 if i were to do *10 [ty seb])
             str = str.concat(String.fromCharCode(Math.floor(Math.random() * 26) + 97)); // append a random alphabetical character
