@@ -101,7 +101,7 @@ let gxuSplashes = [
     "d-d-a g",
     "Woomy!",
     "amogus",
-    'client.on("join-game", e => { clientMessage("This is valid Latite plugin code") });',
+    'client.on("join-game", e => { clientMessage("This is valid Latite plugin code"); });',
     "5D Parkour Builders with Multiverse Time Travel",
     "There is 1 tester and it is myself",
     "Trans rights!",
