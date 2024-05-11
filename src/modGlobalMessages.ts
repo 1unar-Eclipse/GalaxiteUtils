@@ -112,11 +112,28 @@ let gxuSplashes = [
     "Allays are just Orbi stop hiding the truth Mojang",
     "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
     `${(() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the depths of javascript. no i do not care
+        let keysmashes = [
+            "ouewnbv9uwebv9uwbngv",
+            "opiqwhnvoicsnvkwgw890fghuison",
+            "lksjddflkajdflkjdflkjsldfkjls",
+            "nzxkivcnjpoignungvpoinvano",
+            "q0oifnqovinovnqovnqovnqo",
+            "e",
+            "wwdeuubdefdqzukjkjyjadhwflr",
+            "estmegelbbuupbtewngsaiuen",
+            "wkjgqgyfwxgufmasxncriomncqoyx"
+        ];
+        return keysmashes[
+            Math.floor(Math.random() * keysmashes.length)
+        ];
+
+        /* This code could probably generate some bad words by accident. Don't want to take the risk even if this is technically more pure
         let str = ""; // initialize empty string
-        for(let i = 0; i < Math.floor(Math.random() * 11) + 10; i++) { // for 10-20 characters (*11 because floor removes the chance for 10 if i were to do *10 [ty seb])
+        for(let i = 0; i < Math.floor(Math.random() * 21) + 20; i++) { // for 10-20 characters (*11 because floor removes the chance for 10 if i were to do *10 [ty seb])
             str = str.concat(String.fromCharCode(Math.floor(Math.random() * 26) + 97)); // append a random alphabetical character
         }
         return str;
+        */
     })()}` // last parentheses make this run (ty melody)
 ];
 function getSplash(): string {
