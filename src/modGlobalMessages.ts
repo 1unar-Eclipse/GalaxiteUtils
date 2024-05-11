@@ -86,7 +86,6 @@ let gxuSplashes = [
     "Sends /whereami!",
     "if notOnGalaxite() return;",
     "Hundreds of lines of code just to store a command on screen smh just code better",
-    "galaxite season 9 or hollow knight silksong",
     "PC-exclusive!",
     "Controller isn't a bad input method y'all just don't know how to use steam input",
     "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
