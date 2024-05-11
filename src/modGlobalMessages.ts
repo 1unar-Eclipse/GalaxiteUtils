@@ -34,7 +34,7 @@ client.on("join-game", e => {
             let githubInterpretation = util.bufferToString(githubRaw.body);
             let onlineJson = JSON.parse(githubInterpretation);
             if(onlineJson.version != plugin.version) {
-                sendGXUMessage("A GalaxiteUtils update is available! Run .plugin install GalaxiteUtils and relaunch the client to update.")
+                sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l.plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
             }
         }
     }, 5000);

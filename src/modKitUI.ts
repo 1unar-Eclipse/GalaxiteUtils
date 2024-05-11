@@ -10,3 +10,10 @@ Kit PvP: Icon + kit name
 */
 
 // import { notOnGalaxite } from "./exports";
+
+/* Cues:
+- Chronos: 
+- Chronos (Random Perk): 
+- Hyper Racers: \uE0BD \xA7a\xA7lEngine Equipped - \xA7r\xA7lEngine Name:
+- Kit PvP: 
+*/

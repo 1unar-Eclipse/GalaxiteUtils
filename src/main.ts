@@ -2,13 +2,13 @@
 // i learned this language with freecodecamp, miniscule c#/python knowledge, and looking at the script examples lol
 
 import { notOnGalaxite } from "./exports";
+const fs = require("fs");
 
 // Main file for non-module settings (currently unused).
 
 // import { notOnGalaxite } from "./exports";
 
 // Import other modules
-
 let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
