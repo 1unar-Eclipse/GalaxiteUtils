@@ -29,8 +29,8 @@ client.on("join-game", e => {
         }
 
         // updater notifications (i do not want this to be an option)
-        let githubRaw = http.get("https://raw.githubusercontent.com/LatiteScripting/Scripts/master/Plugins/GalaxiteUtils/plugin.json");
-        if(githubRaw.statusCode == 200) {
+        let githubRaw = http.get("https://raw.githubusercontent.com/LatiteScripting/Scripts/master/Plugins/GalaxiteUtils/plugin.json", {});
+        if(githubRaw.statusCode == 200) { // if github sent a response
             let githubInterpretation = util.bufferToString(githubRaw.body);
             let onlineJson = JSON.parse(githubInterpretation);
             if(onlineJson.version != plugin.version) {
@@ -49,5 +49,5 @@ client.on("key-press", e => { // debug function comment this for release
 function getSplash(): string {
     return gxuSplashes[
         Math.floor(Math.random() * gxuSplashes.length)
-    ]
+    ];
 }

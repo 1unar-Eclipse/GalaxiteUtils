@@ -102,3 +102,7 @@ export let gxuSplashes = [
         */
     })()}` // last parentheses make this run (ty melody)
 ];
+
+export let patchNotes = new Map([
+    ["0.3.0", ""],
+]);
