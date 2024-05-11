@@ -109,7 +109,7 @@ let gxuSplashes = [
     "727!!!!!!! 727!! When you see it!!!!!!!",
     "O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA",
     "!bsr 25f",
-    "When \xa76server\xa7r is selected, destroy previously sent splash text and permanently add \xa76double\xa7r its character length to your \xa7bGems\xa7r next login \xa78(Currently \xa7b+0\xa78 Gems)\xa7r"
+    `When \xa76server\xa7r is selected, destroy previously sent splash text and permanently add \xa76double\xa7r its character length to your \xa7bGems\xa7r next login \xa78(Currently \xa7b+${Math.round(Math.random() * 10)}\xa78 Gems)\xa7r`
 ];
 function getSplash(): string {
     return gxuSplashes[
