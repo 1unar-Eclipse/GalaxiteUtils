@@ -115,12 +115,18 @@ export let patchNotes = new Map([
         "- Added splash texts to confirm that the plugin is active (can be toggled using the new Global Messages module)\n" +
         "- Added notifications when an update is available\n" +
         "- Added patch note notifications like seen here\n" +
-        "- New module: Attempt Counter (for Parkour Builders)\n" +
-        "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
         '- Chat Debloat: Added options to remove the "Welcome to Galaxite" and "You are now (in)visible messages\n' +
-        "- WhereAmIHUD: ParkourUUID now has its own settings\n" +
+        "- WhereAmIHUD: ParkourUUID now has its own settings and is positioned above developer fields\n" +
+        "- WhereAmIHUD: If Hide Response is enabled, all /whereami responses will now be hidden (this fixes some issues with rapid server transfers)\n" +
+        "  - 0.4.0 will add a new way of handling sending /whereami commands that \xa7oshould\xa7r make this not happen as often\n" +
         "- Fixed a bug (hopefully) where prestige icons occasionally caused the Compact Badges module to not work as expected\n" +
-        "- Fixed WhereAmIHUD not properly handling ParkourUUID"
+        "- Fixed WhereAmIHUD not properly handling ParkourUUID\n" +
+        "- Various backend changes\n\n" +
+        "Remember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils"
     ],
     ["0.3.1", "REMINDER UPDATE THIS LATER"],
+    ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
+        "- New module: Attempt Counter (for Parkour Builders)\n" +
+        "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n"
+    ]
 ]);
