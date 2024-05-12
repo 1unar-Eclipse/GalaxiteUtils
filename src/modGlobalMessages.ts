@@ -61,11 +61,11 @@ client.on("join-game", e => {
     }, 5000);
 });
 
-client.on("key-press", e => { // debug function comment this for release
-    if(!e.isDown) return;
-    if(e.keyCode == KeyCode.K)
-        sendGXUMessage(getSplash());
-});
+// client.on("key-press", e => { // debug function comment this for release
+//     if(!e.isDown) return;
+//     if(e.keyCode == KeyCode.K)
+//         sendGXUMessage(getSplash());
+// });
 
 function getSplash(): string {
     return gxuSplashes[
