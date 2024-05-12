@@ -116,7 +116,8 @@ export let patchNotes = new Map([
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
         '- Chat Debloat: Added options to remove the "Welcome to Galaxite" and "You are now (in)visible messages\n' +
         "- WhereAmIHUD: ParkourUUID now has its own settings\n" +
-        "- Fixed a bug where prestige icons occasionally caused the Compact Badges module to not work as expected"
+        "- Fixed a bug where prestige icons occasionally caused the Compact Badges module to not work as expected\n" +
+        "- Fixed WhereAmIHUD not properly handling ParkourUUID"
     ],
     ["0.3.1", "REMINDER UPDATE THIS LATER"],
 ]);

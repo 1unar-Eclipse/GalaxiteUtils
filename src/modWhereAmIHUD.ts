@@ -139,8 +139,8 @@ client.on("receive-chat", msg => {
         let formattedMessage = msg.message.replace("\u00bc\u0020", ""); // cache message
         let entries = formattedMessage.split("\n\u00a7c"); // Split up the response at this substring, in the process splitting by line
         for(let i = 0; i < entries.length; i++) { // For each entry:
-            clientMessage(entries[i]);
             entries[i] = entries[i].split(" \u00a7a")[1]; // Save only the part of the response after the category name
+            clientMessage(entries[i]);
         }
 
         // serverUUID = entries[0];
@@ -152,13 +152,14 @@ client.on("receive-chat", msg => {
         // privacy = entries[6];
 
         [serverUUID, podName, serverName, commitID, shulkerID, region, privacy] = entries; // Store the entries to cache
-        parkourUUID = (entries.length > 7) ? entries[6] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
+        parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
+        clientMessage(parkourUUID);
 
         if(whereAmISent) {
             whereAmISent = false;
-            if(w.optionHideResponse.getValue()) {
-                msg.cancel = true;
-            }
+        }
+        if(w.optionHideResponse.getValue()) {
+            msg.cancel = true;
         }
     }
 });
