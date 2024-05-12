@@ -151,7 +151,7 @@ client.on("receive-chat", msg => {
         // privacy = entries[6];
 
         [serverUUID, podName, serverName, commitID, shulkerID, region, privacy] = entries; // Store the entries to cache
-        parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
+        parkourUUID = (entries.length > 7) ? entries[6] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
 
         if(whereAmISent) {
             whereAmISent = false;
