@@ -184,6 +184,14 @@ w.whereAmIHUD.on("text", () => {
         render = render.concat(w.optionRegionPrefix.getValue(), (region.toUpperCase()), w.optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
     if(w.optionPrivacy.getValue())
         render = render.concat(w.optionPrivacyPrefix.getValue(), privacy, w.optionPrivacySuffix.getValue(), NL);
+    if(w.optionParkourUUID.getValue()) {
+        render = render.concat(
+            (parkourUUID != "")
+            ? (
+                w.optionParkourUUIDPrefix.getValue(), parkourUUID, w.optionParkourUUIDSuffix.getValue(), NL
+            ) : ""
+        );
+    }
     if(w.optionDevFields.getValue()) {
         render = render.concat(
             w.optionServerUUIDPrefix.getValue(), serverUUID, w.optionServerUUIDSuffix.getValue(),
@@ -192,13 +200,8 @@ w.whereAmIHUD.on("text", () => {
             NL,
             w.optionCommitIDPrefix.getValue(), commitID, w.optionCommitIDSuffix.getValue(),
             NL,
-            w.optionShulkerIDPrefix.getValue(), shulkerID, w.optionShulkerIDSuffix.getValue(), (
-                (parkourUUID != "")
-                ? (
-                    NL + w.optionParkourUUIDPrefix.getValue(), parkourUUID, w.optionParkourUUIDSuffix.getValue()  // NL in here to reduce potential trim
-                ) : ""
-            )
-        ); // no final NL since that's always the last data point
+            w.optionShulkerIDPrefix.getValue(), shulkerID, w.optionShulkerIDSuffix.getValue(),
+        );
     }
 
     // remove possible trailing \n
