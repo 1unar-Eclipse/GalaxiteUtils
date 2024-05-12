@@ -38,7 +38,7 @@ export let gxuSplashes = [
     "CubeCraftUtils active..?",
     ":3",
     "is ACTIVE",
-    "Made with 95% pure TypeScript!",
+    "Made with 98.9% pure TypeScript!",
     "These aren't funny aren't they",
     "Open-source!",
     "Now with patch notes!",
