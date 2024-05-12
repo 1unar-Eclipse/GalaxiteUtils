@@ -151,8 +151,7 @@ client.on("receive-chat", msg => {
         // privacy = entries[6];
 
         [serverUUID, podName, serverName, commitID, shulkerID, region, privacy] = entries; // Store the entries to cache
-        parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it (is this needed?)
-        clientMessage(parkourUUID);
+        parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it
 
         if(whereAmISent) {
             whereAmISent = false;
@@ -208,7 +207,7 @@ w.whereAmIHUD.on("text", () => {
 });
 
 function parkourUUIDString() {
-    if(w.optionParkourUUID.getValue())
+    if(w.optionParkourUUID.getValue() && parkourUUID.trim() != "")
         return(w.optionParkourUUIDPrefix.getValue() + parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL);
     else
         return "";
