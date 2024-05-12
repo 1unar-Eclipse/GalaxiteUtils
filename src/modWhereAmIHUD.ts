@@ -140,7 +140,6 @@ client.on("receive-chat", msg => {
         let entries = formattedMessage.split("\n\u00a7c"); // Split up the response at this substring, in the process splitting by line
         for(let i = 0; i < entries.length; i++) { // For each entry:
             entries[i] = entries[i].split(" \u00a7a")[1]; // Save only the part of the response after the category name
-            clientMessage(entries[i]);
         }
 
         // serverUUID = entries[0];
@@ -187,12 +186,7 @@ w.whereAmIHUD.on("text", () => {
     if(w.optionPrivacy.getValue())
         render = render.concat(w.optionPrivacyPrefix.getValue(), privacy, w.optionPrivacySuffix.getValue(), NL);
     if(w.optionParkourUUID.getValue()) {
-        render = render.concat(
-            (parkourUUID.trim() != "")
-            ? (
-                w.optionParkourUUIDPrefix.getValue(), parkourUUID, w.optionParkourUUIDSuffix.getValue(), NL
-            ) : ""
-        );
+        render = render.concat(parkourUUIDString()); // why is this necessary
     }
     if(w.optionDevFields.getValue()) {
         render = render.concat(
@@ -212,3 +206,10 @@ w.whereAmIHUD.on("text", () => {
     // return finalized text
     return render;
 });
+
+function parkourUUIDString() {
+    if(w.optionParkourUUID.getValue())
+        return(w.optionParkourUUIDPrefix.getValue() + parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL);
+    else
+        return "";
+}
