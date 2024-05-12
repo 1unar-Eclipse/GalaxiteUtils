@@ -8,7 +8,7 @@ const fs = require("filesystem");
 let modGlobalMessages = new Module(
     "globalmessages",
     "GXU: Global Messages",
-    "Configures what GalaxiteUtils-related messages should be sent",
+    "Configures what GalaxiteUtils-related messages should be sent. (The toggle state of this module is useless)",
     KeyCode.None
 );
 let optionSplashText = modGlobalMessages.addBoolSetting(
