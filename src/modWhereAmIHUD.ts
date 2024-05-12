@@ -188,7 +188,7 @@ w.whereAmIHUD.on("text", () => {
         render = render.concat(w.optionPrivacyPrefix.getValue(), privacy, w.optionPrivacySuffix.getValue(), NL);
     if(w.optionParkourUUID.getValue()) {
         render = render.concat(
-            (parkourUUID != "")
+            (parkourUUID.trim() != "")
             ? (
                 w.optionParkourUUIDPrefix.getValue(), parkourUUID, w.optionParkourUUIDSuffix.getValue(), NL
             ) : ""
