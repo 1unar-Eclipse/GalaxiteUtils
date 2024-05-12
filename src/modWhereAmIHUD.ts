@@ -184,9 +184,12 @@ w.whereAmIHUD.on("text", () => {
         render = render.concat(w.optionRegionPrefix.getValue(), (region.toUpperCase()), w.optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
     if(w.optionPrivacy.getValue())
         render = render.concat(w.optionPrivacyPrefix.getValue(), privacy, w.optionPrivacySuffix.getValue(), NL);
-    if(w.optionParkourUUID.getValue()) {
-        render = render.concat(parkourUUIDString()); // why is this necessary
-    }
+    if(w.optionParkourUUID.getValue()) 
+        render = render.concat(
+            (w.optionParkourUUID.getValue() && parkourUUID.trim() != "")
+            ? (w.optionParkourUUIDPrefix.getValue() + parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL)
+            : ""
+        );
     if(w.optionDevFields.getValue()) {
         render = render.concat(
             w.optionServerUUIDPrefix.getValue(), serverUUID, w.optionServerUUIDSuffix.getValue(),
@@ -205,10 +208,3 @@ w.whereAmIHUD.on("text", () => {
     // return finalized text
     return render;
 });
-
-function parkourUUIDString() {
-    if(w.optionParkourUUID.getValue() && parkourUUID.trim() != "")
-        return(w.optionParkourUUIDPrefix.getValue() + parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL);
-    else
-        return "";
-}
