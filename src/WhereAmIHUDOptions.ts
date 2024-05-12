@@ -86,6 +86,28 @@ export let optionPrivacySuffix = whereAmIHUD.addTextSetting(
 );
 optionPrivacySuffix.setCondition("Privacy");
 
+// Parkour UUID
+export let optionParkourUUID = whereAmIHUD.addBoolSetting(
+    "ParkourUUID",
+    "Parkour UUID",
+    "Shows the Parkour UUID field (if in parkour)",
+    true
+);
+export let optionParkourUUIDPrefix = whereAmIHUD.addTextSetting(
+    "ParkourUUIDPrefix",
+    "Prefix (Parkour UUID)",
+    "Text to display before the Parkour UUID entry",
+    "ParkourUUID: "
+);
+optionParkourUUIDPrefix.setCondition("ParkourUUID");
+export let optionParkourUUIDSuffix = whereAmIHUD.addTextSetting(
+    "ParkourUUIDSuffix",
+    "Suffix (Parkour UUID)",
+    "Text to display after the Parkour UUID entry",
+    ""
+);
+optionParkourUUIDSuffix.setCondition("ParkourUUID");
+
 // Dev Fields
 export let optionDevFields = whereAmIHUD.addBoolSetting(
     "DevFields",
@@ -157,28 +179,5 @@ export let optionShulkerIDSuffix = whereAmIHUD.addTextSetting(
     ""
 );
 optionShulkerIDSuffix.setCondition("DevFields");
-
-// Parkour UUID
-export let optionParkourUUID = whereAmIHUD.addBoolSetting(
-    "ParkourUUID",
-    "Parkour UUID",
-    "Shows the Parkour UUID field (if in parkour)",
-    true
-);
-
-export let optionParkourUUIDPrefix = whereAmIHUD.addTextSetting(
-    "ParkourUUIDPrefix",
-    "Prefix (Parkour UUID)",
-    "Text to display before the Parkour UUID entry",
-    "ParkourUUID: "
-);
-optionParkourUUIDPrefix.setCondition("ParkourUUID");
-export let optionParkourUUIDSuffix = whereAmIHUD.addTextSetting(
-    "ParkourUUIDSuffix",
-    "Suffix (Parkour UUID)",
-    "Text to display after the Parkour UUID entry",
-    ""
-);
-optionParkourUUIDSuffix.setCondition("ParkourUUID");
 
 client.getModuleManager().registerModule(whereAmIHUD); // Putting this after settings makes the custom settings appear first
