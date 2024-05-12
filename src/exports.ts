@@ -107,7 +107,7 @@ export let gxuSplashes = [
 
 export let patchNotes = new Map([
     ["0.2.3", "How?"],
-    ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xa7lWake up.\xa7r"], // for those looking at the code, i used 0.2.4 as a placeholder for 0.3.0
+    ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xa7lWake up.\xa7r"], // for those looking at the code, i used 0.2.4 as a placeholder while making 0.3.0
     ["0.3.0", "GalaxiteUtils has been updated to v0.3.0!\n" +
         "- Added splash texts to confirm that the plugin is active (can be toggled using the new Global Messages module)\n" +
         "- Added notifications when an update is available\n" +
