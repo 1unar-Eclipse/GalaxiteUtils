@@ -100,17 +100,23 @@ export let gxuSplashes = [
         }
         return str;
         */
-    })()}` // last parentheses make this run (ty melody)
+    })()}`, // last parentheses make this run (ty melody)
+    "scp-6113 my beloved",
+    "scp-113 my beloved",
 ];
 
 export let patchNotes = new Map([
-    ["0.3.0", "GalaxiteUtils has been updated to 0.3.0!\n" +
+    ["0.2.3", "How?"],
+    ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xa7lWake up.\xa7r"], // for those looking at the code, i used 0.2.4 as a placeholder for 0.3.0
+    ["0.3.0", "GalaxiteUtils has been updated to v0.3.0!\n" +
         "- Added splash texts to confirm that the plugin is active (can be toggled using the new Global Messages module)\n" +
         "- Added notifications when an update is available\n" +
         "- Added patch note notifications like seen here\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
-        '- Chat Debloat can now remove the "Welcome to Galaxite" and "You are now (in)visible messages\n' +
+        '- Chat Debloat: Added options to remove the "Welcome to Galaxite" and "You are now (in)visible messages\n' +
+        "- WhereAmIHUD: ParkourUUID now has its own settings\n" +
         "- Fixed a bug where prestige icons occasionally caused the Compact Badges module to not work as expected"
     ],
+    ["0.3.1", "REMINDER UPDATE THIS LATER"],
 ]);

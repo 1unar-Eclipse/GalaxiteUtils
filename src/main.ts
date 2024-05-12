@@ -2,7 +2,6 @@
 // i learned this language with freecodecamp, miniscule c#/python knowledge, and looking at the script examples lol
 
 import { notOnGalaxite } from "./exports";
-const fs = require("fs");
 
 // Main file for non-module settings (currently unused).
 
