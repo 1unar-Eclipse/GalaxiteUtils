@@ -13,8 +13,8 @@ let compactBadges = new Module(
 let optionRemoveBadges = compactBadges.addBoolSetting(
     "removebadges",
     "Remove Player Badges",
-    "Completely hides all non-staff badges (Player, Elite, etc.).\n\nIf this is disabled, all badges will be compacted instead.",
-    // Hides Player, Ultra, Elite, Elite + Ultra, VIP, and Influencer
+    "Completely hides all non-staff badges (Player, ELITE, etc.).\n\nIf this is disabled, all badges will be compacted instead.",
+    // Hides Player, ULTRA, ELITE, ELITE + ULTRA, VIP, and Influencer
     false
 );
 let optionHidePrestigeIcons = compactBadges.addBoolSetting(
@@ -25,8 +25,8 @@ let optionHidePrestigeIcons = compactBadges.addBoolSetting(
 )
 let optionComboToggle = compactBadges.addBoolSetting(
     "combotoggle",
-    "Combination Badge Acts as Elite",
-    "If this setting is enabled, players with the combination Elite & Ultra badge appear as Elite. If disabled, Ultra.",
+    "Combination Badge Acts as ELITE",
+    "If this setting is enabled, players with the combination ELITE & ULTRA badge appear as ELITE. If disabled, ULTRA.",
     true
 );
 client.getModuleManager().registerModule(compactBadges);

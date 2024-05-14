@@ -6,9 +6,18 @@
 * Returns `true` if the player is not on Galaxite; `false` if they are.
 */
 export function notOnGalaxite(): boolean {
-    // return true if you are on anything BUT galaxite. this way i can just do `if(notOnGalaxite()) return;` on every client.on()
+    // return true if you are on anything BUT Galaxite. this way I can just do `if(notOnGalaxite()) return;` on every client.on()
     return (game.getFeaturedServer() != "Galaxite");
 }
+/**
+* Returns `true` if the player is a Galaxite nerd; `false` if they aren't.
+*/
+var galaxiteNerds = ["ThatJadon 26","Eclipse2421","AJckk","GalaxiteAJ","A2K Delta133","SpinaRosam"]
+export function nerdRadar(): boolean {
+    // If the person is a Galaxite nerd (a wiki team member), return as true
+    return (game.getLocalPlayer() == "galaxiteNerds");
+}
+
 
 /**
  * Sends a formatted message to chat.
@@ -36,6 +45,7 @@ export let gxuSplashes = [
     "GalaxiteUtils active!",
     "HiveUtils active..?",
     "CubeCraftUtils active..?",
+    "PixelParadiseUtils disactive.",
     ":3",
     "is ACTIVE",
     "Made with 98.9% pure TypeScript!",

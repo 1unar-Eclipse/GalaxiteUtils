@@ -4,7 +4,7 @@
 - Significant overhauls (I'll need to redo this whole thing tbh)
 */
 
-import { notOnGalaxite } from "./exports";
+import { notOnGalaxite, nerdRadar } from "./exports";
 
 // Module setup
 let autoGG = new Module(
@@ -68,7 +68,11 @@ let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
 
 function sendGG() {
     clientMessage("GG should've been sent.");
+    if (nerdRadar==true){
+        game.sendChatMessage("Good game!");
+    } else {
     game.sendChatMessage("gg");
+    }
 }
 
 let sendWhereAmI: boolean = false,
