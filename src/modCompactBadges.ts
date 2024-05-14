@@ -56,7 +56,7 @@ client.on("receive-chat", c => {
     if(optionHidePrestigeIcons.getValue()) { // if the user wants to hide prestige icons:
         if(rgxPrestiges.test(editedMessage)) { // check if message has a prestige icon
             c.cancel = true;
-            editedMessage = editedMessage.replace(rgxPlayerBadges, ""); // delete the prestige icon
+            editedMessage = editedMessage.replace(rgxPrestiges, ""); // delete the prestige icon
         }
     }
 
