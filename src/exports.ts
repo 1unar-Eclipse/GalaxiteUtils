@@ -37,7 +37,7 @@ export function sendGXUMessage(message: string) {
 /**
  * A collection of splash texts.
  */
-export let gxuSplashes = [
+export const gxuSplashes = [
     "Now with more utils!",
     "pve game",
     "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
@@ -126,7 +126,7 @@ export let gxuSplashes = [
 /**
  * A map between the updated-to version and the changes included in that version.
  */
-export let patchNotes = new Map([
+export const patchNotes = new Map([
     ["0.2.3", "How?"],
     ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xa7lWake up.\xa7r"], // for those looking at the code, i used 0.2.4 as a placeholder while making 0.3.0
     ["0.3.0", "GalaxiteUtils has been updated to v0.3.0!\n" +
@@ -143,7 +143,10 @@ export let patchNotes = new Map([
         "Remember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)" // lol
     ],
-    ["0.3.1", "REMINDER UPDATE THIS LATER"],
+    ["0.3.1", "GalaxiteUtils has been updated to v0.3.1!\n" +
+        "- Added specific nerd functionality for specific people. If you don't know what this means, don't worry about it. If you are affected by this, an option for it will appear after this functionality is used once and the game has been relaunched. (by ThatJadon 26)\n" +
+        "- Actually fixed COmpact Badges hiding ranks while the Hide Prestiges option was enabled"
+    ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n"

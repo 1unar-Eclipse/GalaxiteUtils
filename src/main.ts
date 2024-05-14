@@ -5,8 +5,6 @@ import { notOnGalaxite } from "./exports";
 
 // Main file for non-module settings (currently unused).
 
-// import { notOnGalaxite } from "./exports";
-
 // Import other modules
 let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
