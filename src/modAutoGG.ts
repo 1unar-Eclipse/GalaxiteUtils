@@ -54,27 +54,26 @@ let ph = autoGG.addBoolSetting(
 
 /* Galaxite Game End Messages:
 hr            - "Finished!", "Out of Time!"
-ftg           - "\u00a7l<team> Team\u00a7r\u00a7a won the game!"
-ch (subtitle) - "Is The \u00a76\u00a7lChronos Champion!", "Are The \u00a76\u00a7lChronos Champions!"
-ru (subtitle) - "Is The \u00a76\u00a7lRush Champion!", "Are The \u00a76\u00a7lRush Champions!"
-cw            - "\u00a7l<team> Team\u00a7r\u00a7a won the game!"
-ph            - "\u00a7bHiders\u00a7r\u00a7f Win", "\u00a7eSeekers\u00a7r\u00a7f Win"
+ftg           - "\xA7l<team> Team\xA7r\xA7a won the game!"
+ch (subtitle) - "Is The \xA76\xA7lChronos Champion!", "Are The \xA76\xA7lChronos Champions!"
+ru (subtitle) - "Is The \xA76\xA7lRush Champion!", "Are The \xA76\xA7lRush Champions!"
+cw            - "\xA7l<team> Team\xA7r\xA7a won the game!"
+ph            - "\xA7bHiders\xA7r\xA7f Win", "\xA7eSeekers\xA7r\xA7f Win"
 No other modes have gg rewards */
 
 // cache regex
-let rgxFtgCw = /Team\u00a7r\u00a7a won the game!/; // does it work like this?
-let rgxChRu = /(Is|Are) The \u00a76\u00a7l(Chronos|Rush) Champion(|s)!/;
-let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
+let rgxFtgCw = /Team\xA7r\xA7a won the game!/; // does it work like this?
+let rgxChRu = /(Is|Are) The \xA76\xA7l(Chronos|Rush) Champion(|s)!/;
+let rgxPh = /\xA7(bHiders|eSeekers)\xA7r\xA7f Win/;
 
 function sendGG() {
     clientMessage("GG should've been sent.");
-    // if(nerdRadar()){
-    //     game.sendChatMessage("Good game!");
-    // }
-    // else {
-    //     game.sendChatMessage("gg");
-    // }
-    game.sendChatMessage("gg"); // sorry jadon
+    if(nerdRadar()) {
+        game.sendChatMessage("Good game!");
+    }
+    else {
+        game.sendChatMessage("gg");
+    }
 }
 
 let sendWhereAmI: boolean = false,
