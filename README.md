@@ -53,5 +53,7 @@ The terminal command `npm run build` in the root folder also works.
 I don't know how to GitHub, if something else should be here please open an issue
 
 ## Credits
-- Mojang, Blockception, and the Latite dev team, obviously
+- Mojang, Blockception, and the Latite dev team
+- Seb for motivation and helping with some cues
+- Jadon for some very specific nerd functionality
 - MelodicCatgirl for the Chronos perk images as seen in her tier list
