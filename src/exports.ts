@@ -144,8 +144,11 @@ export const patchNotes = new Map([
         "(press your chat button to view full patch notes)" // lol
     ],
     ["0.3.1", "GalaxiteUtils has been updated to v0.3.1!\n" +
-        "- Added specific nerd functionality for specific people. If you don't know what this means, don't worry about it. If you are affected by this, an option for it will appear after this functionality is used once and the game has been relaunched. (by ThatJadon 26)\n" +
-        "- Actually fixed COmpact Badges hiding ranks while the Hide Prestiges option was enabled"
+        "- Actually fixed the Compact Badges module hiding ranks while the Hide Prestiges option was enabled\n" +
+        "- Made some very large backend changes that should make some modules more stable\n" +
+        // "- Added specific nerd functionality for specific people. If you don't know what this means, don't worry about it, you're unaffected. If you are affected by this, an option for it will appear after this functionality is used once and the game has been relaunched. (by ThatJadon 26)\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
     ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +

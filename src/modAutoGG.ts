@@ -68,12 +68,13 @@ let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
 
 function sendGG() {
     clientMessage("GG should've been sent.");
-    if(nerdRadar()){
-        game.sendChatMessage("Good game!"); // hopefully this works
-    }
-    else {
-        game.sendChatMessage("gg");
-    }
+    // if(nerdRadar()){
+    //     game.sendChatMessage("Good game!");
+    // }
+    // else {
+    //     game.sendChatMessage("gg");
+    // }
+    game.sendChatMessage("gg"); // sorry jadon
 }
 
 let sendWhereAmI: boolean = false,
@@ -132,7 +133,7 @@ client.on("receive-chat", msg => {
             msg.cancel = true;
             awaitWhereAmI = false;
             if(msg.message.includes("PropHunt"))
-                game.sendChatMessage("gg"); // gg
+                sendGG(); // gg
         }
     }
 });
