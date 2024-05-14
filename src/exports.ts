@@ -15,7 +15,7 @@ export function notOnGalaxite(): boolean {
 var galaxiteNerds = ["ThatJadon 26","Eclipse2421","AJckk","GalaxiteAJ","A2K Delta133","SpinaRosam"]
 export function nerdRadar(): boolean {
     // If the person is a Galaxite nerd (a wiki team member), return as true
-    return (game.getLocalPlayer() == "galaxiteNerds");
+    return (galaxiteNerds.includes(game.getLocalPlayer()!.getName()));
 }
 
 
