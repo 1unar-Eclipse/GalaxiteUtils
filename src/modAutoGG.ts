@@ -68,10 +68,11 @@ let rgxPh = /\u00a7(bHiders|eSeekers)\u00a7r\u00a7f Win/;
 
 function sendGG() {
     clientMessage("GG should've been sent.");
-    if (nerdRadar==true){
-        game.sendChatMessage("Good game!");
-    } else {
-    game.sendChatMessage("gg");
+    if(nerdRadar()){
+        game.sendChatMessage("Good game!"); // hopefully this works
+    }
+    else {
+        game.sendChatMessage("gg");
     }
 }
 

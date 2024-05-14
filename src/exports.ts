@@ -12,10 +12,17 @@ export function notOnGalaxite(): boolean {
 /**
 * Returns `true` if the player is a Galaxite nerd; `false` if they aren't.
 */
-var galaxiteNerds = ["ThatJadon 26","Eclipse2421","AJckk","GalaxiteAJ","A2K Delta133","SpinaRosam"]
+const galaxiteNerds = [
+    "ThatJadon 26",
+    "Eclipse2421",
+    "AJckk",
+    "GalaxiteAJ",
+    "A2K Delta133",
+    "SpinaRosam"
+];
 export function nerdRadar(): boolean {
     // If the person is a Galaxite nerd (a wiki team member), return as true
-    return (galaxiteNerds.includes(game.getLocalPlayer()!.getName()));
+    return galaxiteNerds.includes(game.getLocalPlayer()!.getName());
 }
 
 
@@ -113,6 +120,7 @@ export let gxuSplashes = [
     })()}`, // last parentheses make this run (ty melody)
     "scp-6113 my beloved",
     "scp-113 my beloved",
+    "If you or a loved one has suffered from vitenout addiction, you may be entitled to financial compensation!",
 ];
 
 /**
