@@ -4,7 +4,8 @@
 - Significant overhauls (I'll need to redo this whole thing tbh)
 */
 
-import { notOnGalaxite, nerdRadar } from "./exports";
+import { notOnGalaxite, nerdRadar, gxuSplashes } from "./exports";
+const fs = require("filesystem");
 
 // Module setup
 let autoGG = new Module(
@@ -51,6 +52,17 @@ let ph = autoGG.addBoolSetting(
     "Prop Hunt support",
     true
 );
+let nerdToggle: Setting;
+let nerdToggleExists = false;
+if(fs.exists("NerdToggle")) {
+    nerdToggleExists = true;
+    nerdToggle = autoGG.addBoolSetting(
+        "nerdtoggle",
+        "Nerd Toggle",
+        'Says the full "Good game!" when saying GG',
+        true
+    );
+}
 
 /* Galaxite Game End Messages:
 hr            - "Finished!", "Out of Time!"
@@ -62,14 +74,18 @@ ph            - "\xA7bHiders\xA7r\xA7f Win", "\xA7eSeekers\xA7r\xA7f Win"
 No other modes have gg rewards */
 
 // cache regex
-let rgxFtgCw = /Team\xA7r\xA7a won the game!/; // does it work like this?
-let rgxChRu = /(Is|Are) The \xA76\xA7l(Chronos|Rush) Champion(|s)!/;
-let rgxPh = /\xA7(bHiders|eSeekers)\xA7r\xA7f Win/;
+const rgxFtgCw = /Team\xA7r\xA7a won the game!/; // does it work like this?
+const rgxChRu = /(Is|Are) The \xA76\xA7l(Chronos|Rush) Champion(|s)!/;
+const rgxPh = /\xA7(bHiders|eSeekers)\xA7r\xA7f Win/;
 
 function sendGG() {
     clientMessage("GG should've been sent.");
-    if(nerdRadar()) {
+    if(nerdRadar() && (nerdToggle.getValue() == null || nerdToggle.getValue())) { // if the sender is wiki team, and either the nerd toggle setting does not exist or is on
         game.sendChatMessage("Good game!");
+
+        if(!fs.exists("NerdToggle")) { // if the nerdtoggle file does not exist
+            fs.write("NerdToggle", util.stringToBuffer(gxuSplashes[Math.floor(Math.random() * gxuSplashes.length)])); // force it to exist and write anything on it really
+        }
     }
     else {
         game.sendChatMessage("gg");
