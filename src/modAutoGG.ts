@@ -4,7 +4,7 @@
 - Significant overhauls (I'll need to redo this whole thing tbh)
 */
 
-import { notOnGalaxite, nerdRadar, gxuSplashes } from "./exports";
+import { notOnGalaxite, nerdRadar, gxuSplashes, sendGXUMessage } from "./exports";
 const fs = require("filesystem");
 
 // Module setup
@@ -53,9 +53,8 @@ let ph = autoGG.addBoolSetting(
     true
 );
 let nerdToggle: Setting;
-let nerdToggleExists = false;
+
 if(fs.exists("NerdToggle")) {
-    nerdToggleExists = true;
     nerdToggle = autoGG.addBoolSetting(
         "nerdtoggle",
         "Nerd Toggle",
@@ -81,7 +80,7 @@ const rgxPh = /\xA7(bHiders|eSeekers)\xA7r\xA7f Win/;
 function sendGG() {
     clientMessage("GG should've been sent.");
     if(nerdRadar() && (nerdToggle.getValue() == null || nerdToggle.getValue())) { // if the sender is wiki team, and either the nerd toggle setting does not exist or is on
-        game.sendChatMessage("Good game!");
+        sendMessage("Good game!");
 
         if(!fs.exists("NerdToggle")) { // if the nerdtoggle file does not exist
             fs.write("NerdToggle", util.stringToBuffer(gxuSplashes[Math.floor(Math.random() * gxuSplashes.length)])); // force it to exist and write anything on it really
@@ -89,6 +88,14 @@ function sendGG() {
     }
     else {
         game.sendChatMessage("gg");
+    }
+}
+
+function sendMessage(message: string) {
+    try {
+        game.sendChatMessage(message)
+    } catch (error) {
+        sendGXUMessage("Error: there is currently no permission to send messages");
     }
 }
 
