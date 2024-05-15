@@ -114,7 +114,8 @@ export const gxuSplashes = [
     "e",
     "wwdeuubdefdqzukjkjyjadhwflr",
     "estmegelbbuupbtewngsaiuen",
-    "wkjgqgyfwxgufmasxncriomncqoyx"
+    "wkjgqgyfwxgufmasxncriomncqoyx",
+    "Remember to update your game from time to time!",
 ];
 
 /**
