@@ -32,11 +32,11 @@ let optionComboToggle = compactBadges.addBoolSetting(
 client.getModuleManager().registerModule(compactBadges);
 
 // respectively: elite & ultra, elite, player, vip, ultra, influencer
-let rgxPlayerBadges = /\uE096|\uE099|\uE09A|\uE09D|\uE09E|\uE09F/;
+let rgxPlayerBadges = /(\uE096|\uE099|\uE09A|\uE09D|\uE09E|\uE09F) /;
 // elite, player, staff, helper, vip, ultra, influencer. combo badge excluded for its own test
-let rgxBadges = /\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F/;
+let rgxBadges = /(\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
 // p1-p5 respectively
-let rgxPrestiges = /\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD/;
+let rgxPrestiges = /(\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD) /;
 // map that converts long badges to short badges
 let badgeMap = new Map([
     ["\uE099", "\uE089"],
