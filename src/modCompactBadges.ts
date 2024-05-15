@@ -39,13 +39,13 @@ let rgxBadges = /(\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
 let rgxPrestiges = /(\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD) /;
 // map that converts long badges to short badges
 let badgeMap = new Map([
-    ["\uE099", "\uE089"], // elite
-    ["\uE09A", "\uE08A"], // player
-    ["\uE09B", "\uE08B"], // staff
-    ["\uE09C", "\uE08C"], // helper
-    ["\uE09D", "\uE08D"], // vip
-    ["\uE09E", "\uE08E"], // ultra
-    ["\uE09F", "\uE08F"], // influencer
+    ["\uE099 ", "\uE089"], // elite
+    ["\uE09A ", "\uE08A"], // player
+    ["\uE09B ", "\uE08B"], // staff
+    ["\uE09C ", "\uE08C"], // helper
+    ["\uE09D ", "\uE08D"], // vip
+    ["\uE09E ", "\uE08E"], // ultra
+    ["\uE09F ", "\uE08F"], // influencer
 ]);
 
 client.on("receive-chat", c => {
