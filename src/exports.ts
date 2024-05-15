@@ -144,8 +144,12 @@ export const patchNotes = new Map([
         "(press your chat button to view full patch notes)" // lol
     ],
     ["0.3.1", "GalaxiteUtils has been updated to v0.3.1!\n" +
+        "- The placeholder message for AutoGG not working is now a GalaxiteUtils message\n" +
+        "- There is no longer a scary error message when AutoGG fails\n" +
         "- Actually fixed the Compact Badges module hiding ranks while the Hide Prestiges option was enabled\n" +
-        "- Added specific nerd functionality for specific people. If you don't know what this means, don't worry about it, you're unaffected. If you are affected by this, an option for it will appear after this functionality is used once and the game has been relaunched. (by ThatJadon 26)\n" +
+        "- Added specific nerd functionality for specific people. (by ThatJadon 26)\n" +
+        "  - If you don't know what this means, don't worry about it, you're unaffected.\n" +
+        "  - If you are affected by this, an option for it will appear after this functionality is used once and the game has been relaunched.\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
