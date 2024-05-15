@@ -52,8 +52,8 @@ let ph = autoGG.addBoolSetting(
     "Prop Hunt support",
     true
 );
-let nerdToggle: Setting;
 
+let nerdToggle: Setting;
 if(fs.exists("NerdToggle")) {
     nerdToggle = autoGG.addBoolSetting(
         "nerdtoggle",
