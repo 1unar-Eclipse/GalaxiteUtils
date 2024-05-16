@@ -1,17 +1,23 @@
-<h1 align="center">GalaxiteUtils</h1>
+<h1 align="center"><b>GalaxiteUtils</b></h1>
+<h2 align="center">A Latite plugin that adds a variety of Galaxite-related modules</h2>
 
-# A Latite plugin that adds a variety of Galaxite-related modules.
-Don't want to say gg after every game? Want to show your viewers what perk you're using? Need to know how many times you've died in a Parkour Builders run? This is for you - all of those and more are actual modules!
-
-Module list:
+Don't want to say GG after every game? Want to show your viewers what perk you're using? Need to know how many times you've died in a Parkour Builders run? This is for you - all of those and more are actual modules!
+***
+## Installation
+1. Download and install [Latite Client](https://latite.net/)
+2. Run Minecraft with the client injected
+3. In the chat menu, type `.plugin install GalaxiteUtils` and send the message
+***
+## Module list.
 - **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
 - **Chat Debloat:** Reduces some spammy hub messages.
 - **Compact Badges:** A fun thing I cooked up after discovering there were shortened badges usable from the resource pack.
 - **Confirm Extra Things:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
 - **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 
-Future Plans:
+## Details
 
+### Future Plans
 - **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
   - Toggle Sprint in The Entity and Alien Blast, and Coordinates in Chronos.
 - **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
@@ -20,15 +26,15 @@ Future Plans:
 - **Mythic Chest Timers:** For Rush and Chronos, automatically know when mythic chests will arrive!
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
 
-## Notes
+### Notes
 `/whereami` will be ran a lot, even without the module on. This is since it gives a pretty good amount of information; it's one of the key ways for the plugin to know the game.
 
-## Issues
+### Issues
 I'm expecting a lot of desync-related bugs, so please include steps to reproduce anything weird you may find. Otherwise, just be clear.
 
 I'm also cool with suggestions, but don't expect me to implement everything.
 
-## PRs
+### PRs
 I'll probably accept PRs for the following fairly quickly:
 - Code cleanup
 - Bug fixes
@@ -45,7 +51,7 @@ if(notOnGalaxite()) return;
 ```
 Those will make the remainder of your code only occur on Galaxite. Beyond that, my only criteria is that it works and adds a new, useful feature; I'd especially be happy with modules for games I don't play a lot.
 
-## Building
+### Building
 This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned. Just make sure to download the Node modules first with `npm i`.
 
 The terminal command `npm run build` in the root folder also works.
@@ -54,6 +60,6 @@ I don't know how to GitHub, if something else should be here please open an issu
 
 ## Credits
 - Mojang, Blockception, and the Latite dev team
-- Seb for motivation and helping with some cues
-- Jadon for some very specific nerd functionality
-- MelodicCatgirl for the Chronos perk images as seen in her tier list
+- [Seb](https://github.com/TwistedAsylumMC) for motivation and helping with some cues
+- [Jadon](https://github.com/ThatJadon26) for some very specific nerd functionality
+- [MelodicCatgirl](https://github.com/MelodicCatgirl) for the Chronos perk images as seen in her tier list
