@@ -90,8 +90,6 @@ let changeDimensionBandage = true;
 
 // Send /whereami every time a new server is joined
 client.on("change-dimension", e => {
-    // runWhereAmI(); // Uncomment this when the bug is fixed
-
     if(changeDimensionBandage) { // if the dimension changes an odd number of times, the dimension has actually been changed
         runWhereAmI();
         changeDimensionBandage = false;
