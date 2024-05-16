@@ -26,6 +26,12 @@ export let optionWhereAmIDelay = modGlobalMessages.addNumberSetting(
     0.1,
     2.5
 );
+export let optionHideResponses = modGlobalMessages.addBoolSetting(
+    "hideresponse",
+    "Hide automatic /whereami responses",
+    "Hides responses of automatically-sent /whereami commands.",
+    true
+);
 client.getModuleManager().registerModule(modGlobalMessages);
 
 // get and compare version from last launch

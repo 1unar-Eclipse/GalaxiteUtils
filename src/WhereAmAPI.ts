@@ -1,7 +1,7 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { notOnGalaxite } from "./exports";
-import { optionWhereAmIDelay } from "./modGlobalMessages";
+import { optionWhereAmIDelay, optionHideResponses } from "./modGlobalMessages";
 
 class WhereAmAPI {
     /**
@@ -103,7 +103,9 @@ class WhereAmAPI {
                     [this.serverUUID, this.podName, this.serverName, this.commitID, this.shulkerID, this.region, this.privacy] = entries; // Store the entries to cache
                     this.parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it
 
-                    msg.cancel = true; // hide the api-provided whereami
+                    if(optionHideResponses.getValue())
+                        msg.cancel = true; // hide the api-provided whereami
+                    
                     this.whereAmIReceived = true; // whereami has been received
 
                     this.delayedCode.forEach(code => { // for each block of code waiting on a whereami:

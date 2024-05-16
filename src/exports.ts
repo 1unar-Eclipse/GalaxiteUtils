@@ -153,6 +153,8 @@ export const patchNotes = new Map([
         "- You can now shorten GalaxiteUtils badges\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
+        "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module" +
+        '- The plugin now automatically downloads a resource pack that removes armor. Click the "Open Latite Folder" button next time you launch and import the pack there!\n' +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ]

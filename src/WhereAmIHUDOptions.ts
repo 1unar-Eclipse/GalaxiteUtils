@@ -6,13 +6,6 @@ export let whereAmIHUD = new TextModule(
     KeyCode.None,
 );
 
-export let optionHideResponse = whereAmIHUD.addBoolSetting(
-    "HideResponse",
-    "Hide Response",
-    "Runs command in the background without a chat message (disable if normal /whereami doesn't work)",
-    true
-);
-
 // Server Name
 export let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
