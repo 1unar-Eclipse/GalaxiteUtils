@@ -7,8 +7,8 @@ const fs = require("filesystem");
 // initialization
 let modGlobalMessages = new Module(
     "globalmessages",
-    "GXU: Global Messages",
-    "Configures what GalaxiteUtils-related messages should be sent. (The toggle state of this module is useless)",
+    "GXU: Global Settings",
+    "Configures assorted GalaxiteUtils behaviors. (The toggle state of this module is useless)",
     KeyCode.None
 );
 let optionSplashText = modGlobalMessages.addBoolSetting(
@@ -16,6 +16,15 @@ let optionSplashText = modGlobalMessages.addBoolSetting(
     "GalaxiteUtils Splashes",
     "Sends a fun message upon joining Galaxite",
     true
+);
+export let optionWhereAmIDelay = modGlobalMessages.addNumberSetting(
+    "whereamidelay",
+    "/whereami Delay",
+    "The delay between joining a server and running /whereami for some module updates, in seconds.\n\nValues set too low may cause the message to fail, while values set too high may be sent after fast server transfers.",
+    0,
+    10.0,
+    0.1,
+    2.5
 );
 client.getModuleManager().registerModule(modGlobalMessages);
 
