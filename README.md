@@ -8,13 +8,13 @@ Don't want to say GG after every game? Want to show your viewers what perk you'r
 2. Run Minecraft with the client injected
 3. In the chat menu, type `.plugin install GalaxiteUtils` and send the message
 ***
-## Module list.
+## Module list
 - **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
 - **Chat Debloat:** Removes some spammy hub messages if you so choose.
 - **Chat Editor:** Don't like the graphics? Want short badges? This lets you have those and more!
 - **Confirm Extra Things:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
 - **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
-- There are also update notifications built-in, so you'll always know to stay up-to-date!
+- There are also update notifications built-in, so you'll always know how to stay up-to-date!
 
 ## Details
 
