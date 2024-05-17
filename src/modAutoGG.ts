@@ -79,7 +79,6 @@ const rgxChRu = /(Is|Are) The \xA76\xA7l(Chronos|Rush) Champion(|s)!/;
 const rgxPh = /\xA7(bHiders|eSeekers)\xA7r\xA7f Win/;
 
 function sendGG() {
-    clientMessage("GG should've been sent.");
     if(nerdRadar() && (nerdToggle.getValue() == null || nerdToggle.getValue())) { // if the sender is wiki team, and either the nerd toggle setting does not exist or is on
         sendMessage("Good game!");
 
