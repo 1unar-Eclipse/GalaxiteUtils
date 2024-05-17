@@ -45,6 +45,7 @@ I'll probably accept PRs for the following fairly quickly:
 I'll take a bit longer with modules, don't want them to be doing anything harmful, but I'm not against them being submitted. If you want to make a new module, in addition to normal Latite module things, make sure to add the following to the start of any file:
 ```ts
 import { notOnGalaxite } from "./exports";
+import { api } from "./WhereAmAPI";
 ```
 as well as add this line of code to any event:
 ```ts
