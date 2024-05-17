@@ -99,9 +99,6 @@ function sendMessage(message: string) {
     }
 }
 
-let sendWhereAmI: boolean = false,
-    awaitWhereAmI: boolean = false;
-
 // All games have a title
 client.on("title", title => {
     if(notOnGalaxite()) return;
