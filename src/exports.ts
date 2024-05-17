@@ -2,6 +2,8 @@
 // Put this everywhere:
 // import { notOnGalaxite } from "./exports";
 
+import { optionShortGXUBadge } from "./modGlobals";
+
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.
 */
@@ -31,7 +33,11 @@ export function nerdRadar(): boolean {
  * @param message The message to use.
  */
 export function sendGXUMessage(message: string) {
-    clientMessage(`\xa78[\xa7tGalaxite\xa7uUtils\xa78]\xa7r ${message}`);
+    clientMessage(`\xa78[\xa7t${        // formatted opening square bracket
+        optionShortGXUBadge.getValue()  // if short badges:
+        ? "GXU"                         // just gxu
+        : "Galaxite\xa7uUtils"          // otherwise, full galaxiteutils
+    }\xa78]\xa7r ${message}`);          // formatted closing square bracket and message
 }
 
 /**
@@ -108,14 +114,10 @@ export const gxuSplashes = [
     "If you or a loved one has suffered from vitenout addiction, you may be entitled to financial compensation!",
     "ouewnbv9uwebv9uwbngv",
     "opiqwhnvoicsnvkwgw890fghuison",
-    "lksjddflkajdflkjdflkjsldfkjls",
-    "nzxkivcnjpoignungvpoinvano",
-    "q0oifnqovinovnqovnqovnqo",
     "e",
     "wwdeuubdefdqzukjkjyjadhwflr",
-    "estmegelbbuupbtewngsaiuen",
-    "wkjgqgyfwxgufmasxncriomncqoyx",
     "Remember to update your game from time to time!",
+    "Powered by WhereAmAPI!"
 ];
 
 /**
@@ -153,8 +155,9 @@ export const patchNotes = new Map([
         "- You can now shorten GalaxiteUtils badges\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
-        "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module" +
+        "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module, not WhereAmIHUD\n" +
         '- The plugin now automatically downloads a resource pack that removes armor. Click the "Open Latite Folder" button next time you launch and import the pack there!\n' +
+        "- Plugin update notifications no longer assume you use . as your command prefix\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ]

@@ -6,7 +6,7 @@ const fs = require("filesystem");
 
 // initialization
 let modGlobalMessages = new Module(
-    "globalmessages",
+    "globalmessages", // old name, kept for legacy support
     "GXU: Global Settings",
     "Configures assorted GalaxiteUtils behaviors. (The toggle state of this module is useless)",
     KeyCode.None
@@ -31,6 +31,12 @@ export let optionHideResponses = modGlobalMessages.addBoolSetting(
     "Hide automatic /whereami responses",
     "Hides responses of automatically-sent /whereami commands.",
     true
+);
+export let optionShortGXUBadge = modGlobalMessages.addBoolSetting(
+    "shortgxu",
+    "Shorten GalaxiteUtils Badge",
+    "Use a shorter version of the GalaxiteUtils icon",
+    false
 );
 client.getModuleManager().registerModule(modGlobalMessages);
 
@@ -61,7 +67,7 @@ client.on("join-game", e => {
 
         // patch notes
         if(updated) {
-            sendGXUMessage(patchNotes.get(plugin.version) ?? `Something went wrong when getting the patch notes! (version: ${util.bufferToString(fs.read(versionPath))})`);
+            sendGXUMessage(patchNotes.get(plugin.version) ?? `Something went wrong when getting the patch notes! (version: v${util.bufferToString(fs.read(versionPath))})`);
         }
 
         // updater notifications (i do not want this to be an option)
@@ -70,17 +76,13 @@ client.on("join-game", e => {
             let githubInterpretation = util.bufferToString(githubRaw.body);
             let onlineJson = JSON.parse(githubInterpretation);
             if(onlineJson.version != plugin.version) {
-                sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l.plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                    client.getCommandManager().getPrefix() // don't hardcode plugin prefix
+                }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
             }
         }
     }, 5000);
 });
-
-// client.on("key-press", e => { // debug function comment this for release
-//     if(!e.isDown) return;
-//     if(e.keyCode == KeyCode.K)
-//         sendGXUMessage(getSplash());
-// });
 
 function getSplash(): string {
     return gxuSplashes[

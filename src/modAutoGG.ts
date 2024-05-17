@@ -5,6 +5,7 @@
 */
 
 import { notOnGalaxite, nerdRadar, gxuSplashes, sendGXUMessage } from "./exports";
+import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 
 // Module setup
@@ -126,36 +127,11 @@ client.on("title", title => {
     // prop hunt
     if(ph.getValue()) {
         if(rgxPh.test(text)) {
-            sendWhereAmI = true;
-        }
-    }
-});
-
-let changeDimensionBandage = true; // exact same bandage fix as whereamihud
-
-// prop hunt requires entering the postgame first
-client.on("change-dimension", e => {
-    if(sendWhereAmI) {
-        if(changeDimensionBandage) {
-            changeDimensionBandage = false;
-            sendWhereAmI = false;
-            game.executeCommand("/whereami");
-            awaitWhereAmI = true;
-        }
-        else {
-            changeDimensionBandage = true;
-        }
-    }
-});
-
-// take in a whereami to confirm 
-client.on("receive-chat", msg => {
-    if(awaitWhereAmI) {
-        if(msg.message.includes("ServerUUID: ") && msg.message.includes("\n")) { // if message actually is a whereami response
-            msg.cancel = true;
-            awaitWhereAmI = false;
-            if(msg.message.includes("PropHunt"))
-                sendGG(); // gg
+            api.onNextTransfer(() => {
+                if(api.game == GameName.PROP_HUNT) {
+                    sendGG();
+                }
+            });
         }
     }
 });

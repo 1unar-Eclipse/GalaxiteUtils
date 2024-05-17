@@ -1,13 +1,35 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { notOnGalaxite } from "./exports";
-import { optionWhereAmIDelay, optionHideResponses } from "./modGlobalMessages";
+import { optionWhereAmIDelay, optionHideResponses } from "./modGlobals";
+
+export enum GameName {
+    UNKNOWN = -1,
+    MAIN_HUB,
+    FILL_THE_GAPS,
+    CORE_WARS,
+    PROP_HUNT,
+    CHRONOS,
+    HYPER_RACERS,
+    RUSH,
+    PLAYGROUND,
+    PARKOUR_HUB,
+    PARKOUR_BUILD,
+    PARKOUR_PLAY,
+    THE_ENITTY,
+    MY_FARM_LIFE,
+    ALIEN_BLAST
+}
 
 class WhereAmAPI {
     /**
      * Stores the results of the ServerName field.
      */
     public serverName: string = "Unknown";
+    /**
+     * Stores the ServerName field in enum form. Notably ignores team sizes.
+     */
+    public game: GameName = GameName.UNKNOWN;
     /**
      * Stores the results of the Region field. (Will likely be either "us" or "eu".)
      */
@@ -53,18 +75,24 @@ class WhereAmAPI {
     delayedCode: (() => void)[] = [];
 
     /**
-     * Executes a given block of code the next time the API updates.
-     * 
-     * If a `/whereami` has already been sent and processed in this instance, the code runs immediately.
-     * @param code The code to run on the next response.
+     * Executes a given block of code when the API has been updated this lobby. This function is asynchronous.
+     * @param code The code to run when the response is given.
      */
-    public onNextResponse(code: () => void) {
+    public onConfirmedResponse(code: () => void) {
         if(!this.whereAmIReceived) { // if there hasn't been a response yet this lobby:
             this.runWhereAmI(); // send the command
             this.delayedCode.push(code); // add the code to a block to run later
         } else { // if there has been a response, just run the code now
             code(); // run the code requested
         }
+    }
+
+    /**
+     * Executes a given block of code the next time the API updates. This function is asynchronous.
+     * @param code The code to run on the next response.
+     */
+    public onNextTransfer(code: () => void) {
+        this.delayedCode.push(code); // code runs next successful transfer anyway
     }
 
     /**
@@ -80,7 +108,41 @@ class WhereAmAPI {
         }, optionWhereAmIDelay.getValue() * 1000);
     }
 
-    constructor() { // This is not being used as a constructor. I am specifically using this to register events. There is only 1 WhereAmAPI at a time.
+
+    nameToGame = new Map([
+    ["MainHub", GameName.MAIN_HUB],
+
+    ["RushSolo", GameName.RUSH],
+    ["RushDouble", GameName.RUSH],
+    ["RushQuad", GameName.RUSH],
+
+    ["PlanetsSolo", GameName.CORE_WARS],
+    ["PlanetsDouble", GameName.CORE_WARS],
+    ["PlanetsQuad", GameName.CORE_WARS],
+    ["PlanetsPush", GameName.CORE_WARS],
+
+    ["ChronosSolo", GameName.CHRONOS],
+    ["ChronosDouble", GameName.CHRONOS],
+    ["ChronosMega", GameName.CHRONOS],
+
+    ["FillTheGapsSolo", GameName.FILL_THE_GAPS],
+    ["FillTheGapsDouble", GameName.FILL_THE_GAPS],
+    ["FillTheGapsQuad", GameName.FILL_THE_GAPS],
+
+    ["PropHunt", GameName.PROP_HUNT],
+    ["HyperRacersSingle", GameName.HYPER_RACERS],
+    
+    ["Playground", GameName.PLAYGROUND],
+    ["AlienBlast", GameName.ALIEN_BLAST],
+    ["Spooky", GameName.THE_ENITTY],
+    ["Farming", GameName.MY_FARM_LIFE],
+
+    ["ParkourLobby", GameName.PARKOUR_HUB],
+    ["ParkourBuild", GameName.PARKOUR_BUILD],
+    ["ParkourPlay", GameName.PARKOUR_PLAY]
+]);
+
+    constructor() { // Registers the events for this WhereAmAPI.
         client.on("receive-chat", msg => {
             if(notOnGalaxite()) return;
 
@@ -102,14 +164,17 @@ class WhereAmAPI {
             
                     [this.serverUUID, this.podName, this.serverName, this.commitID, this.shulkerID, this.region, this.privacy] = entries; // Store the entries to cache
                     this.parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it
+                    this.game = this.nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
 
                     if(optionHideResponses.getValue())
                         msg.cancel = true; // hide the api-provided whereami
                     
                     this.whereAmIReceived = true; // whereami has been received
+                    this.whereAmISent = false;
 
                     this.delayedCode.forEach(code => { // for each block of code waiting on a whereami:
                         code(); // run the code
+                        this.delayedCode.shift(); // delete the code reference
                     });
                 }
             }
