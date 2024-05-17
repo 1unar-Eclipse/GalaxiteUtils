@@ -1,7 +1,7 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { notOnGalaxite } from "./exports";
-import { optionWhereAmIDelay, optionHideResponses } from "./modGlobals";
+import { optionWhereAmIDelay, optionHideResponses } from "./modGlobalMessages";
 
 export enum GameName {
     UNKNOWN = -1,

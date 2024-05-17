@@ -1,4 +1,5 @@
-// Compact Badges: Replaces the default chat badges (Player, Helper, etc.) with their unused short counterparts.
+// Chat Editor: Allows for various changes to the in-game chat.
+// CompactBadges file name kept for legacy compatibility.
 
 import { notOnGalaxite } from "./exports";
 
@@ -82,7 +83,7 @@ evidently i didn't care about symmetry
 */
 
 let classicBadgeMap = new Map([
-    ["\uE096 ", "\xa78[\xa7nE\xa76L\xa74I\xa75T\xa7uE\xa78]\xa7r "], // elite + ultra (gradient)
+    ["\uE096 ", "\xa78[\xa76E\xa7nL\xa74I\xa75T\xa7uE\xa78]\xa7r "], // elite + ultra (gradient)
     ["\uE099 ", "\xa78[\xa7eELITE\xa78]\xa7r" ], // elite (yellow)
     ["\uE09A ", "\xa78[\xa77PLAYER\xa78]\xa7r "], // player (light gray or white)
     ["\uE09B ", "\xa78[\xa79STAFF\xa78]\xa7r "], // staff (blue)
@@ -97,6 +98,9 @@ let classicPrestigeMap = new Map([
     ["\uE1DB ", "\xa78(\xa7gP3\xa78)\xa7r "], // p3 (gold)
     ["\uE1DC ", "\xa78(\xa7uP4\xa78)\xa7r "], // p4 (amethyst)
     ["\uE1DD ", "\xa78(\xa7sP5\xa78)\xa7r "], // p5 (diamond)
+]);
+let classicMessageMap = new Map([
+
 ]);
 
 client.on("receive-chat", c => {

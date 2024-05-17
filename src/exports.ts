@@ -2,7 +2,7 @@
 // Put this everywhere:
 // import { notOnGalaxite } from "./exports";
 
-import { optionShortGXUBadge } from "./modGlobals";
+import { optionShortGXUBadge } from "./modGlobalMessages";
 
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.

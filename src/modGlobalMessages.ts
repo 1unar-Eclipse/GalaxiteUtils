@@ -1,23 +1,24 @@
-// Global Messages: Assorted global messages for informational purposes
+// Globals: Assorted global messages and settings.
+// GlobalMessages file name is used for legacy compatibility.
 
 import { notOnGalaxite, sendGXUMessage, gxuSplashes, patchNotes } from "./exports";
 const http = require("http");
 const fs = require("filesystem");
 
 // initialization
-let modGlobalMessages = new Module(
+let modGlobals = new Module(
     "globalmessages", // old name, kept for legacy support
     "GXU: Global Settings",
     "Configures assorted GalaxiteUtils behaviors. (The toggle state of this module is useless)",
     KeyCode.None
 );
-let optionSplashText = modGlobalMessages.addBoolSetting(
+let optionSplashText = modGlobals.addBoolSetting(
     "gxuactive",
     "GalaxiteUtils Splashes",
     "Sends a fun message upon joining Galaxite",
     true
 );
-export let optionWhereAmIDelay = modGlobalMessages.addNumberSetting(
+export let optionWhereAmIDelay = modGlobals.addNumberSetting(
     "whereamidelay",
     "/whereami Delay",
     "The delay between joining a server and running /whereami for some module updates, in seconds.\n\nValues set too low may cause the message to fail, while values set too high may be sent after fast server transfers.",
@@ -26,19 +27,19 @@ export let optionWhereAmIDelay = modGlobalMessages.addNumberSetting(
     0.1,
     2.5
 );
-export let optionHideResponses = modGlobalMessages.addBoolSetting(
+export let optionHideResponses = modGlobals.addBoolSetting(
     "hideresponse",
     "Hide automatic /whereami responses",
     "Hides responses of automatically-sent /whereami commands.",
     true
 );
-export let optionShortGXUBadge = modGlobalMessages.addBoolSetting(
+export let optionShortGXUBadge = modGlobals.addBoolSetting(
     "shortgxu",
     "Shorten GalaxiteUtils Badge",
     "Use a shorter version of the GalaxiteUtils icon",
     false
 );
-client.getModuleManager().registerModule(modGlobalMessages);
+client.getModuleManager().registerModule(modGlobals);
 
 // get and compare version from last launch
 let version = plugin.version;
