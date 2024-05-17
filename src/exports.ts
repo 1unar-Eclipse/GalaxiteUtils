@@ -117,7 +117,8 @@ export const gxuSplashes = [
     "e",
     "wwdeuubdefdqzukjkjyjadhwflr",
     "Remember to update your game from time to time!",
-    "Powered by WhereAmAPI!"
+    "Powered by WhereAmAPI!",
+    "\uE1E4" // this is the ph coin icon, which looks like an amogus
 ];
 
 /**
@@ -158,6 +159,7 @@ export const patchNotes = new Map([
         "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module, not WhereAmIHUD\n" +
         '- The plugin now automatically downloads a resource pack that removes armor. Click the "Open Latite Folder" button next time you launch and import the pack there!\n' +
         "- Plugin update notifications no longer assume you use . as your command prefix\n" +
+        "- Compact Badges has been expanded into a full chat editor, with multiple new options\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ]
