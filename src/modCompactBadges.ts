@@ -176,7 +176,7 @@ client.on("receive-chat", c => {
         }
         if(editedMessage.includes(" \xA7e\xA7l\xBB\xA7r ")) { // \xBB is », used for galaxite player messages
             c.cancel = true;
-            editedMessage = editedMessage.replace(" \xA7e\xA7l\xBB\xA7r ", "\xA7r: ");
+            editedMessage = editedMessage.replace(" \xA7e\xA7l\xBB\xA7r ", ": \xA7r");
         }
     }
 
