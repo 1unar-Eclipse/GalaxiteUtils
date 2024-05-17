@@ -9,7 +9,7 @@ import { notOnGalaxite } from "./exports";
 let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
-let modCompactBadges = require("modCompactBadges");
+let modChatEditor = require("modChatEditor");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modExtraThingsPrevent = require("modExtraThingsPrevent");
 let modGlobalMessages = require("modGlobalMessages");
