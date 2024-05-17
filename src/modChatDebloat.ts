@@ -8,7 +8,7 @@
 - Info (ex. invisible): \ue0bc
   Note: only apply this to invisible messages, Info has some useful stuff + invisible is the module anyway
 - Notice (ex. hub messages): \ue0b9
-- Warn: (intentionally omitted)
+- Warn: \ue0bb (intentionally omitted)
 - Melvin: \u00ad\u0020\u00a7\u006c\u00a7\u0036Miner
 */
 
@@ -60,10 +60,10 @@ client.on("receive-chat", msg => {
     // cache message for ease of reference
     let message = msg.message;
 
-    if(message.startsWith("\ue0b9") && optionHideNotices.getValue()) { // notices
+    if(message.startsWith("\uE0B9") && optionHideNotices.getValue()) { // notices
         msg.cancel = true;
     }
-    if(message.startsWith("\ue0ba") && optionHideJoins.getValue()) { // join
+    if(message.startsWith("\uE0BA") && optionHideJoins.getValue()) { // join
         msg.cancel = true;
     }
     if(message.startsWith("\uE0AD \xa7l\xa76Miner Melvin\xa7r \xa7e\xa7l\xbb\xa7r") && optionHideMelvin.getValue()) { // melvin
