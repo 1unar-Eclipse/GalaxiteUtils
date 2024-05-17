@@ -99,9 +99,9 @@ let classicBadgeMap = new Map([
     ["\uE09F ", "\xa78[\xa7cINFLUENCER\xa78]\xa7r "], // influencer (red)
 ]);
 let classicPrestigeMap = new Map([
-    ["\uE1D9 ", "\xa78(\xa7nP1\xa78)\xa7r "], // p1 (bronze)
-    ["\uE1DA ", "\xa78(\xa7iP2\xa78)\xa7r "], // p2 (iron)
-    ["\uE1DB ", "\xa78(\xa7gP3\xa78)\xa7r "], // p3 (gold)
+    ["\uE1D9", "\xa78(\xa7nP1\xa78)\xa7r "], // p1 (bronze)
+    ["\uE1DA", "\xa78(\xa7iP2\xa78)\xa7r "], // p2 (iron)
+    ["\uE1DB", "\xa78(\xa7gP3\xa78)\xa7r "], // p3 (gold)
     ["\uE1DC ", "\xa78(\xa7uP4\xa78)\xa7r "], // p4 (amethyst)
     ["\uE1DD ", "\xa78(\xa7sP5\xa78)\xa7r "], // p5 (diamond)
 ]);
@@ -109,7 +109,7 @@ let classicServerMap = new Map([
     ["\uE0B9 ", "\xa78[\xa7dNOTICE\xa78]\xa7r "], // notice
     ["\uE0BA ", "\xa78[\xa72JOIN\xa78]\xa7r "], // join
     ["\uE0BB ", "\xa78[\xa74WARN\xa78]\xa7r "], // warn
-    ["\uE0BC ", "\xa78[\xa7eInfo\xa78]\xa7r "], // info
+    ["\uE0BC ", "\xa78[\xa7eINFO\xa78]\xa7r "], // info
     ["\uE0BD ", "\xa78[\xa7aGAME\xa78]\xa7r "], // game
     ["\uE0BE ", "\xa78[\xa73TEAM\xa78]\xa7r "], // team
     ["\uE0BF ", "\xa78[\xa75PARTY\xa78]\xa7r "], // party
