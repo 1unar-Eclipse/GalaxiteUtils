@@ -6,7 +6,7 @@ import { notOnGalaxite } from "./exports";
 let chatEditor = new Module(
     "compactBadges",
     "GXU: Chat Editor",
-    "Adds options to modify various parts of the Galaxite chat.",
+    "Adds options to modify various parts of the Galaxite chat.\n\nThis module is incompatible with anything else that edits chat (such as the Timestamps plugin).",
     KeyCode.None
 );
 let optionCompactBadges = chatEditor.addBoolSetting( // Shortens badges.
@@ -89,7 +89,7 @@ n: 6    o: 6    p: 6    q: 6    r: 6    s: 6   *t: 4*   u: 6    v: 6    w: 6    
 evidently i didn't care about symmetry
 */
 let classicBadgeMap = new Map([
-    ["\uE096 ", "\xa78[\xa76E\xa7nL\xa74I\xa75T\xa7uE\xa78]\xa7r "], // elite + ultra (gradient)
+    ["\uE096 ", "\xa78[\xa7eE\xa76L\xa7cI\xa7dT\xa75E\xa78]\xa7r "], // elite + ultra (gradient)
     ["\uE099 ", "\xa78[\xa7eELITE\xa78]\xa7r" ], // elite (yellow)
     ["\uE09A ", "\xa78[\xa77PLAYER\xa78]\xa7r "], // player (light gray or white)
     ["\uE09B ", "\xa78[\xa79STAFF\xa78]\xa7r "], // staff (blue)
