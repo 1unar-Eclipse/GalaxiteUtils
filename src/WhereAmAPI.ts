@@ -101,6 +101,7 @@ class WhereAmAPI {
     changeDimensionBandage: boolean = false;
 
     runWhereAmI() {
+        if(notOnGalaxite()) return;
         setTimeout(() => {
             game.executeCommand("/whereami");
             this.whereAmISent = true;
