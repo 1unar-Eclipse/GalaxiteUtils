@@ -152,6 +152,7 @@ export const patchNotes = new Map([
         "(press your chat button to view full patch notes)"
     ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
+        "- Fixed WhereAmIHUD breaking due to Galaxite updating the command response (it shouldn't break in the future, either!)" +
         "- Made some very large backend changes that should make some modules more stable\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
