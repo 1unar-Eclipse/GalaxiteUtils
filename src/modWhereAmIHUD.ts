@@ -15,7 +15,7 @@ import { api } from "./WhereAmAPI";
 - Region (region)
 - Privacy (privacy)
 
-Order: ServerName, Region, Privacy, ServerUUID, PodName, CommitID, ShulkerID, ParkourUUID (if applicable)
+Order: ServerName, Region, Privacy, ParkourUUID, Username, [ServerUUID, PodName, CommitID, ShulkerID]
 
 Internal game names (for formatting):
 - RushSolo, RushDouble, RushQuad                            Rush (Solos), Rush (Doubles), Rush (Quads)
@@ -75,15 +75,21 @@ w.whereAmIHUD.on("text", () => {
     let render = "";
 
     // consider options and build text
-    if(w.optionServerName.getValue())
+    if(w.optionServerName.getValue()) {
         render = render.concat(
             w.optionServerNamePrefix.getValue(),
             w.optionFormatServerName.getValue() ? (formatMap.get(api.serverName) ?? api.serverName) : api.serverName, // ?? is "choose the first defined value"
             w.optionServerNameSuffix.getValue(),
             NL
         );
-    if(w.optionRegion.getValue())
-        render = render.concat(w.optionRegionPrefix.getValue(), (api.region.toUpperCase()), w.optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
+    }
+    if(w.optionRegion.getValue()) {
+        render = render.concat(w.optionRegionPrefix.getValue(), (
+            w.optionUseNAName.getValue() && api.region == "us" // if the user wants to see na instead of us and the region actually is us
+            ? "na"
+            : api.region
+        ).toUpperCase(), w.optionRegionSuffix.getValue(), NL); // Uppercase region, as the server sends it lowercase
+    }
     if(w.optionPrivacy.getValue())
         render = render.concat(w.optionPrivacyPrefix.getValue(), api.privacy, w.optionPrivacySuffix.getValue(), NL);
     if(w.optionParkourUUID.getValue()) 
@@ -92,6 +98,8 @@ w.whereAmIHUD.on("text", () => {
             ? (w.optionParkourUUIDPrefix.getValue() + api.parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL)
             : ""
         );
+    if(w.optionUsername.getValue())
+        render = render.concat(w.optionUsernamePrefix.getValue(), api.username, w.optionUsernameSuffix.getValue(), NL);
     if(w.optionDevFields.getValue()) {
         render = render.concat(
             w.optionServerUUIDPrefix.getValue(), api.serverUUID, w.optionServerUUIDSuffix.getValue(),

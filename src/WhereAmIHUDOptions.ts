@@ -6,6 +6,8 @@ export let whereAmIHUD = new TextModule(
     KeyCode.None,
 );
 
+// Order: ServerName, Region, Privacy, ParkourUUID, Username, [ServerUUID, PodName, CommitID, ShulkerID]
+
 // Server Name
 export let optionServerName = whereAmIHUD.addBoolSetting(
     "ServerName",
@@ -42,6 +44,13 @@ export let optionRegion = whereAmIHUD.addBoolSetting(
     "Shows the Region field",
     true
 );
+export let optionUseNAName = whereAmIHUD.addBoolSetting(
+    "UseNA",
+    "Change US Region To NA",
+    "Changes the US region label to NA (to be more consistent with the rest of the server)",
+    true
+);
+optionUseNAName.setCondition("Region");
 export let optionRegionPrefix = whereAmIHUD.addTextSetting(
     "RegionPrefix",
     "Prefix (Region)",
@@ -100,6 +109,28 @@ export let optionParkourUUIDSuffix = whereAmIHUD.addTextSetting(
     ""
 );
 optionParkourUUIDSuffix.setCondition("ParkourUUID");
+
+// Username
+export let optionUsername = whereAmIHUD.addBoolSetting(
+    "Username",
+    "Username",
+    "Shows the Username field",
+    true
+);
+export let optionUsernamePrefix = whereAmIHUD.addTextSetting(
+    "UsernamePrefix",
+    "Prefix (Username)",
+    "Text to display before the Username entry",
+    "Username: "
+);
+optionUsernamePrefix.setCondition("Username");
+export let optionUsernameSuffix = whereAmIHUD.addTextSetting(
+    "UsernameSuffix",
+    "Suffix (Username)",
+    "Text to display after the Username field",
+    ""
+);
+optionUsernameSuffix.setCondition("Username");
 
 // Dev Fields
 export let optionDevFields = whereAmIHUD.addBoolSetting(

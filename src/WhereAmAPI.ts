@@ -23,6 +23,10 @@ export enum GameName {
 
 class WhereAmAPI {
     /**
+     * For accuracy in sending bug reports, this doesn't actually store the results of the Username field.
+     */
+    public username: string = "Unknown";
+    /**
      * Stores the results of the ServerName field.
      */
     public serverName: string = "Unknown";
@@ -72,7 +76,7 @@ class WhereAmAPI {
     /**
      * Array of code to run on the next `/whereami` response.
      */
-    delayedCode: (() => void)[] = [];
+    private delayedCode: (() => void)[] = [];
 
     /**
      * Executes a given block of code when the API has been updated this lobby. This function is asynchronous.
@@ -98,7 +102,7 @@ class WhereAmAPI {
     /**
      * The `change-dimension` event fires twice. This works around it.
      */
-    changeDimensionBandage: boolean = false;
+    private changeDimensionBandage: boolean = false;
 
     runWhereAmI() {
         if(notOnGalaxite()) return;
@@ -109,8 +113,105 @@ class WhereAmAPI {
         }, optionWhereAmIDelay.getValue() * 1000);
     }
 
+    private response: any
 
-    nameToGame = new Map([
+    private assign(field: string): string {
+        let def: string; // default is reserved
+        if(field == "ParkourUUID") 
+            def = "";
+        else
+            def = "Unknown";
+        return (this.response[field] ?? def);
+    }
+
+    constructor() { // Registers the events for this WhereAmAPI.
+        client.on("receive-chat", msg => {
+            if(notOnGalaxite()) return;
+            if(!this.whereAmISent) return; // if a whereami is being waited on:
+
+            if(msg.message.includes("ServerUUID:") && msg.message.includes("\n")) { // Check for message (users can't send \n)
+                let formattedMessage = msg.message.replace("\uE0BC \xA7c", ""); // Cache message
+                let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line and removing color
+                let whereAmIPairs: string[][] = [];
+                for(let i = 0; i < entries.length; i++) { // For each entry:
+                    whereAmIPairs[i] = entries[i].split(": \xA7a"); // Save the key and its corresponding value, in the process removing color
+                }
+                /* The general structure of whereAmIPairs is:
+                [
+                    ["Username" : username],
+                    ["ServerUUID" : serverUUID],
+                    ...
+                    ["FieldName" : fieldResult]
+                ]
+                */
+
+                this.response = whereAmIPairs.reduce((prevVal, [key, value]) => {
+                    prevVal[key] = value;
+                    return prevVal;
+                }, {} as any);
+
+                /* Response should look like:
+                {
+                    "Username" : username,
+                    "ServerUUID" : serverUUID,
+                    ...
+                    "FieldName" : fieldResult
+                }
+                */
+
+                // username =   entries[0];
+                // serverUUID = entries[1];
+                // podName =    entries[2];
+                // serverName = entries[3];
+                // commitID =   entries[4];
+                // shulkerID =  entries[5];
+                // region =     entries[6];
+                // privacy =    entries[7];
+        
+                // Store entries
+                this.username = game.getLocalPlayer()!.getName(); // this is being ran on a receive-chat event. there will be a player
+                this.serverUUID = this.assign("ServerUUID");
+                this.podName = this.assign("PodName");
+                this.serverName = this.assign("ServerName");
+                this.commitID = this.assign("CommitID");
+                this.shulkerID = this.assign("ShulkerID");
+                this.region = this.assign("Region");
+                this.privacy = this.assign("Privacy");
+                this.parkourUUID = this.assign("ParkourUUID"); // The assign function already considers the possibility of no entry
+
+                this.game = nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
+
+                if(optionHideResponses.getValue())
+                    msg.cancel = true; // hide the api-provided whereami
+                
+                this.whereAmIReceived = true; // whereami has been received
+                this.whereAmISent = false;
+
+                this.delayedCode.forEach(code => { // for each block of code waiting on a whereami:
+                    code(); // run the code
+                    this.delayedCode.shift(); // delete the code reference
+                });
+            }
+        
+        });
+
+        // Send /whereami every time a new server is joined
+        client.on("change-dimension", e => {
+            if(this.changeDimensionBandage) { // if the dimension changes an odd number of times, the dimension has actually been changed
+                this.runWhereAmI();
+                this.changeDimensionBandage = false;
+            }
+            else { // even, ghost fire
+                this.changeDimensionBandage = true;
+            }
+        });
+        client.on("join-game", e => {
+            this.runWhereAmI();
+        });
+    }
+}
+
+const nameToGame = new Map([
     ["MainHub", GameName.MAIN_HUB],
 
     ["RushSolo", GameName.RUSH],
@@ -142,60 +243,6 @@ class WhereAmAPI {
     ["ParkourBuild", GameName.PARKOUR_BUILD],
     ["ParkourPlay", GameName.PARKOUR_PLAY]
 ]);
-
-    constructor() { // Registers the events for this WhereAmAPI.
-        client.on("receive-chat", msg => {
-            if(notOnGalaxite()) return;
-
-            if(this.whereAmISent) { // if a whereami is being waited on:
-                if(msg.message.includes("ServerUUID: ") && msg.message.includes("\n")) { // Check for message (users can't send \n)
-                    let formattedMessage = msg.message.replace("\uE0BC ", ""); // Cache message
-                    let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line
-                    for(let i = 0; i < entries.length; i++) { // For each entry:
-                        entries[i] = entries[i].split(" \xA7a")[1]; // Save only the part of the response after the category name
-                    }
-            
-                    // serverUUID = entries[0];
-                    // podName = entries[1];
-                    // serverName = entries[2];
-                    // commitID = entries[3];
-                    // shulkerID = entries[4];
-                    // region = entries[5];
-                    // privacy = entries[6];
-            
-                    [this.serverUUID, this.podName, this.serverName, this.commitID, this.shulkerID, this.region, this.privacy] = entries; // Store the entries to cache
-                    this.parkourUUID = (entries.length > 7) ? entries[7] : ""; // If ParkourUUID was sent, add it; otherwise store an empty string for it
-                    this.game = this.nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
-
-                    if(optionHideResponses.getValue())
-                        msg.cancel = true; // hide the api-provided whereami
-                    
-                    this.whereAmIReceived = true; // whereami has been received
-                    this.whereAmISent = false;
-
-                    this.delayedCode.forEach(code => { // for each block of code waiting on a whereami:
-                        code(); // run the code
-                        this.delayedCode.shift(); // delete the code reference
-                    });
-                }
-            }
-        });
-
-        // Send /whereami every time a new server is joined
-        client.on("change-dimension", e => {
-            if(this.changeDimensionBandage) { // if the dimension changes an odd number of times, the dimension has actually been changed
-                this.runWhereAmI();
-                this.changeDimensionBandage = false;
-            }
-            else { // even, ghost fire
-                this.changeDimensionBandage = true;
-            }
-        });
-        client.on("join-game", e => {
-            this.runWhereAmI();
-        });
-    }
-}
 
 /**
  * The WhereAmAPI. Use this as a pseudo-API for finding server information.
