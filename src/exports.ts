@@ -61,7 +61,7 @@ export const gxuSplashes = [
     "PixelParadiseUtils disactive.",
     ":3",
     "is ACTIVE",
-    "Made with 98.9% pure TypeScript!",
+    "Made with 99.3% pure TypeScript!",
     "These aren't funny aren't they",
     "Open-source!",
     "Now with patch notes!",
@@ -249,4 +249,4 @@ client.on("key-press", k => {
         str = str.concat(key, ": ", val, "\n");
     });
     sendGXUMessage(str);
-})
+});
