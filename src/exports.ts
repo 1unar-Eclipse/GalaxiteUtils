@@ -81,7 +81,6 @@ export const gxuSplashes = [
     "What's a meta, anyway?",
     "Does not help with escaping the Entity",
     "Sonic Snowballs were such a good item Mojang added them officially",
-    "Also try MCC Island!",
     "Currently Latite's largest plugin!",
     "Exposes no internal information!",
     "d-d-a g",
@@ -118,7 +117,8 @@ export const gxuSplashes = [
     "wwdeuubdefdqzukjkjyjadhwflr",
     "Remember to update your game from time to time!",
     "Powered by WhereAmAPI!",
-    "\uE1E4" // this is the ph coin icon, which looks like an amogus
+    "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
+    "Let's paint this gray haze into sky blue!"
 ];
 
 /**
