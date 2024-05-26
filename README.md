@@ -64,4 +64,3 @@ I don't know how to GitHub, if something else should be here please open an issu
 - Mojang, Blockception, and the Latite dev team
 - [Seb](https://github.com/TwistedAsylumMC) for motivation and helping with some cues
 - [Jadon](https://github.com/ThatJadon26) for some very specific nerd functionality
-- [MelodicCatgirl](https://github.com/MelodicCatgirl) for the Chronos perk images as seen in her tier list
