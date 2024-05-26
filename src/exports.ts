@@ -157,7 +157,7 @@ export const patchNotes = new Map([
         "- You can now allow the plugin to update automatically\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
-        "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +
+        "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Rush due to length)\n" +
         "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module, not WhereAmIHUD\n" +
         "- Compact Badges has been expanded into a full chat editor, with multiple new options including traditional badges\n" +
         "- Plugin update notifications no longer assume you use . as your command prefix\n" +
@@ -174,11 +174,11 @@ export const patchNotes = new Map([
 export const chronosPerkMap = new Map([
     // OFFENSE
     ["Bow Start", "\uE115"], // tier 3 bow
-    ["Prepare Shot", "\uE12E"], // fist
+    ["Prepare Shot", "\uE1C0"], // battery
     ["Sonic Snowballs", "\uE1C4"], // sonic snowball
     ["Daredevil", "\uE184"], // faded dark red player
     ["Solid Snowballs", "\uE119"], // snowball
-    ["Glass Cannon", "\uE12D"], // playground glass cannon graphic
+    ["Glass Cannon", "\uE12B"], // playground glass cannon graphic
     ["Sniper", "\uE14D"], // playground sniper graphic
     ["Airstrike", "\uE12D"], // firework rocket
     ["Sword Specialist", "\uE112"], // netherite sword
@@ -234,10 +234,19 @@ export const chronosPerkMap = new Map([
     ["Contract of Rewarding", "\uE148\uE1EC"], // present
 
     // TEAM - general team icon is \uE146
-    ["Warper", "\uE148\uE14E"], // ender pearl
-    ["Frontline", "\uE148\uE111"], // diamond sword
-    ["Healer", "\uE148\uE10B"], // red heart
-    ["Avenger", "\uE148\uE136"], // red skull
-    ["Mayday", "\uE148\uE1A4"], // speed icon
-    ["Freezer", "\uE148\uE1C5"], // ice slider
+    ["Warper", "\uE146\uE14E"], // ender pearl
+    ["Frontline", "\uE146\uE111"], // diamond sword
+    ["Healer", "\uE146\uE10B"], // red heart
+    ["Avenger", "\uE146\uE136"], // red skull
+    ["Mayday", "\uE146\uE1A4"], // speed icon
+    ["Freezer", "\uE146\uE1C5"], // ice slider
 ]);
+
+client.on("key-press", k => {
+    if(notOnGalaxite() || k.keyCode != KeyCode.K || !k.isDown) return;
+    let str = "";
+    chronosPerkMap.forEach((val, key) => {
+        str = str.concat(key, ": ", val, "\n");
+    });
+    sendGXUMessage(str);
+})

@@ -8,15 +8,15 @@ Hyper Racers: Engine + track name
 Kit PvP: Icon + kit name
 */
 
-import { notOnGalaxite } from "./exports";
+import { notOnGalaxite, chronosPerkMap } from "./exports";
 
 /* Cues:
 - Chronos: 
 - Chronos (Random Perk): 
 - Hyper Racers: \uE0BD \xA7a\xA7lEngine Equipped - \xA7r\xA7lEngine Name:
-- Kit PvP: 
+- Kit PvP: \uE0BD \xA7a(icon) Name\xA7f kit selected!
 
 - Core Wars (dynamic!):
-- Rush: 
+- Rush (long): 
 - Alien Blast (dynamic!)
 */
