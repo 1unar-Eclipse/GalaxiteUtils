@@ -1,7 +1,8 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
-import { notOnGalaxite } from "./exports";
+import { notOnGalaxite, sendGXUMessage } from "./exports";
 import { optionWhereAmIDelay, optionHideResponses } from "./modGlobalMessages";
+const clipboard = require("clipboard");
 
 export enum GameName {
     UNKNOWN = -1,
@@ -62,6 +63,13 @@ class WhereAmAPI {
      * Stores the results of the ParkourUUID field. (Will often be empty.)
      */
     public parkourUUID: string = "";
+
+    public exportWhereAmI: Command = new Command(
+        "export",
+        "Copies the results of the last whereami to the clipboard",
+        "$",
+        ["copywhereami", "whereami"]
+    );
 
     /**
      * Whether /whereami has been sent this lobby.
@@ -192,7 +200,6 @@ class WhereAmAPI {
                     this.delayedCode.shift(); // delete the code reference
                 });
             }
-        
         });
 
         // Send /whereami every time a new server is joined
@@ -207,6 +214,26 @@ class WhereAmAPI {
         });
         client.on("join-game", e => {
             this.runWhereAmI();
+        });
+
+        client.getCommandManager().registerCommand(this.exportWhereAmI);
+        this.exportWhereAmI.on("execute", () => {
+            clipboard.set(
+                `\`\`\`Username: ${this.username}` +
+                `\nServerUUID: ${this.serverUUID}` +
+                `\nPodName: ${this.podName}` +
+                `\nServerName: ${this.serverName}` +
+                `\nCommitID: ${this.commitID}` +
+                `\nShulkerID: ${this.shulkerID}` +
+                `\nRegion: ${this.region}` +
+                `\nPrivacy: ${this.privacy}` +
+                (this.parkourUUID != "")
+                ? `\nParkourUUID: ${this.parkourUUID}`
+                : "" +
+                "```"
+            );
+            sendGXUMessage("Copied the last /whereami to clipboard!");
+            return true;
         });
     }
 }
