@@ -154,6 +154,7 @@ export const patchNotes = new Map([
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- Fixed WhereAmIHUD breaking due to Galaxite updating the command response (it shouldn't break in the future, either!)" +
         "- Made some very large backend changes that should make some modules more stable\n" +
+        "- You can now allow the plugin to update automatically\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Core Wars, Rush, and Alien Blast due to length)\n" +

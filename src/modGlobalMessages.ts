@@ -39,6 +39,12 @@ export let optionShortGXUBadge = modGlobals.addBoolSetting(
     "Use a shorter version of the GalaxiteUtils icon",
     false
 );
+export let optionAutoUpdate = modGlobals.addBoolSetting(
+    "autoupdate",
+    "Auto Update",
+    "Whether to automatically download plugin updates",
+    false
+);
 client.getModuleManager().registerModule(modGlobals);
 
 // get and compare version from last launch
@@ -77,9 +83,23 @@ client.on("join-game", e => {
             let githubInterpretation = util.bufferToString(githubRaw.body);
             let onlineJson = JSON.parse(githubInterpretation);
             if(onlineJson.version != plugin.version) {
-                sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
-                    client.getCommandManager().getPrefix() // don't hardcode plugin prefix
-                }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                if(optionAutoUpdate.getValue()) {
+                    let success = client.runCommand("plugin install GalaxiteUtils"); // this also runs the command
+                    if(success) {
+                        sendGXUMessage(`GalaxiteUtils v${onlineJson.version} has been downloaded! Relaunch the game to finish updating.`);
+                    }
+                    else {
+                        sendGXUMessage(`\xA74Auto-update failed; falling back to manual updating`);
+                        sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                            client.getCommandManager().getPrefix()
+                        }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                    }
+                }
+                else {
+                    sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                        client.getCommandManager().getPrefix() // don't hardcode plugin prefix
+                    }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                }
             }
         }
     }, 5000);
