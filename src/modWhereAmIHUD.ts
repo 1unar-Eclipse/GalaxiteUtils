@@ -92,12 +92,13 @@ w.whereAmIHUD.on("text", () => {
     }
     if(w.optionPrivacy.getValue())
         render = render.concat(w.optionPrivacyPrefix.getValue(), api.privacy, w.optionPrivacySuffix.getValue(), NL);
-    if(w.optionParkourUUID.getValue()) 
+    if(w.optionParkourUUID.getValue()) {
         render = render.concat(
             (w.optionParkourUUID.getValue() && api.parkourUUID.trim() != "")
             ? (w.optionParkourUUIDPrefix.getValue() + api.parkourUUID + w.optionParkourUUIDSuffix.getValue() + NL)
             : ""
         );
+    }
     if(w.optionUsername.getValue())
         render = render.concat(w.optionUsernamePrefix.getValue(), api.username, w.optionUsernameSuffix.getValue(), NL);
     if(w.optionDevFields.getValue()) {
