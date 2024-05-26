@@ -27,7 +27,7 @@ modAutoModule.addBoolSetting(
 modAutoModule.addBoolSetting(
     "alienblast-togglesprint",
     "Toggle Sprint (Alien Blast)",
-    "Turns off Toggle Sprintt while in Alien Blast",
+    "Turns off Toggle Sprint while in Alien Blast",
     false
 );
 // client.getModuleManager().registerModule(modAutoModule);
