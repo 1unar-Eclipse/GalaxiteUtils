@@ -62,6 +62,8 @@ let optionKitPVPIcon = modPerkUI.addBoolSetting(
 optionKitPVP.setCondition("kitpvp");
 client.getModuleManager().registerModule(modPerkUI);
 
+throw "test"; // check something
+
 let perk: string;
 let perkIcon: string;
 let random: boolean;
@@ -119,10 +121,15 @@ client.on("change-dimension", e => { // reset perk on dimension change
     random = false;
 });
 
+let optionMinecraftRenderer: Setting;
 modPerkUI.on("render", () => {
     if(notOnGalaxite() || !modPerkUI.isEnabled()) return;
+
+    optionMinecraftRenderer = modPerkUI.getSettings().find((s) => {
+        return (s.name == "forceMinecraftRend");
+    })!;
     if(optionChronosIcon.getValue() || optionKitPVPIcon.getValue())
-        forceMinecraftRendererOn();
+        optionMinecraftRenderer.setValue(true);
 
     switch(api.game) {
         case GameName.CHRONOS: {
@@ -144,13 +151,11 @@ modPerkUI.on("render", () => {
 });
 
 // Cache the minecraft renderer setting
-let optionMinecraftRenderer: Setting;
-client.on("join-game", e => {
-    optionMinecraftRenderer = modPerkUI.getSettings().find((s) => {
-        return (s.name == "forceMinecraftRend");
-    })!;
-});
 
-function forceMinecraftRendererOn() { // Force Minecraft renderer on, allowing emotes to be used
-    optionMinecraftRenderer.setValue(true);
-}
+// client.on("join-game", e => {
+
+// });
+
+// function forceMinecraftRendererOn() { // Force Minecraft renderer on, allowing emotes to be used
+//     optionMinecraftRenderer.setValue(true);
+// }

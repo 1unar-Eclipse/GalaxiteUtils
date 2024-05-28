@@ -151,17 +151,24 @@ export const patchNotes = new Map([
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
-    ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
-        "- Fixed WhereAmIHUD breaking due to Galaxite updating the command response (it shouldn't break in the future, either!)" +
-        "- Made some very large backend changes that should make some modules more stable\n" +
+    ["0.3.5", "GalaxiteUtils has been updated to v0.3.5!\n" +
+        "- Fixed WhereAmIHUD breaking due to Galaxite updating the command response (it shouldn't break as badly in the future, too!)\n" +
+        "- Made some very large backend changes that should make some modules more stable (ex. /whereami is no longer sent twice with WhereAmIHUD and AutoGG on in Prop Hunt)\n" +
+        "- You can make /whereami run sooner after changing servers, reducing the chance of results accidentally showing\n" +
         "- You can now allow the plugin to update automatically\n" +
+        "  - This does still require relaunching the game\n" +
+        "- Plugin update notifications no longer assume you use . as your command prefix\n" +
+        "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module, not WhereAmIHUD\n" +
+        "- Compact Badges has been expanded into a full chat editor, with multiple new options including traditional badges\n" +
+        "- You can now shorten GalaxiteUtils badges using the Global Settings module\n" +
+        "- A command that allows copying /whereami data has been internally added ('export', 'copywhereami', or 'whereami'), though is currently non-functional due to an upstream bug\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
+    ],
+    ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
         "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Rush due to length)\n" +
-        "- Hiding automatic /whereami responses is now handled using an option in the Global Settings module, not WhereAmIHUD\n" +
-        "- Compact Badges has been expanded into a full chat editor, with multiple new options including traditional badges\n" +
-        "- Plugin update notifications no longer assume you use . as your command prefix\n" +
-        "- You can now shorten GalaxiteUtils badges\n" +
         '- The plugin now automatically downloads a resource pack that removes armor. Click the "Open Latite Folder" button next time you launch and import the pack there!\n' +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
@@ -241,12 +248,3 @@ export const chronosPerkMap = new Map([
     ["Mayday", "\uE146\uE1A4"], // speed icon
     ["Freezer", "\uE146\uE1C5"], // ice slider
 ]);
-
-client.on("key-press", k => {
-    if(notOnGalaxite() || k.keyCode != KeyCode.K || !k.isDown) return;
-    let str = "";
-    chronosPerkMap.forEach((val, key) => {
-        str = str.concat(key, ": ", val, "\n");
-    });
-    sendGXUMessage(str);
-});
