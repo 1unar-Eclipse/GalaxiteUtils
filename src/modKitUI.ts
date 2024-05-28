@@ -74,6 +74,7 @@ client.on("receive-chat", m => {
     if(!(api.game == GameName.CHRONOS || api.game == GameName.HYPER_RACERS || api.game == GameName.PLAYGROUND)) { // only do stuff in ch, hr, or pg
         perk = "";
         perkIcon = "";
+        random = false;
         return;
     }
 
@@ -116,7 +117,7 @@ client.on("change-dimension", e => { // reset perk on dimension change
     perk = "";
     perkIcon = "";
     random = false;
-})
+});
 
 modPerkUI.on("render", () => {
     if(notOnGalaxite() || !modPerkUI.isEnabled()) return;
@@ -142,10 +143,14 @@ modPerkUI.on("render", () => {
     }
 });
 
-let minecraftRenderer = modPerkUI.getSettings().find((s) => {
-    return (s.name == "forceMinecraftRend");
-})!;
+// Cache the minecraft renderer setting
+let optionMinecraftRenderer: Setting;
+client.on("join-game", e => {
+    optionMinecraftRenderer = modPerkUI.getSettings().find((s) => {
+        return (s.name == "forceMinecraftRend");
+    })!;
+});
 
 function forceMinecraftRendererOn() { // Force Minecraft renderer on, allowing emotes to be used
-    minecraftRenderer.setValue(true);
+    optionMinecraftRenderer.setValue(true);
 }

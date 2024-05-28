@@ -64,7 +64,7 @@ class WhereAmAPI {
      */
     public parkourUUID: string = "";
 
-    public exportWhereAmI: Command = new Command(
+    public cmdExportWhereAmI: Command = new Command(
         "export",
         "Copies the results of the last whereami to the clipboard",
         "$",
@@ -216,8 +216,8 @@ class WhereAmAPI {
             this.runWhereAmI();
         });
 
-        client.getCommandManager().registerCommand(this.exportWhereAmI);
-        this.exportWhereAmI.on("execute", () => {
+        client.getCommandManager().registerCommand(this.cmdExportWhereAmI);
+        this.cmdExportWhereAmI.on("execute", () => {
             clipboard.set(
                 `\`\`\`Username: ${this.username}` +
                 `\nServerUUID: ${this.serverUUID}` +
