@@ -62,8 +62,6 @@ let optionKitPVPIcon = modPerkUI.addBoolSetting(
 optionKitPVP.setCondition("kitpvp");
 client.getModuleManager().registerModule(modPerkUI);
 
-throw "test"; // check something
-
 let perk: string;
 let perkIcon: string;
 let random: boolean;
