@@ -12,7 +12,7 @@ const fs = require("filesystem");
 let autoGG = new Module(
     "autoGG",
     "GXU: AutoGG",
-    'Automatically says "gg" when a game finishes.',
+    'Automatically says "gg" when a game finishes',
     KeyCode.None
 );
 client.getModuleManager().registerModule(autoGG);
