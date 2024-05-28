@@ -56,9 +56,9 @@ Those will make the remainder of your code only occur on Galaxite. Beyond that, 
 ### Building
 This uses [the template found here](https://github.com/LatiteScripting/Template) as a base, so it can be compiled with Ctrl-Shift-B in VS Code once cloned. Just make sure to download the Node modules first with `npm i`.
 
-The terminal command `npm run build` in the root folder also works.
+**You must have the plugin's development folder in a subfolder in the `%localappdata%\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\RoamingState\LatiteRecode\Plugins` to build properly** I have mine in a folder labeled Projects in that directory.
 
-I don't know how to GitHub, if something else should be here please open an issue
+The terminal command `npm run build` in the root folder also works.
 
 ## Credits
 - Mojang, Blockception, and the Latite dev team
