@@ -3,7 +3,7 @@
 // - The Entity: Toggle Sprint
 // - Alien Blast: Toggle Sprint
 // - Chronos: Coordinates
-
+ /*
 import { notOnGalaxite } from "./exports";
 
 let modAutoModule = new Module(
@@ -32,3 +32,4 @@ modAutoModule.addBoolSetting(
 );
 // client.getModuleManager().registerModule(modAutoModule);
 
+*/
