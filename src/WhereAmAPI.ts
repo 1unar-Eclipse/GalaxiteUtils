@@ -1,7 +1,6 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
-import { notOnGalaxite, sendGXUMessage } from "./exports";
-import { optionWhereAmIDelay, optionHideResponses } from "./modGlobalMessages";
+import { notOnGalaxite, sendGXUMessage, optionWhereAmIDelay, optionHideResponses } from "./exports";
 const clipboard = require("clipboard");
 
 export enum GameName {

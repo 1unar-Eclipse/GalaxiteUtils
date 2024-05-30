@@ -2,7 +2,8 @@
 // Put this everywhere:
 // import { notOnGalaxite } from "./exports";
 
-import { optionShortGXUBadge } from "./modGlobalMessages";
+const http = require("http");
+const fs = require("filesystem");
 
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.
@@ -27,7 +28,6 @@ export function nerdRadar(): boolean {
     return galaxiteNerds.includes(game.getLocalPlayer()!.getName());
 }
 
-
 /**
  * Sends a formatted message to chat.
  * @param message The message to use.
@@ -38,6 +38,111 @@ export function sendGXUMessage(message: string) {
         ? "GXU"                         // just gxu
         : "Galaxite\xa7uUtils"          // otherwise, full galaxiteutils
     }\xa78]\xa7r ${message}`);          // formatted closing square bracket and message
+}
+
+let modGlobals = new Module(
+    "globalmessages", // old name, kept for legacy support
+    "GXU: Global Settings",
+    "Configures assorted GalaxiteUtils behaviors. (The toggle state of this module is useless)",
+    KeyCode.None
+);
+let optionSplashText = modGlobals.addBoolSetting(
+    "gxuactive",
+    "GalaxiteUtils Splashes",
+    "Sends a fun message upon joining Galaxite",
+    true
+);
+export let optionWhereAmIDelay = modGlobals.addNumberSetting(
+    "whereamidelay",
+    "/whereami Delay",
+    "The delay between joining a server and running /whereami for some module updates, in seconds.\n\nValues set too low may cause the message to fail, while values set too high may be sent after fast server transfers.",
+    0,
+    10.0,
+    0.1,
+    2.5
+);
+export let optionHideResponses = modGlobals.addBoolSetting(
+    "hideresponse",
+    "Hide automatic /whereami responses",
+    "Hides responses of automatically-sent /whereami commands.",
+    true
+);
+export let optionShortGXUBadge = modGlobals.addBoolSetting(
+    "shortgxu",
+    "Shorten GalaxiteUtils Badge",
+    "Use a shorter version of the GalaxiteUtils icon",
+    false
+);
+export let optionAutoUpdate = modGlobals.addBoolSetting(
+    "autoupdate",
+    "Auto Update",
+    "Whether to automatically download plugin updates",
+    false
+);
+client.getModuleManager().registerModule(modGlobals);
+
+// get and compare version from last launch
+let version = plugin.version;
+let updated: boolean;
+let versionPath = "GalaxiteUtilsVersion";
+
+// make the file if needed
+if(fs.exists(versionPath)) { // if there is a version stored
+    let storedVersion = util.bufferToString(fs.read(versionPath)); // read the file
+    updated = (version != storedVersion); // set whether the plugin has updated to the opposite of whether the versions match
+}
+else {
+    updated = true;
+}
+fs.write(versionPath, util.stringToBuffer(version)); // regardless of stored version, update (or create) the version file
+
+// send messages
+client.on("join-game", e => {
+    if(notOnGalaxite()) return;
+
+    setTimeout(() => {
+        // splash texts
+        if(optionSplashText.getValue()) {
+            sendGXUMessage(getSplash());
+        }
+
+        // patch notes
+        if(updated) {
+            sendGXUMessage(patchNotes.get(plugin.version) ?? `Something went wrong when getting the patch notes! (version: v${util.bufferToString(fs.read(versionPath))})`);
+        }
+
+        // updater notifications (i do not want this to be an option)
+        let githubRaw = http.get("https://raw.githubusercontent.com/LatiteScripting/Scripts/master/Plugins/GalaxiteUtils/plugin.json", {});
+        if(githubRaw.statusCode == 200) { // if github sent a response
+            let githubInterpretation = util.bufferToString(githubRaw.body);
+            let onlineJson = JSON.parse(githubInterpretation);
+            if(onlineJson.version != plugin.version) {
+                if(optionAutoUpdate.getValue()) {
+                    let success = client.runCommand("plugin install GalaxiteUtils"); // this also runs the command
+                    if(success) {
+                        sendGXUMessage(`GalaxiteUtils v${onlineJson.version} has been downloaded! Relaunch the game to finish updating.`);
+                    }
+                    else {
+                        sendGXUMessage(`\xA74Auto-update failed; falling back to manual updating`);
+                        sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                            client.getCommandManager().getPrefix()
+                        }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                    }
+                }
+                else {
+                    sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                        client.getCommandManager().getPrefix() // don't hardcode plugin prefix
+                    }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                }
+            }
+        }
+    }, 5000);
+});
+
+function getSplash(): string {
+    return gxuSplashes[
+        Math.floor(Math.random() * gxuSplashes.length)
+    ];
 }
 
 /**
@@ -173,78 +278,4 @@ export const patchNotes = new Map([
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ]
-]);
-
-/**
- * random is `\uE1EB`
- */
-export const chronosPerkMap = new Map([
-    // OFFENSE
-    ["Bow Start", "\uE115"], // tier 3 bow
-    ["Prepare Shot", "\uE1C0"], // battery
-    ["Sonic Snowballs", "\uE1C4"], // sonic snowball
-    ["Daredevil", "\uE184"], // faded dark red player
-    ["Solid Snowballs", "\uE119"], // snowball
-    ["Glass Cannon", "\uE12B"], // playground glass cannon graphic
-    ["Sniper", "\uE14D"], // playground sniper graphic
-    ["Airstrike", "\uE12D"], // firework rocket
-    ["Sword Specialist", "\uE112"], // netherite sword
-    ["Assassin", "\uE1A2"], // playground assassin graphic
-    ["Revenger", "\uE136"], // red skull
-    ["Fireballs", "\uE11A"], // fire death icon
-    ["Poison Arrows", "\uE114"], // tier 2 bow
-    ["Bandit Boss", "\uE103"], // that code guy
-    ["Levitation Arrows", "\uE11B"], // broken bone
-    ["Time Siphon", "\uE138"], // hourglass
-
-    // DEFENSE
-    ["Tank", "\uE101"], // classic armor icon
-    ["Health Scavenger", "\uE1A5"], // health pop-in
-    ["Medicine", "\uE201"], // apple
-    ["Blinding Forcefield", "\uE1A0"], // blindness icon
-    ["Weakening Arrows", "\uE113"], // gray bow
-    ["Vampire", "\uE10B"], // playground vampire icon
-    ["Heavy Duty", "\uE12F"], // still anvil
-    ["Hunker Down", "\uE247"], // statue
-    ["Armour Specialist", "\uE10A"], // netherite armor
-    ["Smoke Bomb", "\uE1A7"], // mirror / empty window
-    ["Soul Collector", "\uE14B"], // soul
-    ["Ancient", "\uE1D2"], // silver clock
-    ["Shielder", "\uE1A8"], // shield
-    ["Shattered Glass", "\uE129"], // cactus death icon
-    ["Scaredy Cat", "\uE1DF"], // engine
-    ["Trapper", "\uE12A"], // explosion death icon
-
-    // UTILITY
-    ["Mobility", "\uE19A"], // kart
-    ["Backpack", "\uE1C2"], // open lock
-    ["Builder", "\uE147"], // block
-    ["Falcon", "\uE14F"], // feather
-    ["Vault Raider", "\uE1C1"], // lock
-    ["Scout", "\uE1A4"], // speed icon
-    ["Sticky Arrows", "\uE1A3"], // snail
-    ["Stealth Jet", "\uE1AC"], // particles
-    ["Time Hoarder", "\uE139"], // gold clock
-    ["Ninja", "\uE190"], // person
-    ["Gravity Spheres", "\uE11C"], // bubbles
-    ["Dasher", "\uE12C"], // trident
-    ["Sparrow", "\uE193"], // dropship icon
-    ["Soulbound", "\uE1A1"], // blue death icon
-    ["Ghost", "\uE1AB"], // ghost nameplate icon
-    ["Recon", "\uE1F7"], // red exclamation mark
-    ["Lucky", "\uE1EC"], // present
-
-    // BOUNTY - bounty char is \uE148
-    ["Feedback Loop", "\uE148\uE19C"], // add player
-    ["Contract of Blessing", "\uE148\uE1BD"], // gold plus
-    ["Contract of Protection", "\uE148\uE10C"], // absorption heart
-    ["Contract of Rewarding", "\uE148\uE1EC"], // present
-
-    // TEAM - general team icon is \uE146
-    ["Warper", "\uE146\uE14E"], // ender pearl
-    ["Frontline", "\uE146\uE111"], // diamond sword
-    ["Healer", "\uE146\uE10B"], // red heart
-    ["Avenger", "\uE146\uE136"], // red skull
-    ["Mayday", "\uE146\uE1A4"], // speed icon
-    ["Freezer", "\uE146\uE1C5"], // ice slider
 ]);
