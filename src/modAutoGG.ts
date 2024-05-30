@@ -87,7 +87,7 @@ function sendGG() {
         }
     }
     else {
-        game.sendChatMessage("gg");
+        sendMessage("gg");
     }
 }
 
