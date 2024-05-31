@@ -22,45 +22,45 @@ import { notOnGalaxite, sendGXUMessage } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
 
 try {
-    let modPerkUI = new TextModule(
+    let perkUI = new TextModule(
         "perkui",
         "GXU: Perk UI",
         "Shows your equipped perk in various games",
         KeyCode.None
     );
-    let optionChronos = modPerkUI.addBoolSetting(
+    let optionChronos = perkUI.addBoolSetting(
         "chronos",
         "Chronos Perk",
         "Shows the equipped perk in games of Chronos.",
         true
     );
-    let optionChronosIcon = modPerkUI.addBoolSetting(
+    let optionChronosIcon = perkUI.addBoolSetting(
         "chronosicon",
         "Chronos Perk Icon",
         "Adds icons to represent each Chronos perk.\n\nForces Minecraft renderer to be on.",
         true
     );
     optionChronosIcon.setCondition("chronos");
-    let optionHyperRacers = modPerkUI.addBoolSetting(
+    let optionHyperRacers = perkUI.addBoolSetting(
         "hyperracers",
         "Hyper Racers Engine",
         "Shows the equipped engine in games of Hyper Racers.",
         true
     );
-    let optionKitPVP = modPerkUI.addBoolSetting(
+    let optionKitPVP = perkUI.addBoolSetting(
         "kitpvp",
         "Kit PVP Kit",
         "Shows the equipped kit in games of Kit PVP.",
         true
     );
-    let optionKitPVPIcon = modPerkUI.addBoolSetting(
+    let optionKitPVPIcon = perkUI.addBoolSetting(
         "kitpvpicon",
         "Kit PVP Icon",
         "Use the icons that represent each kit. (Unlike Chronos, whether you selected a random kit will not be shown.)\n\nForces Minecraft renderer to be on.",
         true
     );
     optionKitPVPIcon.setCondition("kitpvp");
-    client.getModuleManager().registerModule(modPerkUI);
+    client.getModuleManager().registerModule(perkUI);
     
     let perk: string = "";
     let perkIcon: string = "";
@@ -124,8 +124,8 @@ try {
         random = false;
     });
     
-    modPerkUI.on("text", () => {
-        if(notOnGalaxite() || !modPerkUI.isEnabled()) return "";
+    perkUI.on("text", () => {
+        if(notOnGalaxite() || !perkUI.isEnabled()) return "";
     
         // let optionMinecraftRenderer = modPerkUI.getSettings().find((s) => {
         //     return (s.name == "forceMinecraftRend");
