@@ -33,11 +33,11 @@ export function nerdRadar(): boolean {
  * @param message The message to use.
  */
 export function sendGXUMessage(message: string) {
-    clientMessage(`\xa78[\xa7t${        // formatted opening square bracket
+    clientMessage(`\xA78[\xA7t${        // formatted opening square bracket
         optionShortGXUBadge.getValue()  // if short badges:
         ? "GXU"                         // just gxu
-        : "Galaxite\xa7uUtils"          // otherwise, full galaxiteutils
-    }\xa78]\xa7r ${message}`);          // formatted closing square bracket and message
+        : "Galaxite\xA7uUtils"          // otherwise, full galaxiteutils
+    }\xA78]\xA7r ${message}`);          // formatted closing square bracket and message
 }
 
 let globals = new Module(
@@ -124,15 +124,15 @@ client.on("join-game", e => {
                     }
                     else {
                         sendGXUMessage(`\xA74Auto-update failed; falling back to manual updating`);
-                        sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                        sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xA7l${
                             client.getCommandManager().getPrefix()
-                        }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                        }plugin install GalaxiteUtils\xA7r and relaunch the client to update.`);
                     }
                 }
                 else {
-                    sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xa7l${
+                    sendGXUMessage(`A GalaxiteUtils update (v${onlineJson.version}) is available! Run \xA7l${
                         client.getCommandManager().getPrefix() // don't hardcode plugin prefix
-                    }plugin install GalaxiteUtils\xa7r and relaunch the client to update.`);
+                    }plugin install GalaxiteUtils\xA7r and relaunch the client to update.`);
                 }
             }
         }
@@ -162,13 +162,13 @@ client.on("key-press", k => { // DEBUG CODE
  * A collection of splash texts.
  */
 export const gxuSplashes = [
-    "\xa7cHap\xa76py \xa7ePri\xa7ade \xa79Mon\xa75th!", // hate that i'll need to remove this after june :(
-    "\xa76w\xa7po\xa7em\xa7fe\xa7dn\xa7u,\xa75,", // lesbian
-    "\xa73gay\xa7s ga\xa7by h\xa7fomo\xa79sex\xa71ual \xa75gay", // gay
-    "\xa7cWhy \xa75not \xa79both?", // bi
-    "\xa7bTrans \xa7drights \xa7fare \xa7dhuman \xa7brights!", // trans
-    "\xa70N\xa77o\xa7fp\xa75e", // asexual
-    "\xa7eWhat \xa7feven \xa75is \xa70gender?", // non-binary
+    "\xA7cHap\xA76py \xA7ePri\xA7ade \xA79Mon\xA75th!", // hate that i'll need to remove this after june :(
+    "\xA76w\xA7po\xA7em\xA7fe\xA7un\xA7d,\xA75,", // lesbian
+    "\xA73gay\xA7s ga\xA7by h\xA7fomo\xA79sex\xA71ual \xA75gay", // gay
+    "\xA7cWhy \xA75not \xA79both?", // bi
+    "\xA7bTrans \xA7drights \xA7fare \xA7dhuman \xA7brights!", // trans
+    "\xA78N\xA77o\xA7fp\xA75e", // asexual
+    "\xA7eWhat \xA7feven \xA75is \xA78gender?", // non-binary
     "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
     "Now with more utils!",
     "pve game",
@@ -219,9 +219,9 @@ export const gxuSplashes = [
     "727!!!!!!! 727!! When you see it!!!!!!!",
     "O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA",
     "!bsr 25f",
-    `When \xa76server\xa7r is selected, destroy previously sent splash text and permanently add \xa76double\xa7r its character length to your \xa7bGems\xa7r next login \xa78(Currently \xa7b+${
+    `When \xA76server\xA7r is selected, destroy previously sent splash text and permanently add \xA76double\xA7r its character length to your \xA7bGems\xA7r next login \xA78(Currently \xA7b+${
         Math.round(Math.random() * 31)
-        }\xa78 Gems)\xa7r`,
+        }\xA78 Gems)\xA7r`,
     "Allays are just Orbi's kids stop hiding the truth Mojang",
     "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
     // `${(() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the depths of javascript. no i do not care
@@ -251,7 +251,7 @@ export const gxuSplashes = [
  */
 export const patchNotes = new Map([
     ["0.2.3", "How?"],
-    ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xa7lWake up.\xa7r"], // for those looking at the code, i used 0.2.4 as a placeholder while making 0.3.0
+    ["0.2.4", "GalaxiteUtils v0.2.4 was never released. \xA7lWake up.\xA7r"], // for those looking at the code, i used 0.2.4 as a placeholder while making 0.3.0
     ["0.3.0", "GalaxiteUtils has been updated to v0.3.0!\n" +
         "- Added splash texts to confirm that the plugin is active (can be toggled using the new Global Messages module)\n" +
         "- Added notifications when an update is available\n" +
@@ -259,7 +259,7 @@ export const patchNotes = new Map([
         '- Chat Debloat: Added options to remove the "Welcome to Galaxite" and "You are now (in)visible messages\n' +
         "- WhereAmIHUD: ParkourUUID now has its own settings and is positioned above developer fields\n" +
         "- WhereAmIHUD: If Hide Response is enabled, all /whereami responses will now be hidden (this fixes some issues with rapid server transfers)\n" +
-        "  - 0.4.0 will add a new way of handling sending /whereami commands that \xa7oshould\xa7r make this not happen as often\n" +
+        "  - 0.4.0 will add a new way of handling sending /whereami commands that \xA7oshould\xA7r make this not happen as often\n" +
         "- Fixed a bug (hopefully) where prestige icons occasionally caused the Compact Badges module to not work as expected\n" +
         "- Fixed WhereAmIHUD not properly handling ParkourUUID\n" +
         "- Various backend changes\n\n" +
