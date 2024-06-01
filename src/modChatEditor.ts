@@ -60,17 +60,17 @@ optionHidePrestigeIcons.setCondition("classicprestige", false);
 client.getModuleManager().registerModule(chatEditor);
 
 // respectively: elite & ultra, elite, player, vip, ultra, influencer
-let rgxPlayerBadges = /(\uE096|\uE099|\uE09A|\uE09D|\uE09E|\uE09F) /;
+const rgxPlayerBadges = /(\uE096|\uE099|\uE09A|\uE09D|\uE09E|\uE09F) /;
 // elite, player, staff, helper, vip, ultra, influencer. combo badge excluded for its own test
-let rgxBadges = /(\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
+const rgxBadges = /(\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
 // all badges (for classic badges)
-let rgxAllBadges = /(\uE096|\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
+const rgxAllBadges = /(\uE096|\uE099|\uE09A|\uE09B|\uE09C|\uE09D|\uE09E|\uE09F) /;
 // p1-p5 respectively
-let rgxPrestiges = /(\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD)/;
+const rgxPrestiges = /(\uE1D9|\uE1DA|\uE1DB|\uE1DC|\uE1DD)/;
 // notice, join, warn, info, game, team, party
-let rgxServerBadges = /(\uE0B9|\uE0BA|\uE0BB|\uE0BC|\uE0BD|\uE0BE|\uE0BF) /;
+const rgxServerBadges = /(\uE0B9|\uE0BA|\uE0BB|\uE0BC|\uE0BD|\uE0BE|\uE0BF) /;
 // map that converts long badges to short badges
-let shortbadgeMap = new Map([
+const shortbadgeMap = new Map([
     ["\uE099 ", "\uE089 "], // elite
     ["\uE09A ", "\uE08A "], // player
     ["\uE09B ", "\uE08B "], // staff
@@ -88,7 +88,7 @@ n: 6    o: 6    p: 6    q: 6    r: 6    s: 6   *t: 4*   u: 6    v: 6    w: 6    
 
 evidently i didn't care about symmetry
 */
-let classicBadgeMap = new Map([
+const classicBadgeMap = new Map([
     ["\uE096 ", "\xa78[\xa7eE\xa76L\xa7cI\xa7dT\xa75E\xa78]\xa7r "], // elite + ultra (gradient)
     ["\uE099 ", "\xa78[\xa7eELITE\xa78]\xa7r" ], // elite (yellow)
     ["\uE09A ", "\xa78[\xa77PLAYER\xa78]\xa7r "], // player (light gray or white)
@@ -98,14 +98,14 @@ let classicBadgeMap = new Map([
     ["\uE09E ", "\xa78[\xa75ULTRA\xa78]\xa7r "], // ultra (purple)
     ["\uE09F ", "\xa78[\xa7cINFLUENCER\xa78]\xa7r "], // influencer (red)
 ]);
-let classicPrestigeMap = new Map([
-    ["\uE1D9", "\xa78(\xa7nP1\xa78)\xa7r"], // p1 (bronze)
-    ["\uE1DA", "\xa78(\xa7iP2\xa78)\xa7r"], // p2 (iron)
-    ["\uE1DB", "\xa78(\xa7gP3\xa78)\xa7r"], // p3 (gold)
-    ["\uE1DC", "\xa78(\xa7uP4\xa78)\xa7r"], // p4 (amethyst)
-    ["\uE1DD", "\xa78(\xa7sP5\xa78)\xa7r"], // p5 (diamond)
+const classicPrestigeMap = new Map([
+    ["\uE1D9", "\xa78(\xa7nP1\xa78)\xa7r "], // p1 (bronze)
+    ["\uE1DA", "\xa78(\xa7iP2\xa78)\xa7r "], // p2 (iron)
+    ["\uE1DB", "\xa78(\xa7gP3\xa78)\xa7r "], // p3 (gold)
+    ["\uE1DC", "\xa78(\xa7uP4\xa78)\xa7r "], // p4 (amethyst)
+    ["\uE1DD", "\xa78(\xa7sP5\xa78)\xa7r "], // p5 (diamond)
 ]);
-let classicServerMap = new Map([
+const classicServerMap = new Map([
     ["\uE0B9 ", "\xa78[\xa7dNOTICE\xa78]\xa7r "], // notice
     ["\uE0BA ", "\xa78[\xa72JOIN\xa78]\xa7r "], // join
     ["\uE0BB ", "\xa78[\xa74WARN\xa78]\xa7r "], // warn
