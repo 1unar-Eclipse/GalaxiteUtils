@@ -11,9 +11,6 @@ let confirmClick = new Module(
     "Adds options to confirm using Extra Things and interact with shops",
     KeyCode.None
 );
-client.getModuleManager().registerModule(confirmClick);
-
-// initialize settings
 let optionInterval = confirmClick.addNumberSetting(
     "interval",
     "Max Interval",
@@ -41,6 +38,7 @@ let optionNotif = confirmClick.addBoolSetting(
     "Shows a notification whenever confirmation is needed",
     true
 );
+client.getModuleManager().registerModule(confirmClick);
 
 // the actual function
 let etTimePrev: number = 0; // the first click will always be cancelled, might as well make it all use the same code
@@ -63,13 +61,14 @@ function prevent(button: number, down: boolean): boolean {
     if(bind != button) return false; // is the pressed button the use button
 
     // actual prevention code
+    extraThings:
     if(optionExtraThings.getValue()) {
-        if(localPlayer.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
+        if(localPlayer.getSelectedSlot() != 8) break extraThings; // are you on slot 9 (zero-indexed)
         
         etTimeCurrent = Date.now(); // get current time
         if(etTimeCurrent - etTimePrev <= optionInterval.getValue() * 1000) { // if the difference between the times is less than or equal to the interval specified by the player,
             etTimePrev = etTimeCurrent; // update previous click time
-            return false; // do not cancel the event
+            break extraThings; // do not cancel the event
         }
         else { // otherwise,
             etTimePrev = etTimeCurrent; // update previous click time
@@ -77,18 +76,21 @@ function prevent(button: number, down: boolean): boolean {
             return true; // cancel it
         }
     }
+    shop:
     if(optionShop.getValue()) {
-        if(localPlayer.getLookingAt() != LookingAt.Entity) return false; // are you looking at an entity (either shop or player)
-        if(!(api.game == GameName.CHRONOS || api.game == GameName.CORE_WARS)) return false; // are you in a game with a shop
+        if(localPlayer.getLookingAt() != LookingAt.Entity) break shop; // are you looking at an entity (either shop or player)
+        if(!(api.game == GameName.CHRONOS || api.game == GameName.CORE_WARS)) break shop; // are you in a game with a shop
 
-        if(interactableItems.includes(localPlayer.getHoldingItem().item?.name ?? "")) { // if player IS holding a whitelisted item, do not prevent
-            return false;
+        if(interactableItems.includes(localPlayer.getHoldingItem().item?.name ?? "fist")) { // if player IS holding a whitelisted item, do not prevent
+            sendGXUMessage("Holding a whitelisted item!");
+            break shop;
         }
         else { // prevent code
             shopTimeCurrent = Date.now();
             if(shopTimeCurrent - shopTimePrev <= optionInterval.getValue() * 1000) {
+                sendGXUMessage("Not prevented!");
                 shopTimePrev = shopTimeCurrent;
-                return false;
+                break shop;
             }
             else {
                 shopTimePrev = shopTimeCurrent;
@@ -122,6 +124,7 @@ client.on("click", e => {
  * Relevant items that are used with the Use/Interact keybind. These only consider games with shops
  */
 const interactableItems: string[] = [
+    "fist",
     "minecraft:snowball",
     "minecraft:bow",
     "minecraft:ender_pearl",
@@ -143,9 +146,11 @@ function communicateBlock(reason: BlockReason) {
         switch(reason) {
             case BlockReason.EXTRA_THINGS: {
                 sendGXUMessage("Click again to confirm using Extra Things");
+                break;
             }
             case BlockReason.SHOP: {
                 sendGXUMessage("Click again to open the shop");
+                break;
             }
         }
     }
