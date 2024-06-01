@@ -145,10 +145,24 @@ function getSplash(): string {
     ];
 }
 
+client.on("key-press", k => { // DEBUG CODE
+    if(notOnGalaxite()) return;
+    if(k.keyCode != KeyCode.K) return;
+    if(!k.isDown) return;
+    let player = game.getLocalPlayer();
+    if(!player) return;
+    if(player.getName() != "Eclipse2421") return;
+
+    sendGXUMessage(gxuSplashes[0]);
+    sendGXUMessage(gxuSplashes[1]);
+})
+
 /**
  * A collection of splash texts.
  */
 export const gxuSplashes = [
+    "\xa7bTrans \xa7drights \xa7fare \xa7dhuman \xa7brights!",
+    "\xa7cHap\xa76py \xa7ePri\xa7ade \xa79Mon\xa75th!", // hate that i'll need to remove this after june :(
     "Now with more utils!",
     "pve game",
     "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
@@ -194,7 +208,6 @@ export const gxuSplashes = [
     'client.on("join-game", e => { clientMessage("This is valid Latite plugin code"); });',
     "5D Parkour Builders with Multiverse Time Travel",
     "There is 1 tester and it is myself",
-    "Trans rights!",
     'In JS, "([]+{})[!![]+!![]]" is the same thing as "b". Don\'t ask.',
     "727!!!!!!! 727!! When you see it!!!!!!!",
     "O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA",
@@ -223,7 +236,7 @@ export const gxuSplashes = [
     "Remember to update your game from time to time!",
     "Powered by WhereAmAPI!",
     "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
-    "Let's paint this gray haze into sky blue!"
+    "Let's paint this gray haze into sky blue!",
 ];
 
 /**
@@ -273,7 +286,7 @@ export const patchNotes = new Map([
     ["0.3.6", "GalaxiteUtils has been updated to v0.3.6!\n" +
         "- Confirm Extra Things has been renamed to Confirm Item Use and has a new option to work on shops (experimental). Thanks @xjayrex for the idea!\n" +
         "- The setting controlling Confirm Item Use is now stored and displayed in seconds\n" +
-        "  - \xa7lYou will need to update your setting in some way, otherwise unintended behavior that I can't control may occur\xa7r\n" +
+        "  - The setting should reset to 0.5 seconds, if it doesn't any manual change should update it\n" +
         "- Fixed a bug in Chat Editor where Prestige icons could not be hidden or made classic\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
