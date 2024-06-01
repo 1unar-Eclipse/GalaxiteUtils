@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && copy .\\src\\plugin.json .\\out\\plugin.json"
+    "build": "tsc && copy .\\src\\plugin.json ..\\..\\GalaxiteUtils\\plugin.json"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.2",
