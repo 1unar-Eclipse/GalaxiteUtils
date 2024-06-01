@@ -82,13 +82,11 @@ function prevent(button: number, down: boolean): boolean {
         if(!(api.game == GameName.CHRONOS || api.game == GameName.CORE_WARS)) break shop; // are you in a game with a shop
 
         if(interactableItems.includes(localPlayer.getHoldingItem().item?.name ?? "fist")) { // if player IS holding a whitelisted item, do not prevent
-            sendGXUMessage("Holding a whitelisted item!");
             break shop;
         }
         else { // prevent code
             shopTimeCurrent = Date.now();
             if(shopTimeCurrent - shopTimePrev <= optionInterval.getValue() * 1000) {
-                sendGXUMessage("Not prevented!");
                 shopTimePrev = shopTimeCurrent;
                 break shop;
             }
