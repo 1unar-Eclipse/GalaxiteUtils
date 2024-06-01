@@ -2,65 +2,103 @@
 // TO-DO: Add a cooldown to the notification
 
 import { notOnGalaxite, sendGXUMessage } from "./exports";
+import { api, GameName } from "./WhereAmAPI";
 
 // initialization
-let extraThingsPrevent = new Module(
+let confirmClick = new Module(
     "etprevent",
-    "GXU: Confirm Extra Things",
-    "Adds a confirmation click before using Extra Things",
+    "GXU: Confirm Item Use",
+    "Adds options to confirm using Extra Things and interact with shops",
     KeyCode.None
 );
-client.getModuleManager().registerModule(extraThingsPrevent);
+client.getModuleManager().registerModule(confirmClick);
 
 // initialize settings
-let optionInterval = extraThingsPrevent.addNumberSetting(
+let optionInterval = confirmClick.addNumberSetting(
     "interval",
-    "Max Interval (ms)",
+    "Max Interval",
     "Maximum amount of time between a click and the confirmation click",
     0,
-    1000,
-    50,
-    500
+    1,
+    0.01,
+    0.5
 );
-let optionNotif = extraThingsPrevent.addBoolSetting(
+let optionExtraThings = confirmClick.addBoolSetting(
+    "etconfirm",
+    "Confirm Extra Things",
+    "Require a confirmation click to use Extra Things or leave Kit PVP",
+    true
+);
+let optionShop = confirmClick.addBoolSetting(
+    "shopconfirm",
+    "Confirm Shop Interaction (experimental)",
+    "Require a confirmation click to interact with shops while holding fighting items in Chronos and Core Wars",
+    false
+);
+let optionNotif = confirmClick.addBoolSetting(
     "notif",
     "Show Notification",
-    "Shows a notification when Extra Things use was successfully blocked",
+    "Shows a notification whenever confirmation is needed",
     true
 );
 
 // the actual function
-let timePrev: number = 0; // the first click will always be cancelled, might as well make it all use the same code
-let timeCurrent: number;
+let etTimePrev: number = 0; // the first click will always be cancelled, might as well make it all use the same code
+let etTimeCurrent: number;
+let shopTimePrev: number = 0;
+let shopTimeCurrent: number;
 function prevent(button: number, down: boolean): boolean {
     // return cases
     if(notOnGalaxite()) return false; // are you on galaxite
-    if(!extraThingsPrevent.isEnabled()) return false; // is the module enabled
-    if(!down) return false;
-    if(!game.getLocalPlayer()) return false; // are you in a game
-    if(game.getLocalPlayer()!.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
+    if(!confirmClick.isEnabled()) return false; // is the module enabled
+    if(!down) return false; // is the button pressed
     if(game.isInUI()) return false; // this may have issues. if necessary use game.getScreen()
 
-    // get use button - not cached because it might change mid-game
-    let bind = game.getInputBinding("use");
+    let localPlayer = game.getLocalPlayer(); // cache local player, as this is all within a frame and changes will be negligible
+    if(!localPlayer) return false;
+    
+    let bind = game.getInputBinding("use"); // get use button - not cached because it might change mid-game
     if(bind < 0)
         bind += 100; // fix mouse button oddities
     if(bind != button) return false; // is the pressed button the use button
 
     // actual prevention code
-    timeCurrent = Date.now(); // get current time
-    if(timeCurrent - timePrev <= optionInterval.getValue()) { // if the difference between the times is less than or equal to the interval specified by the player,
-        timePrev = timeCurrent; // update previous click time
-        return false; // do not cancel the event
-    }
-    else { // otherwise,
-        timePrev = timeCurrent; // update previous click time
-        game.playSoundUI("item.shield.block", 0.25, 0.8); // play a sound effect to indicate the block
-        if(optionNotif.getValue()) {
-            sendGXUMessage("Click again to confirm using Extra Things"); // show a notif if wanted
+    if(optionExtraThings.getValue()) {
+        if(localPlayer.getSelectedSlot() != 8) return false; // are you on slot 9 (zero-indexed)
+        
+        etTimeCurrent = Date.now(); // get current time
+        if(etTimeCurrent - etTimePrev <= optionInterval.getValue() * 1000) { // if the difference between the times is less than or equal to the interval specified by the player,
+            etTimePrev = etTimeCurrent; // update previous click time
+            return false; // do not cancel the event
         }
-        return true; // cancel it
+        else { // otherwise,
+            etTimePrev = etTimeCurrent; // update previous click time
+            communicateBlock(BlockReason.EXTRA_THINGS);
+            return true; // cancel it
+        }
     }
+    if(optionShop.getValue()) {
+        if(localPlayer.getLookingAt() != LookingAt.Entity) return false; // are you looking at an entity (either shop or player)
+        if(!(api.game == GameName.CHRONOS || api.game == GameName.CORE_WARS)) return false; // are you in a game with a shop
+
+        if(interactableItems.includes(localPlayer.getHoldingItem().item?.name ?? "")) { // if player IS holding a whitelisted item, do not prevent
+            return false;
+        }
+        else { // prevent code
+            shopTimeCurrent = Date.now();
+            if(shopTimeCurrent - shopTimePrev <= optionInterval.getValue() * 1000) {
+                shopTimePrev = shopTimeCurrent;
+                return false;
+            }
+            else {
+                shopTimePrev = shopTimeCurrent;
+                communicateBlock(BlockReason.SHOP);
+                return true;
+            }
+        }
+    }
+
+    return false; // just in case the module is enabled but neither of the options are
 }
 
 // listen for potential inputs
@@ -70,3 +108,50 @@ client.on("key-press", e => {
 client.on("click", e => {
     e.cancel = prevent(e.button, e.isDown);
 });
+
+/*
+- snowballs
+- bows
+- ender pearls
+- feathers (feather jumps/falcon feathers)
+- slime balls (warper chronos perk)
+- paper (bounty contract)
+- totems (time capsules)
+*/
+/**
+ * Relevant items that are used with the Use/Interact keybind. These only consider games with shops
+ */
+const interactableItems: string[] = [
+    "minecraft:snowball",
+    "minecraft:bow",
+    "minecraft:ender_pearl",
+    "minecraft:feather", // falcon feather and feather jump
+    "minecraft:slime_ball", // warper perk
+    "minecraft:paper", // bounty contract
+    "minecraft:totem_of_undying", // time capsule
+    "galaxite:pickup_backpack", // backpack upgrade
+    "galaxite:token_life",
+    "galaxite:token_shield",
+    "galaxite:smoke_bomb",
+    "galaxite:icon_tnt_bomb",
+    "galaxite:icon_sonic_snowballs", // this is plural internally
+];
+
+function communicateBlock(reason: BlockReason) {
+    game.playSoundUI("item.shield.block", 0.25, 0.8); // play a sound effect to indicate the block
+    if(optionNotif.getValue()) { // show a notif if wanted
+        switch(reason) {
+            case BlockReason.EXTRA_THINGS: {
+                sendGXUMessage("Click again to confirm using Extra Things");
+            }
+            case BlockReason.SHOP: {
+                sendGXUMessage("Click again to open the shop");
+            }
+        }
+    }
+}
+
+enum BlockReason {
+    EXTRA_THINGS,
+    SHOP
+}
