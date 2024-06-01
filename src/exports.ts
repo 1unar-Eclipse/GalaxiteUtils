@@ -167,8 +167,8 @@ export const gxuSplashes = [
     "\xA73gay\xA7s ga\xA7by h\xA7fomo\xA79sex\xA71ual \xA75gay", // gay
     "\xA7cWhy \xA75not \xA79both?", // bi
     "\xA7bTrans \xA7drights \xA7fare \xA7dhuman \xA7brights!", // trans
-    "\xA78N\xA77o\xA7fp\xA75e", // asexual
-    "\xA7eWhat \xA7feven \xA75is \xA78gender?", // non-binary
+    "\xA7jN\xA77o\xA7fp\xA75e", // asexual
+    "\xA7eWhat \xA7feven \xA75is \xA7jgender?", // non-binary
     "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
     "Now with more utils!",
     "pve game",
