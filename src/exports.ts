@@ -270,6 +270,14 @@ export const patchNotes = new Map([
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
+    ["0.3.6", "GalaxiteUtils has been updated to v0.3.6!\n" +
+        "- Confirm Extra Things has been renamed to Confirm Item Use and has a new option to work on shops (experimental). Thanks @xjayrex for the idea!\n" +
+        "- The setting controlling Confirm Item Use is now stored and displayed in seconds\n" +
+        "  - \xa7lYou will need to update your setting in some way, otherwise unintended behavior that I can't control may occur\xa7r\n" +
+        "- Fixed a bug in Chat Editor where Prestige icons could not be hidden or made classic\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
+    ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
