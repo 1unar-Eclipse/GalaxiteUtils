@@ -76,6 +76,7 @@ function prevent(button: number, down: boolean): boolean {
             return true; // cancel it
         }
     }
+
     shop:
     if(optionShop.getValue()) {
         if(localPlayer.getLookingAt() != LookingAt.Entity) break shop; // are you looking at an entity (either shop or player)

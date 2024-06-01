@@ -153,16 +153,23 @@ client.on("key-press", k => { // DEBUG CODE
     if(!player) return;
     if(player.getName() != "Eclipse2421") return;
 
-    sendGXUMessage(gxuSplashes[0]);
-    sendGXUMessage(gxuSplashes[1]);
+    for(let i = 0; i < 8; i++) {
+        sendGXUMessage(gxuSplashes[i]);
+    }
 })
 
 /**
  * A collection of splash texts.
  */
 export const gxuSplashes = [
-    "\xa7bTrans \xa7drights \xa7fare \xa7dhuman \xa7brights!",
     "\xa7cHap\xa76py \xa7ePri\xa7ade \xa79Mon\xa75th!", // hate that i'll need to remove this after june :(
+    "\xa76w\xa7po\xa7em\xa7fe\xa7dn\xa7u,\xa75,", // lesbian
+    "\xa73gay\xa7s ga\xa7by h\xa7fomo\xa79sex\xa71ual \xa75gay", // gay
+    "\xa7cWhy \xa75not \xa79both?", // bi
+    "\xa7bTrans \xa7drights \xa7fare \xa7dhuman \xa7brights!", // trans
+    "\xa70N\xa77o\xa7fp\xa75e", // asexual
+    "\xa7eWhat \xa7feven \xa75is \xa70gender?", // non-binary
+    "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
     "Now with more utils!",
     "pve game",
     "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
@@ -288,6 +295,7 @@ export const patchNotes = new Map([
         "- The setting controlling Confirm Item Use is now stored and displayed in seconds\n" +
         "  - The setting should reset to 0.5 seconds, if it doesn't any manual change should update it\n" +
         "- Fixed a bug in Chat Editor where Prestige icons could not be hidden or made classic\n" +
+        "- Added a lot of Pride splashes! Only one of these will be deleted after June.\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
