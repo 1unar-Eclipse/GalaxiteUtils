@@ -99,7 +99,7 @@ function prevent(button: number, down: boolean): boolean {
         }
     }
 
-    return false; // just in case the module is enabled but neither of the options are
+    return false;
 }
 
 // listen for potential inputs

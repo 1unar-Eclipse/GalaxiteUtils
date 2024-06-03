@@ -149,11 +149,12 @@ client.on("key-press", k => { // DEBUG CODE
     if(notOnGalaxite()) return;
     if(k.keyCode != KeyCode.K) return;
     if(!k.isDown) return;
+    if(game.isInUI()) return;
     let player = game.getLocalPlayer();
     if(!player) return;
     if(player.getName() != "Eclipse2421") return;
 
-    for(let i = 0; i < 8; i++) {
+    for(let i = 0; i < 8; i++) { // these are all the gay ones
         sendGXUMessage(gxuSplashes[i]);
     }
 })
@@ -167,8 +168,8 @@ export const gxuSplashes = [
     "\xA73gay\xA7s ga\xA7by h\xA7fomo\xA79sex\xA71ual \xA75gay", // gay
     "\xA7cWhy \xA75not \xA79both?", // bi
     "\xA7bTrans \xA7drights \xA7fare \xA7dhuman \xA7brights!", // trans
-    "\xA7jN\xA77o\xA7fp\xA75e", // asexual
-    "\xA7eWhat \xA7feven \xA75is \xA7jgender?", // non-binary
+    "\xA78N\xA77o\xA7fp\xA75e", // asexual
+    "\xA7eWhat \xA7feven \xA75is \xA78gender?", // non-binary
     "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
     "Now with more utils!",
     "pve game",
@@ -187,7 +188,7 @@ export const gxuSplashes = [
     "PixelParadiseUtils disactive.",
     ":3",
     "is ACTIVE",
-    "Made with 99.3% pure TypeScript!",
+    "Made with 99.4% pure TypeScript!",
     "These aren't funny aren't they",
     "Open-source!",
     "Now with patch notes!",
@@ -212,7 +213,7 @@ export const gxuSplashes = [
     "d-d-a g",
     "Woomy!",
     "amogus",
-    'client.on("join-game", e => { clientMessage("This is valid Latite plugin code"); });',
+    'client.on("join-game", e => clientMessage("This is valid Latite plugin code") );',
     "5D Parkour Builders with Multiverse Time Travel",
     "There is 1 tester and it is myself",
     'In JS, "([]+{})[!![]+!![]]" is the same thing as "b". Don\'t ask.',
