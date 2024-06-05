@@ -154,10 +154,31 @@ client.on("key-press", k => { // DEBUG CODE
     if(!player) return;
     if(player.getName() != "Eclipse2421") return;
 
-    for(let i = 0; i < 8; i++) { // these are all the gay ones
-        sendGXUMessage(gxuSplashes[i]);
-    }
-})
+    sendGXUMessage("Option 1:")
+    words.forEach(badge => {
+        clientMessage(badge + "Sample message");
+    });
+    sendGXUMessage("Option 2:")
+    symbols.forEach(badge => {
+        clientMessage(badge + "Sample message");
+    });
+});
+
+let words: string[] = [
+    "\xa78[\xa7dNOTICE\xa78]\xa7r ",
+    "\xa78[\xa72JOIN\xa78]\xa7r ",
+    "\xa78[\xa74WARN\xa78]\xa7r ",
+    "\xa78[\xa7eINFO\xa78]\xa7r ",
+    "\xa78[\xa7aGAME\xa78]\xa7r ",
+];
+let symbols: string[] = [
+    "\xa78[\xa7d ... \xa78]\xa7r ",
+    "\xa78[\xa72 + \xa78]\xa7r ",
+    "\xa78[\xa74 !!! \xa78]\xa7r ",
+    "\xa78[\xa7e  i  \xa78]\xa7r ",
+    "\xa78[\xa7a  !  \xa78]\xa7r ",
+]
+
 
 /**
  * A collection of splash texts.
@@ -296,7 +317,7 @@ export const patchNotes = new Map([
         "- The setting controlling Confirm Item Use is now stored and displayed in seconds\n" +
         "  - The setting should reset to 0.5 seconds, if it doesn't any manual change should update it\n" +
         "- Fixed a bug in Chat Editor where Prestige icons could not be hidden or made classic\n" +
-        "- Added a lot of Pride splashes! Only one of these will be deleted after June.\n" +
+        "- Added a lot of Pride splashes!\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
