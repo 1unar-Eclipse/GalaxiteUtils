@@ -18,7 +18,7 @@ export let optionServerName = whereAmIHUD.addBoolSetting(
 export let optionFormatServerName = whereAmIHUD.addBoolSetting(
     "FormatServerName",
     "Format Server Name",
-    "Makes the server name field use proper formatting (currently does nothing)",
+    "Makes the server name field use proper formatting",
     true
 );
 optionFormatServerName.setCondition("ServerName");
@@ -136,7 +136,7 @@ optionUsernameSuffix.setCondition("Username");
 export let optionDevFields = whereAmIHUD.addBoolSetting(
     "DevFields",
     "Developer Fields",
-    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID, plus ParkourUUID in Parkour Builders)",
+    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID)",
     false
 );
 
