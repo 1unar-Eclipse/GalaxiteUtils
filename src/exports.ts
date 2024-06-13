@@ -200,6 +200,7 @@ export const gxuSplashes = [
     "\xA78N\xA77o\xA7fp\xA75e", // asexual
     "\xA7eWhat \xA7feven \xA75is \xA78gender?", // non-binary
     "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
+    "Let's paint this gray haze into sky blue!",
     "Now with more utils!",
     "pve game",
     "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
@@ -217,7 +218,7 @@ export const gxuSplashes = [
     "PixelParadiseUtils disactive.",
     ":3",
     "is ACTIVE",
-    "Made with 99.4% pure TypeScript!",
+    "Made with 99.5% pure TypeScript!",
     "These aren't funny aren't they",
     "Open-source!",
     "Now with patch notes!",
@@ -273,7 +274,6 @@ export const gxuSplashes = [
     "Remember to update your game from time to time!",
     "Powered by WhereAmAPI!",
     "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
-    "Let's paint this gray haze into sky blue!"
 ];
 
 /**
