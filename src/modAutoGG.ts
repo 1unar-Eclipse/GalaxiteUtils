@@ -123,10 +123,9 @@ client.on("title", title => {
     // prop hunt
     if(ph.getValue()) {
         if(rgxPh.test(text)) {
-            api.onNextTransfer(() => {
-                if(api.game == GameName.PROP_HUNT) {
+            api.once("whereami-update", () => {
+                if(api.game == GameName.PROP_HUNT)
                     sendGG();
-                }
             });
         }
     }

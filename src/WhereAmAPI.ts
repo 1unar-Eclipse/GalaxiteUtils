@@ -1,5 +1,6 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
+import { EventEmitter } from "./EventEmitter";
 import { notOnGalaxite, sendGXUMessage, optionWhereAmIDelay, optionHideResponses } from "./exports";
 
 export enum GameName {
@@ -20,7 +21,16 @@ export enum GameName {
     ALIEN_BLAST
 }
 
-class WhereAmAPI {
+/**
+ * Keys for relevant events that will be emitted.
+ */
+export type GalaxiteEvents = {
+    "whereami-update": () => void,
+    "game-start": (game: GameName) => void,
+    "game-end": (game: GameName) => void
+}
+
+class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
     /**
      * For accuracy in sending bug reports, this doesn't actually store the results of the Username field.
      */
@@ -72,38 +82,14 @@ class WhereAmAPI {
      */
     public whereAmIReceived: boolean = false;
 
-    /**
-     * Array of code to run on the next `/whereami` response.
-     */
-    private delayedCode: (() => void)[] = [];
-
-    /**
-     * Executes a given block of code when the API has been updated this lobby. This function is asynchronous.
-     * @param code The code to run when the response is given.
-     */
-    public onConfirmedResponse(code: () => void) {
-        if(!this.whereAmIReceived) { // if there hasn't been a response yet this lobby:
-            this.runWhereAmI(); // send the command
-            this.delayedCode.push(code); // add the code to a block to run later
-        } else { // if there has been a response, just run the code now
-            code(); // run the code requested
-        }
-    }
-
-    /**
-     * Executes a given block of code the next time the API updates. This function is asynchronous.
-     * @param code The code to run on the next response.
-     */
-    public onNextTransfer(code: () => void) {
-        this.delayedCode.push(code); // code runs next successful transfer anyway
-    }
+    private eventHandler = new EventEmitter<GalaxiteEvents>();
 
     /**
      * The `change-dimension` event fires twice. This works around it.
      */
     private changeDimensionBandage: boolean = false;
 
-    runWhereAmI() {
+    private runWhereAmI() {
         if(notOnGalaxite()) return;
         setTimeout(() => {
             game.executeCommand("/whereami");
@@ -124,6 +110,7 @@ class WhereAmAPI {
     }
 
     constructor() { // Registers the events for this WhereAmAPI.
+        super();
         client.on("receive-chat", msg => {
             if(notOnGalaxite()) return;
             if(!this.whereAmISent) return; // if a whereami is being waited on:
@@ -186,10 +173,7 @@ class WhereAmAPI {
                 this.whereAmIReceived = true; // whereami has been received
                 this.whereAmISent = false;
 
-                this.delayedCode.forEach(code => { // for each block of code waiting on a whereami:
-                    code(); // run the code
-                    this.delayedCode.shift(); // delete the code reference
-                });
+                this.eventHandler.emit("whereami-update");
             }
         });
 

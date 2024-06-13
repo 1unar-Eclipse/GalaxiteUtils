@@ -63,4 +63,5 @@ The terminal command `npm run build` in the root folder also works.
 ## Credits
 - Mojang, Blockception, and the Latite dev team
 - [Seb](https://github.com/TwistedAsylumMC) for motivation and helping with some cues
+- [Tom](https://github.com/CreeperG16) for the event emitter reimplementation
 - [Jadon](https://github.com/ThatJadon26) for some very specific nerd functionality
