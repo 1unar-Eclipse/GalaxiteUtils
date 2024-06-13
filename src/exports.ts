@@ -2,8 +2,11 @@
 // Put this everywhere:
 // import { notOnGalaxite } from "./exports";
 
+import { api } from "./WhereAmAPI";
+
 const http = require("http");
 const fs = require("filesystem");
+const clipboard = require("clipboard");
 
 /**
 * Returns `true` if the player is not on Galaxite; `false` if they are.
@@ -30,14 +33,16 @@ export function nerdRadar(): boolean {
 
 /**
  * Sends a formatted message to chat.
- * @param message The message to use.
+ * @param messages The messages to send.
  */
-export function sendGXUMessage(message: string) {
-    clientMessage(`\xA78[\xA7t${        // formatted opening square bracket
-        optionShortGXUBadge.getValue()  // if short badges:
-        ? "GXU"                         // just gxu
-        : "Galaxite\xA7uUtils"          // otherwise, full galaxiteutils
-    }\xA78]\xA7r ${message}`);          // formatted closing square bracket and message
+export function sendGXUMessage(...messages: any[]) {
+    messages.forEach((message) => {
+        clientMessage(`\xA78[\xA7t${        // formatted opening square bracket
+            optionShortGXUBadge.getValue()  // if short badges:
+            ? "GXU"                         // just gxu
+            : "Galaxite\xA7uUtils"          // otherwise, full galaxiteutils
+        }\xA78]\xA7r ${message}`);          // formatted closing square bracket and message
+    });
 }
 
 let globals = new Module(
@@ -67,6 +72,18 @@ export let optionHideResponses = globals.addBoolSetting(
     "Hides responses of automatically-sent /whereami commands.",
     true
 );
+let optionUseCopyWhereAmI = globals.addBoolSetting(
+    "usecopywhereami",
+    "Enable /whereami Copying",
+    "Allows copying the last /whereami response",
+    false
+);
+let optionCopyWhereAmI = globals.addKeySetting(
+    "copywhereami",
+    "/whereami Copy Key",
+    "Key used to copy the last response of /whereami",
+    KeyCode.P
+);
 export let optionShortGXUBadge = globals.addBoolSetting(
     "shortgxu",
     "Shorten GalaxiteUtils Badge",
@@ -79,6 +96,7 @@ export let optionAutoUpdate = globals.addBoolSetting(
     "Whether to automatically download plugin updates",
     false
 );
+optionCopyWhereAmI.setCondition("usecopywhereami");
 client.getModuleManager().registerModule(globals);
 
 // get and compare version from last launch
@@ -139,46 +157,36 @@ client.on("join-game", e => {
     }, 5000);
 });
 
+client.on("key-press", k => {
+    if(notOnGalaxite()) return;
+    if(!optionUseCopyWhereAmI.getValue()) return;
+    if(!k.isDown) return;
+    if(game.isInUI()) return;
+    if(k.keyCode != optionCopyWhereAmI.getValue()) return;
+
+    let whereami = (
+        `\`\`\`Username: ${api.username}` +
+        `\nServerUUID: ${api.serverUUID}` +
+        `\nPodName: ${api.podName}` +
+        `\nServerName: ${api.serverName}` +
+        `\nCommitID: ${api.commitID}` +
+        `\nShulkerID: ${api.shulkerID}` +
+        `\nRegion: ${api.region}` +
+        `\nPrivacy: ${api.privacy}` +
+        ((api.parkourUUID != "")
+        ? `\nParkourUUID: ${api.parkourUUID}`
+        : "") +
+        "```"
+    );
+    clipboard.set(whereami);
+    sendGXUMessage("Copied the last /whereami to clipboard!");
+});
+
 function getSplash(): string {
     return gxuSplashes[
         Math.floor(Math.random() * gxuSplashes.length)
     ];
 }
-
-client.on("key-press", k => { // DEBUG CODE
-    if(notOnGalaxite()) return;
-    if(k.keyCode != KeyCode.K) return;
-    if(!k.isDown) return;
-    if(game.isInUI()) return;
-    let player = game.getLocalPlayer();
-    if(!player) return;
-    if(player.getName() != "Eclipse2421") return;
-
-    sendGXUMessage("Option 1:")
-    words.forEach(badge => {
-        clientMessage(badge + "Sample message");
-    });
-    sendGXUMessage("Option 2:")
-    symbols.forEach(badge => {
-        clientMessage(badge + "Sample message");
-    });
-});
-
-let words: string[] = [
-    "\xa78[\xa7dNOTICE\xa78]\xa7r ",
-    "\xa78[\xa72JOIN\xa78]\xa7r ",
-    "\xa78[\xa74WARN\xa78]\xa7r ",
-    "\xa78[\xa7eINFO\xa78]\xa7r ",
-    "\xa78[\xa7aGAME\xa78]\xa7r ",
-];
-let symbols: string[] = [
-    "\xa78[\xa7d ... \xa78]\xa7r ",
-    "\xa78[\xa72 + \xa78]\xa7r ",
-    "\xa78[\xa74 !!! \xa78]\xa7r ",
-    "\xa78[\xa7e  i  \xa78]\xa7r ",
-    "\xa78[\xa7a  !  \xa78]\xa7r ",
-]
-
 
 /**
  * A collection of splash texts.
@@ -225,7 +233,7 @@ export const gxuSplashes = [
     "PC-exclusive!",
     "Controller isn't a bad input method y'all just don't know how to use steam input",
     "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
-    "252+ SpA Choice Specs Beads of Ruin Chi-Yu Overheat vs. 0 HP / 0 SpD Sniper Main in Sun: 18120-21316 (12496.5 - 14700.6%) -- guaranteed OHKO",
+    "252+ SpA Choice Specs Beads of Ruin Chi-Yu Overheat vs. 0 HP / 0- SpD Sniper-Playground in Sun: 40584-47744 (27988.9 - 32926.8%) -- guaranteed OHKO",
     "What's a meta, anyway?",
     "Does not help with escaping the Entity",
     "Sonic Snowballs were such a good item Mojang added them officially",

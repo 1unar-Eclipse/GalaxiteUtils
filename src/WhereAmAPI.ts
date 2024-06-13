@@ -1,7 +1,6 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { notOnGalaxite, sendGXUMessage, optionWhereAmIDelay, optionHideResponses } from "./exports";
-const clipboard = require("clipboard");
 
 export enum GameName {
     UNKNOWN = -1,
@@ -62,13 +61,6 @@ class WhereAmAPI {
      * Stores the results of the ParkourUUID field. (Will often be empty.)
      */
     public parkourUUID: string = "";
-
-    public cmdExportWhereAmI: Command = new Command(
-        "export",
-        "Copies the results of the last whereami to the clipboard",
-        "$",
-        ["copywhereami", "whereami"]
-    );
 
     /**
      * Whether /whereami has been sent this lobby.
@@ -213,26 +205,6 @@ class WhereAmAPI {
         });
         client.on("join-game", e => {
             this.runWhereAmI();
-        });
-
-        client.getCommandManager().registerCommand(this.cmdExportWhereAmI);
-        this.cmdExportWhereAmI.on("execute", () => {
-            clipboard.set(
-                `\`\`\`Username: ${this.username}` +
-                `\nServerUUID: ${this.serverUUID}` +
-                `\nPodName: ${this.podName}` +
-                `\nServerName: ${this.serverName}` +
-                `\nCommitID: ${this.commitID}` +
-                `\nShulkerID: ${this.shulkerID}` +
-                `\nRegion: ${this.region}` +
-                `\nPrivacy: ${this.privacy}` +
-                (this.parkourUUID != "")
-                ? `\nParkourUUID: ${this.parkourUUID}`
-                : "" +
-                "```"
-            );
-            sendGXUMessage("Copied the last /whereami to clipboard!");
-            return true;
         });
     }
 }
