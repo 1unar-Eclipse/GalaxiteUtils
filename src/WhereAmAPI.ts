@@ -110,6 +110,8 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
     }
 
     private parseWhereAmI(message: string): boolean {
+        let cancel: boolean = false;
+
         if(message.includes("ServerUUID:") && message.includes("\n")) { // Check for message (users can't send \n)
             let formattedMessage = message.replace("\uE0BC \xA7c", ""); // Cache message
             let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line and removing color
@@ -125,13 +127,11 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
                 ["FieldName" : fieldResult]
             ]
             */
-
             this.response = whereAmIPairs.reduce((prevVal, [key, value]) => {
                 prevVal[key] = value;
                 return prevVal;
             }, {} as any);
-
-            /* Response should look like:
+            /* Response should now look like:
             {
                 "Username" : username,
                 "ServerUUID" : serverUUID,
@@ -140,15 +140,6 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
             }
             */
 
-            // username =   entries[0];
-            // serverUUID = entries[1];
-            // podName =    entries[2];
-            // serverName = entries[3];
-            // commitID =   entries[4];
-            // shulkerID =  entries[5];
-            // region =     entries[6];
-            // privacy =    entries[7];
-    
             // Store entries
             this.username = game.getLocalPlayer()!.getName(); // this is being ran on a receive-chat event. there will be a player
             this.serverUUID = this.assign("ServerUUID");
@@ -162,16 +153,16 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
 
             this.game = nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
             
-            this.whereAmIReceived = true; // whereami has been received
+            if(this.whereAmISent && optionHideResponses.getValue())
+                cancel = true;
+
             this.whereAmISent = false;
+            this.whereAmIReceived = true; // whereami has been received
 
             this.eventHandler.emit("whereami-update");
-
-            if(this.whereAmISent && optionHideResponses.getValue())
-                return true; // hide the api-provided whereami
         }
 
-        return false;
+        return cancel;
     }
 
     constructor() { // Registers the events for this WhereAmAPI.
