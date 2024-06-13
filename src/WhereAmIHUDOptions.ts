@@ -136,7 +136,7 @@ optionUsernameSuffix.setCondition("Username");
 export let optionDevFields = whereAmIHUD.addBoolSetting(
     "DevFields",
     "Developer Fields",
-    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID).\n",
+    "Shows details less important to normal users (ServerUUID, PodName, CommitID, and ShulkerID).",
     false
 );
 

@@ -60,7 +60,7 @@ let optionSplashText = globals.addBoolSetting(
 export let optionWhereAmIDelay = globals.addNumberSetting(
     "whereamidelay",
     "/whereami Delay",
-    "The delay between joining a server and running /whereami for some module updates, in seconds.\n\nValues set too low may cause the message to fail, while values set too high may be sent after fast server transfers.",
+    "The delay between joining a server and running /whereami for some module updates, in seconds.\nValues set too low may cause the message to fail, while values set too high may be sent after fast server transfers.",
     0,
     10.0,
     0.1,
@@ -159,9 +159,9 @@ client.on("join-game", e => {
 
 client.on("key-press", k => {
     if(notOnGalaxite()) return;
-    if(!optionUseCopyWhereAmI.getValue()) return;
     if(!k.isDown) return;
     if(game.isInUI()) return;
+    if(!optionUseCopyWhereAmI.getValue()) return;
     if(k.keyCode != optionCopyWhereAmI.getValue()) return;
 
     let whereami = (
@@ -179,7 +179,7 @@ client.on("key-press", k => {
         "```"
     );
     clipboard.set(whereami);
-    sendGXUMessage("Copied the last /whereami to clipboard!");
+    sendGXUMessage("Copied the current server information to clipboard!");
 });
 
 function getSplash(): string {
@@ -273,7 +273,7 @@ export const gxuSplashes = [
     "Remember to update your game from time to time!",
     "Powered by WhereAmAPI!",
     "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
-    "Let's paint this gray haze into sky blue!",
+    "Let's paint this gray haze into sky blue!"
 ];
 
 /**
@@ -292,8 +292,8 @@ export const patchNotes = new Map([
         "  - 0.4.0 will add a new way of handling sending /whereami commands that \xA7oshould\xA7r make this not happen as often\n" +
         "- Fixed a bug (hopefully) where prestige icons occasionally caused the Compact Badges module to not work as expected\n" +
         "- Fixed WhereAmIHUD not properly handling ParkourUUID\n" +
-        "- Various backend changes\n\n" +
-        "Remember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "- Various backend changes\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)" // lol
     ],
     ["0.3.1", "GalaxiteUtils has been updated to v0.3.1!\n" +
