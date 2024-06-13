@@ -3,6 +3,7 @@
 
 // Import other modules
 // let modKitUI = require("modKitUI"); // come back to this later
+let modGlobals = require("exports");
 let modAutoGG = require("modAutoGG");
 // let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
@@ -12,4 +13,4 @@ let modConfirmClick = require("modExtraThingsPrevent");
 // let modPKBAttempts = require("modPKBAttempts");
 // let modTeamUI = require("modTeamUI");
 let modWhereAmIHUD = require("modWhereAmIHUD");
-let modGlobals = require("exports");
+// let test = require("test");
