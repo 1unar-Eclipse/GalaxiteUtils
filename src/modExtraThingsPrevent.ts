@@ -8,13 +8,13 @@ import { api, GameName } from "./WhereAmAPI";
 let confirmClick = new Module(
     "etprevent",
     "GXU: Confirm Item Use",
-    "Adds options to confirm using Extra Things and interact with shops",
+    "Adds options to confirm using Extra Things and interact with shops.",
     KeyCode.None
 );
 let optionInterval = confirmClick.addNumberSetting(
     "interval",
     "Max Interval",
-    "Maximum amount of time between a click and the confirmation click",
+    "Maximum amount of time between a click and the confirmation click.",
     0,
     1,
     0.01,
@@ -23,19 +23,19 @@ let optionInterval = confirmClick.addNumberSetting(
 let optionExtraThings = confirmClick.addBoolSetting(
     "etconfirm",
     "Confirm Extra Things",
-    "Require a confirmation click to use Extra Things or leave Kit PVP",
+    "Require a confirmation click to use Extra Things or leave Kit PVP.",
     true
 );
 let optionShop = confirmClick.addBoolSetting(
     "shopconfirm",
     "Confirm Shop Interaction (experimental)",
-    "Require a confirmation click to interact with shops while holding fighting items in Chronos and Core Wars",
+    "Require a confirmation click to interact with shops while holding fighting items in Chronos and Core Wars.",
     false
 );
 let optionNotif = confirmClick.addBoolSetting(
     "notif",
-    "Show Notification",
-    "Shows a notification whenever confirmation is needed",
+    "Send Chat Message",
+    "Sends a chat message whenever confirmation is needed.",
     true
 );
 client.getModuleManager().registerModule(confirmClick);

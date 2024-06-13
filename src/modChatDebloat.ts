@@ -18,37 +18,37 @@ import { notOnGalaxite } from "./exports";
 let chatDebloat = new Module(
     "chatDebloat",
     "GXU: Chat Debloat",
-    "Hides some spammy chat messages",
+    "Hides some spammy chat messages.",
     KeyCode.None,
 );
 let optionHideJoins = chatDebloat.addBoolSetting(
     "hideJoin",
     "Hide Joins",
-    "Hide player join messages",
+    "Hides player join messages in queued games.",
     false
 );
 let optionHideNotices = chatDebloat.addBoolSetting(
     "hideNotices",
     "Hide Notices",
-    "Hides notice messages (ex. hub messages)",
+    "Hides notice messages (ex. hub messages).",
     true
 );
 let optionHideMelvin = chatDebloat.addBoolSetting(
     "hideMelvin",
     "Hide Melvin Messages",
-    "Hides chat messages relating to Melvin's Mine",
+    "Hides chat messages relating to Melvin's Mine.",
     false
 );
 let optionHideWelcome = chatDebloat.addBoolSetting(
     "hideWelcome",
     "Hide Welcome Messages",
-    'Hides the "Welcome to Galaxite" message',
+    'Hides the "Welcome to Galaxite" message.',
     true
 );
 let optionHideVisibility = chatDebloat.addBoolSetting(
     "hideVisibility",
     "Hide Visibility Status",
-    "Hides invisibility status messages",
+    "Hides invisibility status messages.",
     true
 );
 client.getModuleManager().registerModule(chatDebloat);

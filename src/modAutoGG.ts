@@ -12,7 +12,7 @@ const fs = require("filesystem");
 let autoGG = new Module(
     "autoGG",
     "GXU: AutoGG",
-    'Automatically says "gg" when a game finishes',
+    'Automatically say "gg" when a game finishes.',
     KeyCode.None
 );
 client.getModuleManager().registerModule(autoGG);
@@ -20,37 +20,37 @@ client.getModuleManager().registerModule(autoGG);
 let ch = autoGG.addBoolSetting(
     "ch",
     "Chronos",
-    "Chronos support",
+    'Whether to say "gg" in games of Chronos.',
     true
 );
 let ru = autoGG.addBoolSetting(
     "ru",
     "Rush",
-    "Rush support",
+    'Whether to say "gg" in games of Rush.',
     true
 );
 let hr = autoGG.addBoolSetting(
     "hr",
     "Hyper Racers",
-    "Hyper Racers support",
+    'Whether to say "gg" in games of Hyper Racers.',
     true
 );
 let cw = autoGG.addBoolSetting(
     "cw",
     "Core Wars",
-    "Core Wars support",
+    'Whether to say "gg" in games of Core Wars.',
     true
 );
 let ftg = autoGG.addBoolSetting(
     "ftg",
     "Fill the Gaps",
-    "Fill the Gaps support",
+    'Whether to say "gg" in games of Fill the Gaps.',
     true
 );
 let ph = autoGG.addBoolSetting(
     "ph",
     "Prop Hunt",
-    "Prop Hunt support",
+    'Whether to say "gg" in games of Prop Hunt.',
     true
 );
 

@@ -24,7 +24,7 @@ import { api, GameName } from "./WhereAmAPI";
 let perkUI = new TextModule(
     "perkui",
     "GXU: Perk UI",
-    "Shows your equipped perk in various games",
+    "Shows your equipped perk in various games.",
     KeyCode.None
 );
 let optionChronos = perkUI.addBoolSetting(

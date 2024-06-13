@@ -54,7 +54,7 @@ let globals = new Module(
 let optionSplashText = globals.addBoolSetting(
     "gxuactive",
     "GalaxiteUtils Splashes",
-    "Sends a fun message upon joining Galaxite",
+    "Sends a fun message upon joining Galaxite!",
     true
 );
 export let optionWhereAmIDelay = globals.addNumberSetting(
@@ -75,25 +75,25 @@ export let optionHideResponses = globals.addBoolSetting(
 let optionUseCopyWhereAmI = globals.addBoolSetting(
     "usecopywhereami",
     "Enable /whereami Copying",
-    "Allows copying the last /whereami response",
+    "Allows copying the last /whereami response.",
     false
 );
 let optionCopyWhereAmI = globals.addKeySetting(
     "copywhereami",
     "/whereami Copy Key",
-    "Key used to copy the last response of /whereami",
+    "Key used to copy the last response of /whereami.",
     KeyCode.P
 );
 export let optionShortGXUBadge = globals.addBoolSetting(
     "shortgxu",
     "Shorten GalaxiteUtils Badge",
-    "Use a shorter version of the GalaxiteUtils icon",
+    "Use a shorter version of the GalaxiteUtils icon.",
     false
 );
 export let optionAutoUpdate = globals.addBoolSetting(
     "autoupdate",
     "Auto Update",
-    "Whether to automatically download plugin updates",
+    "Whether to automatically download plugin updates.\nRelaunching the game is still required if this is enabled.",
     false
 );
 optionCopyWhereAmI.setCondition("usecopywhereami");
@@ -326,6 +326,13 @@ export const patchNotes = new Map([
         "  - The setting should reset to 0.5 seconds, if it doesn't any manual change should update it\n" +
         "- Fixed a bug in Chat Editor where Prestige icons could not be hidden or made classic\n" +
         "- Added a lot of Pride splashes!\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
+    ],
+    ["0.3.7", "GalaxiteUtils has been updated to v0.3.7!\n" +
+        "- You can now bind a button to copy the information of the current server you're in within the Global Settings module\n" +
+        "- Chat Editor is no longer always active\n" +
+        "- Changed a lot of module and setting descriptions\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],

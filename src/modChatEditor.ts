@@ -6,7 +6,7 @@ import { notOnGalaxite } from "./exports";
 let chatEditor = new Module(
     "compactBadges",
     "GXU: Chat Editor",
-    "Adds options to modify various parts of the Galaxite chat.\n\nThis module is incompatible with anything else that edits chat (such as the Timestamps plugin).",
+    "Adds options to modify various parts of the Galaxite chat.\nThis module is incompatible with anything else that edits chat (such as the Timestamps plugin).",
     KeyCode.None
 );
 let optionCompactBadges = chatEditor.addBoolSetting( // Shortens badges.
@@ -25,7 +25,7 @@ optionComboToggle.setCondition("compactbadges", true); // this toggle makes sens
 let optionClassicBadges = chatEditor.addBoolSetting(
     "classicbadges",
     "Classic Badges",
-    "Uses normal Minecraft text for player badges instead of custom graphics",
+    "Uses Minecraft text for player badges instead of custom graphics.",
     false
 );
 optionClassicBadges.setCondition("compactbadges", false);
@@ -33,7 +33,7 @@ optionCompactBadges.setCondition("classicbadges", false);
 let optionClassicServerBadges = chatEditor.addBoolSetting(
     "classicserverbadges",
     "Classic Server Badges",
-    "Uses normal Minecraft text for server badges (Warn, Info, etc.) instead of custom graphics",
+    "Uses Minecraft text for server badges (Warn, Info, etc.) instead of custom graphics.",
     false
 );
 let optionRemoveBadges = chatEditor.addBoolSetting( // Removes badges. Not mutually exclusive with Compact or Classic Badges because they would still work on staff badges
@@ -52,7 +52,7 @@ let optionHidePrestigeIcons = chatEditor.addBoolSetting(
 let optionClassicPrestigeIcons = chatEditor.addBoolSetting(
     "classicprestige",
     "Classic Prestige Icons",
-    "Uses normal Minecraft text for Prestige icons instead of custom graphics",
+    "Uses Minecraft text for Prestige icons instead of custom graphics.",
     false
 );
 optionClassicPrestigeIcons.setCondition("hideprestige", false);
@@ -116,7 +116,9 @@ const classicServerMap = new Map([
 ]);
 
 client.on("receive-chat", c => {
-    if(notOnGalaxite() || c.cancel) return;
+    if(notOnGalaxite()) return;
+    if(c.cancel) return;
+    if(!chatEditor.isEnabled()) return;
 
     let editedMessage = c.message; // cache a message to edit and resend later
 
