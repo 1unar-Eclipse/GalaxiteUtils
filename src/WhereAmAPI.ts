@@ -24,10 +24,10 @@ export enum GameName {
 /**
  * Keys for relevant events that will be emitted.
  */
-export type GalaxiteEvents = {
+type GalaxiteEvents = {
     "whereami-update": () => void,
-    "game-start": (game: GameName) => void,
-    "game-end": (game: GameName) => void
+    // "game-start": (game: GameName) => void, // future
+    // "game-end": (game: GameName) => void // future
 }
 
 class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
@@ -109,72 +109,77 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
         return (this.response[field] ?? def);
     }
 
+    private parseWhereAmI(message: string): boolean {
+        if(message.includes("ServerUUID:") && message.includes("\n")) { // Check for message (users can't send \n)
+            let formattedMessage = message.replace("\uE0BC \xA7c", ""); // Cache message
+            let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line and removing color
+            let whereAmIPairs: string[][] = [];
+            for(let i = 0; i < entries.length; i++) { // For each entry:
+                whereAmIPairs[i] = entries[i].split(": \xA7a"); // Save the key and its corresponding value, in the process removing color
+            }
+            /* The general structure of whereAmIPairs is:
+            [
+                ["Username" : username],
+                ["ServerUUID" : serverUUID],
+                ...
+                ["FieldName" : fieldResult]
+            ]
+            */
+
+            this.response = whereAmIPairs.reduce((prevVal, [key, value]) => {
+                prevVal[key] = value;
+                return prevVal;
+            }, {} as any);
+
+            /* Response should look like:
+            {
+                "Username" : username,
+                "ServerUUID" : serverUUID,
+                ...
+                "FieldName" : fieldResult
+            }
+            */
+
+            // username =   entries[0];
+            // serverUUID = entries[1];
+            // podName =    entries[2];
+            // serverName = entries[3];
+            // commitID =   entries[4];
+            // shulkerID =  entries[5];
+            // region =     entries[6];
+            // privacy =    entries[7];
+    
+            // Store entries
+            this.username = game.getLocalPlayer()!.getName(); // this is being ran on a receive-chat event. there will be a player
+            this.serverUUID = this.assign("ServerUUID");
+            this.podName = this.assign("PodName");
+            this.serverName = this.assign("ServerName");
+            this.commitID = this.assign("CommitID");
+            this.shulkerID = this.assign("ShulkerID");
+            this.region = this.assign("Region");
+            this.privacy = this.assign("Privacy");
+            this.parkourUUID = this.assign("ParkourUUID"); // The assign function already considers the possibility of no entry
+
+            this.game = nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
+            
+            this.whereAmIReceived = true; // whereami has been received
+            this.whereAmISent = false;
+
+            this.eventHandler.emit("whereami-update");
+
+            if(this.whereAmISent && optionHideResponses.getValue())
+                return true; // hide the api-provided whereami
+        }
+
+        return false;
+    }
+
     constructor() { // Registers the events for this WhereAmAPI.
         super();
         client.on("receive-chat", msg => {
             if(notOnGalaxite()) return;
-            if(!this.whereAmISent) return; // if a whereami is being waited on:
 
-            if(msg.message.includes("ServerUUID:") && msg.message.includes("\n")) { // Check for message (users can't send \n)
-                let formattedMessage = msg.message.replace("\uE0BC \xA7c", ""); // Cache message
-                let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line and removing color
-                let whereAmIPairs: string[][] = [];
-                for(let i = 0; i < entries.length; i++) { // For each entry:
-                    whereAmIPairs[i] = entries[i].split(": \xA7a"); // Save the key and its corresponding value, in the process removing color
-                }
-                /* The general structure of whereAmIPairs is:
-                [
-                    ["Username" : username],
-                    ["ServerUUID" : serverUUID],
-                    ...
-                    ["FieldName" : fieldResult]
-                ]
-                */
-
-                this.response = whereAmIPairs.reduce((prevVal, [key, value]) => {
-                    prevVal[key] = value;
-                    return prevVal;
-                }, {} as any);
-
-                /* Response should look like:
-                {
-                    "Username" : username,
-                    "ServerUUID" : serverUUID,
-                    ...
-                    "FieldName" : fieldResult
-                }
-                */
-
-                // username =   entries[0];
-                // serverUUID = entries[1];
-                // podName =    entries[2];
-                // serverName = entries[3];
-                // commitID =   entries[4];
-                // shulkerID =  entries[5];
-                // region =     entries[6];
-                // privacy =    entries[7];
-        
-                // Store entries
-                this.username = game.getLocalPlayer()!.getName(); // this is being ran on a receive-chat event. there will be a player
-                this.serverUUID = this.assign("ServerUUID");
-                this.podName = this.assign("PodName");
-                this.serverName = this.assign("ServerName");
-                this.commitID = this.assign("CommitID");
-                this.shulkerID = this.assign("ShulkerID");
-                this.region = this.assign("Region");
-                this.privacy = this.assign("Privacy");
-                this.parkourUUID = this.assign("ParkourUUID"); // The assign function already considers the possibility of no entry
-
-                this.game = nameToGame.get(this.serverName) ?? GameName.UNKNOWN; // Assign the shorter game name field
-
-                if(optionHideResponses.getValue())
-                    msg.cancel = true; // hide the api-provided whereami
-                
-                this.whereAmIReceived = true; // whereami has been received
-                this.whereAmISent = false;
-
-                this.eventHandler.emit("whereami-update");
-            }
+            msg.cancel = this.parseWhereAmI(msg.message);
         });
 
         // Send /whereami every time a new server is joined
