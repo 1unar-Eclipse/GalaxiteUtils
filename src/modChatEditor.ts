@@ -90,7 +90,7 @@ evidently i didn't care about symmetry
 */
 const classicBadgeMap = new Map([
     ["\uE096 ", "\xa78[\xa7eE\xa76L\xa7cI\xa7dT\xa75E\xa78]\xa7r "], // elite + ultra (gradient)
-    ["\uE099 ", "\xa78[\xa7eELITE\xa78]\xa7r" ], // elite (yellow)
+    ["\uE099 ", "\xa78[\xa7eELITE\xa78]\xa7r "], // elite (yellow)
     ["\uE09A ", "\xa78[\xa77PLAYER\xa78]\xa7r "], // player (light gray or white)
     ["\uE09B ", "\xa78[\xa79STAFF\xa78]\xa7r "], // staff (blue)
     ["\uE09C ", "\xa78[\xa72HELPER\xa78]\xa7r "], // helper (green)
