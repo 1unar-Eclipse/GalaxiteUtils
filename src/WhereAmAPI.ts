@@ -1,7 +1,7 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { EventEmitter } from "./EventEmitter";
-import { notOnGalaxite, sendGXUMessage, optionWhereAmIDelay, optionHideResponses } from "./exports";
+import { notOnGalaxite, optionWhereAmIDelay, optionHideResponses } from "./exports";
 
 export enum GameName {
     UNKNOWN = -1,
@@ -68,9 +68,9 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
      */
     public shulkerID: string = "Unknown";
     /**
-     * Stores the results of the ParkourUUID field. (Will often be empty.)
+     * Stores the results of the ParkourUUID field. (Will often be null.)
      */
-    public parkourUUID: string = "";
+    public parkourUUID: string | null = null;
 
     /**
      * Whether /whereami has been sent this lobby.
@@ -81,8 +81,6 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
      * Whether `/whereami` has been received this lobby.
      */
     public whereAmIReceived: boolean = false;
-
-    private eventHandler = new EventEmitter<GalaxiteEvents>();
 
     /**
      * The `change-dimension` event fires twice. This works around it.
@@ -100,10 +98,15 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
 
     private response: any
 
-    private assign(field: string): string {
-        let def: string; // default is reserved
+    /**
+     * Reads a given field of the last /whereami response and returns the result.
+     * @param field The field to read.
+     * @returns Usually a string with the correct interpretation. Will only return `null` in case there is no ParkourUUID.
+     */
+    private assign(field: string): any {
+        let def: string | null; // default is reserved
         if(field == "ParkourUUID") 
-            def = "";
+            def = null;
         else
             def = "Unknown";
         return (this.response[field] ?? def);
@@ -159,7 +162,7 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
             this.whereAmISent = false;
             this.whereAmIReceived = true; // whereami has been received
 
-            this.eventHandler.emit("whereami-update");
+            this.emit("whereami-update");
         }
 
         return cancel;
