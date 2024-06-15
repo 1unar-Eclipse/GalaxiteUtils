@@ -59,7 +59,7 @@ let attemptDatabase: any;
 let attemptDirectory = "ParkourAttempts.json";
 
 if(!fs.exists(attemptDirectory)) {
-    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify({} as any)));
+    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify({} as any, () => {}, 4)));
 }
 attemptDatabase = JSON.parse(util.bufferToString(fs.read(attemptDirectory)));
 
@@ -146,5 +146,5 @@ function incrementGlobalAttempts() {
     if(!attemptDatabase[api.parkourUUID!]) // if there is no value for the current id:
         attemptDatabase[api.parkourUUID!] = 0; // initialize it to 0
     attemptDatabase[api.parkourUUID!] += 1; // the combination of setting to zero then adding 1 ultimately makes the default 1
-    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify(attemptDatabase)));
+    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify(attemptDatabase, () => {}, 4)));
 }

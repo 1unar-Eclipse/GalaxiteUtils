@@ -329,18 +329,12 @@ export const patchNotes = new Map([
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
-    ["0.3.7", "GalaxiteUtils has been updated to v0.3.7!\n" +
-        "- You can now bind a button to copy the information of the current server you're in within the Global Settings module\n" +
-        "- Chat Editor is no longer always active\n" +
-        "- Changed a lot of module and setting descriptions\n" +
-        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
-        "(press your chat button to view full patch notes)"
-    ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
-        "- New module: Kit UI (for Chronos, Hyper Racers, and Kit PvP; opt-in for Rush due to length)\n" +
-        '- The plugin now automatically downloads a resource pack that removes armor. Click the "Open Latite Folder" button next time you launch and import the pack there!\n' +
+        "- You can now bind a button to copy the information of the current server you're in within the Global Settings module\n" +
+        "- Chat Editor is no longer always active\n" +
+        "- Changed a lot of module and setting descriptions\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ]
