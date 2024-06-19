@@ -173,7 +173,7 @@ client.on("key-press", k => {
         `\nShulkerID: ${api.shulkerID}` +
         `\nRegion: ${api.region}` +
         `\nPrivacy: ${api.privacy}` +
-        ((api.parkourUUID != "")
+        ((api.parkourUUID)
         ? `\nParkourUUID: ${api.parkourUUID}`
         : "") +
         "```"
