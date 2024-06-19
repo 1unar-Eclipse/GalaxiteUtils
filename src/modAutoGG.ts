@@ -95,7 +95,7 @@ function sendMessage(message: string) {
     try {
         game.sendChatMessage(message);
     } catch (error) {
-        sendGXUMessage("Error: there is currently no permission to send messages");
+        sendGXUMessage("Error in AutoGG: there is currently no permission to send messages");
     }
 }
 
