@@ -1,6 +1,6 @@
 // Parkour Builders Attempts: Shows current attempts on a Parkour Builders run.
 
-import { notOnGalaxite } from "./exports";
+import { notOnGalaxite, sendGXUMessage } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 
@@ -80,16 +80,20 @@ JSON structure:
 */
 
 api.on("whereami-update", () => {
-    if(!api.parkourUUID) { // if there is no parkour uuid:
-        currentAttempts = 0; // tracking attempts doesn't matter but just in case set it to 0
-    }
-    else {
-        currentAttempts = 1; // if there is a parkouruuid, there's something worth tracking. the first attempt must be tracked since there's no death message cue
-        incrementGlobalAttempts();
-    }
+    currentAttempts = 0;
 });
 
 // Track attempts
+client.on("title", t => {
+    if(notOnGalaxite()) return;
+    if(!api.parkourUUID) return;
+
+    if(t.text == "\xA7a\xA7lGO") {
+        currentAttempts += 1;
+        incrementGlobalAttempts(1);
+    }
+});
+
 client.on("receive-chat", m => {
     if(notOnGalaxite()) return;
     if(!api.parkourUUID) return;
@@ -103,9 +107,28 @@ client.on("receive-chat", m => {
     );
     if(rgxDeathMessage.test(m.message)) {
         currentAttempts += 1;
-        incrementGlobalAttempts();
+        incrementGlobalAttempts(1);
     }
 });
+
+// TO-DO: Correct attempts for to-be-published parkours (currently off by 1)
+
+/**
+ * Adds 1 to the lifetime attempts of the current Parkour UUID, and initializes it if it does not exist.
+ */
+function incrementGlobalAttempts(by: number) {
+    if(api.parkourUUID) {
+        if(!attemptDatabase[api.parkourUUID]) // if there is no value for the current id:
+            attemptDatabase[api.parkourUUID] = 0; // initialize it to 0
+        attemptDatabase[api.parkourUUID] += by; // the combination of setting to zero then adding 1 ultimately makes the default 1
+        fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify(attemptDatabase, null, 4)));
+    }
+    else {
+        sendGXUMessage("Error in PKB Attempts: Attempted to change attempts of null parkour");
+    }
+}
+
+// The rendering half
 
 pkbAttempts.on("text", (p, e) => {
     if(p || e)
@@ -115,10 +138,7 @@ pkbAttempts.on("text", (p, e) => {
     if(!pkbAttempts.isEnabled()) return "";
     if(!api.parkourUUID) return "";
 
-    let render: string;
-    render = appendDetails(currentAttempts, attemptDatabase[api.parkourUUID]);
-
-    return render;
+    return appendDetails(currentAttempts, attemptDatabase[api.parkourUUID]);
 });
 
 function appendDetails(currentAttemptsLoc: number | string, lifetimeAttemptsLoc: number | string): string {
@@ -134,17 +154,7 @@ function appendDetails(currentAttemptsLoc: number | string, lifetimeAttemptsLoc:
         str += "\n";
     }
     if(lifetimeVal) {
-        str += (lifetimePrefix.getValue() + lifetimeAttemptsLoc + lifetimeSuffix.getValue());
+        str += (lifetimePrefix.getValue() + lifetimeAttemptsLoc ?? "0" + lifetimeSuffix.getValue());
     }
     return str;
-}
-
-/**
- * Adds 1 to the lifetime attempts of the current Parkour UUID, and initializes it if it does not exist.
- */
-function incrementGlobalAttempts() {
-    if(!attemptDatabase[api.parkourUUID!]) // if there is no value for the current id:
-        attemptDatabase[api.parkourUUID!] = 0; // initialize it to 0
-    attemptDatabase[api.parkourUUID!] += 1; // the combination of setting to zero then adding 1 ultimately makes the default 1
-    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify(attemptDatabase, () => {}, 4)));
 }

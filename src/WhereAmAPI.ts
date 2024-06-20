@@ -1,7 +1,7 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
 import { EventEmitter } from "./EventEmitter";
-import { notOnGalaxite, optionWhereAmIDelay, optionHideResponses } from "./exports";
+import { notOnGalaxite, optionWhereAmIDelay, optionHideResponses, sendGXUMessage } from "./exports";
 
 export enum GameName {
     UNKNOWN = -1,
@@ -117,7 +117,7 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
 
         if(message.includes("ServerUUID:") && message.includes("\n")) { // Check for message (users can't send \n)
             let formattedMessage = message.replace("\uE0BC \xA7c", ""); // Cache message
-            let entries = formattedMessage.split("\n\xA7c"); // Split up the response at this substring, in the process splitting by line and removing color
+            let entries = formattedMessage.split("\n\xA7c") ?? ""; // Split up the response at this substring, in the process splitting by line and removing color
             let whereAmIPairs: string[][] = [];
             for(let i = 0; i < entries.length; i++) { // For each entry:
                 whereAmIPairs[i] = entries[i].split(": \xA7a"); // Save the key and its corresponding value, in the process removing color
