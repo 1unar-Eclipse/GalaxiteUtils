@@ -107,15 +107,25 @@ client.on("title", title => {
     let text = title.text; // cache title
 
     // gg conditions
-    if(hr.getValue()) {
+    if(
+        hr.getValue() && api.game == GameName.HYPER_RACERS
+    ) {
         if(text == "Finished" || text == "Out of Time!")
             sendGG();
     }
-    if(ftg.getValue() || cw.getValue()) {
+
+    if(
+        (ftg.getValue() && api.game == GameName.FILL_THE_GAPS) ||
+        (cw.getValue() && api.game == GameName.CORE_WARS)
+    ) {
         if(rgxFtgCw.test(text))
             sendGG();
     }
-    if(ch.getValue() || ru.getValue()) {
+    
+    if(
+        (ch.getValue() && api.game == GameName.CHRONOS) ||
+        (ru.getValue() && api.game == GameName.RUSH)
+    ) {
         if(rgxChRu.test(text))
             sendGG();
     }
