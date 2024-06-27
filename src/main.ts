@@ -5,7 +5,7 @@
 // let modKitUI = require("modKitUI"); // come back to this later
 let modGlobals = require("exports");
 let modAutoGG = require("modAutoGG");
-// let modAutoModule = require("modAutoModule");
+let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
 let modChatEditor = require("modChatEditor");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
