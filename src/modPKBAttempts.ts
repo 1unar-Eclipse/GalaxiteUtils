@@ -138,7 +138,7 @@ pkbAttempts.on("text", (p, e) => {
     if(!pkbAttempts.isEnabled()) return "";
     if(!api.parkourUUID) return "";
 
-    return appendDetails(currentAttempts, attemptDatabase[api.parkourUUID]);
+    return appendDetails(currentAttempts, attemptDatabase[api.parkourUUID] ?? 0);
 });
 
 function appendDetails(currentAttemptsLoc: number | string, lifetimeAttemptsLoc: number | string): string {
@@ -154,7 +154,7 @@ function appendDetails(currentAttemptsLoc: number | string, lifetimeAttemptsLoc:
         str += "\n";
     }
     if(lifetimeVal) {
-        str += (lifetimePrefix.getValue() + lifetimeAttemptsLoc ?? "0" + lifetimeSuffix.getValue());
+        str += (lifetimePrefix.getValue() + lifetimeAttemptsLoc + lifetimeSuffix.getValue());
     }
     return str;
 }
