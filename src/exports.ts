@@ -192,6 +192,7 @@ function getSplash(): string {
  * A collection of splash texts.
  */
 export const gxuSplashes = [
+    // Gay splashes
     "\xA7cHap\xA76py \xA7ePri\xA7ade \xA79Mon\xA75th!", // hate that i'll need to remove this after june :(
     "\xA76w\xA7po\xA7em\xA7fe\xA7un\xA7d,\xA75,", // lesbian
     "\xA73gay\xA7s ga\xA7by h\xA7fomo\xA79sex\xA71ual \xA75gay", // gay
@@ -201,60 +202,14 @@ export const gxuSplashes = [
     "\xA7eWhat \xA7feven \xA75is \xA78gender?", // non-binary
     "GalaxiteUtils is queer-coded because I'm queer and I coded (it)", // https://twitter.com/kezzdev/status/1735408562791219626
     "Let's paint this gray haze into sky blue!",
-    "Now with more utils!",
-    "pve game",
-    "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
-    "Made with love! (and a lot of nerd questions to galaxite and latite)",
-    "Hello, would the owners of the Galaxite Minecraft server possibly consider selling the server, I would possibly be interested in purchasing the server if it is for sale. I am an influence in the League of Legends community and would like to expand into Minecraft, and I think the Galaxite server would be a good fit.",
-    ":blessseb:",
-    ":blessthedevs:",
-    ":blessali:",
-    ":blameseb:",
-    ":blamecallun:",
-    ":blamealex:",
-    "GalaxiteUtils active!",
-    "HiveUtils active..?",
-    "CubeCraftUtils active..?",
-    "PixelParadiseUtils disactive.",
+
+    // Entirely Eclipse saying stuff
     ":3",
-    "is ACTIVE",
-    "Made with 99.5% pure TypeScript!",
-    "These aren't funny aren't they",
-    "Open-source!",
-    "Now with patch notes!",
-    "Fact: Birds are hard to catch",
-    "3... 2... 1...",
-    "Prevents deaths to bad hotkeying!",
-    "Keeps hub messages down!",
-    "Trims badges!",
-    "AutoGG currently has a permission issue", // this one here
-    "Sends /whereami!",
-    "if notOnGalaxite() return;",
-    "Hundreds of lines of code just to store a command on screen smh just code better",
-    "PC-exclusive!",
+    "scp-6113 my beloved",
+    "scp-113 my beloved",
     "Controller isn't a bad input method y'all just don't know how to use steam input",
-    "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
-    "252+ SpA Choice Specs Beads of Ruin Chi-Yu Overheat vs. 0 HP / 0- SpD Sniper-Playground in Sun: 40584-47744 (27988.9 - 32926.8%) -- guaranteed OHKO",
-    "What's a meta, anyway?",
-    "Does not help with escaping the Entity",
-    "Sonic Snowballs were such a good item Mojang added them officially",
-    "Currently Latite's largest plugin!",
-    "Exposes no internal information!",
-    "d-d-a g",
-    "Woomy!",
-    "amogus",
     'client.on("join-game", e => clientMessage("This is valid Latite plugin code") );',
-    "5D Parkour Builders with Multiverse Time Travel",
-    "There is 1 tester and it is myself",
     'In JS, "([]+{})[!![]+!![]]" is the same thing as "b". Don\'t ask.',
-    "727!!!!!!! 727!! When you see it!!!!!!!",
-    "O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA",
-    "!bsr 25f",
-    `When \xA76server\xA7r is selected, destroy previously sent splash text and permanently add \xA76double\xA7r its character length to your \xA7bGems\xA7r next login \xA78(Currently \xA7b+${
-        Math.round(Math.random() * 31)
-        }\xA78 Gems)\xA7r`,
-    "Allays are just Orbi's kids stop hiding the truth Mojang",
-    "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
     // `${(() => { // this is a dynamic keysmash. yes i'm putting too much effort into being gay while this is being used by minecraft bedrock players. yes this is the depths of javascript. no i do not care
     //     /* This code could probably generate some bad words by accident. Don't want to take the risk even if this is technically more pure
     //     let str = ""; // initialize empty string
@@ -264,16 +219,76 @@ export const gxuSplashes = [
     //     return str;
     //     */
     // })()}`, // last parentheses make this run (ty melody)
-    "scp-6113 my beloved",
-    "scp-113 my beloved",
-    "If you or a loved one has suffered from vitenout addiction, you may be entitled to financial compensation!",
     "ouewnbv9uwebv9uwbngv",
     "opiqwhnvoicsnvkwgw890fghuison",
     "e",
     "wwdeuubdefdqzukjkjyjadhwflr",
     "Remember to update your game from time to time!",
+
+    // Self references
+    "Now with more utils!",
+    "Report issues at https://github.com/1unar-Eclipse/GalaxiteUtils, they're a huge help",
+    "Made with love! (and a lot of nerd questions to galaxite and latite)",
+    "GalaxiteUtils active!",
+    "HiveUtils active..?",
+    "CubeCraftUtils active..?",
+    "PixelParadiseUtils disactive.",
+    "Made with 99.5% pure TypeScript!",
+    "These aren't funny aren't they",
+    "Open-source!",
+    "Now with patch notes!",
+    "if(notOnGalaxite())return;",
+    "PC-exclusive!",
+    "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
+    "Currently Latite's largest plugin!",
+    "Exposes no internal information!",
+    "There is 1 tester and it is myself",
     "Powered by WhereAmAPI!",
+
+    // Module references
+    "Toggle Sprint is kinda overrated if an eldritch horror or a crowd of aliens are chasing you ngl", // Auto Modules
+    "AutoGG currently has a permission issue", // AutoGG
+    "Keeps hub messages down!", // Chat Debloat
+    "Trims badges!", // Chat Editor
+    "Prevents deaths to bad hotkeying!", // Confirm Item Use
+    "Sends /whereami!", // Global Settings
+    'don\'t look at "Open Latite Folder"\\Plugins\\GalaxiteUtils\\ParkourAttempts.json, worst mistake of my life', // Parkour Builders Attempts
+    "Hundreds of lines of code just to store a command on screen smh just code better", // WhereAmIHUD
+
+    // Galaxite jokes
+    "pve game",
+    "Hello, would the owners of the Galaxite Minecraft server possibly consider selling the server, I would possibly be interested in purchasing the server if it is for sale. I am an influence in the League of Legends community and would like to expand into Minecraft, and I think the Galaxite server would be a good fit.",
+    ":blessseb:",
+    ":blessthedevs:",
+    ":blessali:",
+    ":blameseb:",
+    ":blamecallun:",
+    ":blamealex:",
+    "252+ SpA Choice Specs Beads of Ruin Chi-Yu Overheat vs. 0 HP / 0- SpD Sniper-Playground in Sun: 40584-47744 (27988.9 - 32926.8%) -- guaranteed OHKO",
+    "What's a meta, anyway?",
+    "Does not help with escaping the Entity",
+    "Sonic Snowballs were such a good item Mojang added them officially",
     "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
+    "5D Parkour Builders with Multiverse Time Travel",
+    "Allays are just Orbi's kids stop hiding the truth Mojang",
+    "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
+    "If you or a loved one has suffered from vitenout addiction, you may be entitled to financial compensation!",
+
+    // Other game/media references
+    "is ACTIVE", //  Baba is You
+    "Fact: Birds are hard to catch", // Celeste
+    "3... 2... 1...", // Geometry Dash
+    "d-d-a g", // Undertale
+    "Woomy!", // Splatoon
+    "amogus", // Among Us
+    "727!!!!!!! 727!! When you see it!!!!!!!", // Osu
+    "!bsr 25f", // Beat Saber
+    `When \xA76server\xA7r is selected, destroy previously sent splash text and permanently add \xA76double\xA7r its character length to your \xA7bGems\xA7r next login \xA78(Currently \xA7b+${
+        Math.round(Math.random() * 31)
+        }\xA78 Gems)\xA7r`, // Balatro
+    "O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A- JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA", // Brain Power
+
+    // Unsorted splashes that Eclipse just thought of
 ];
 
 /**
