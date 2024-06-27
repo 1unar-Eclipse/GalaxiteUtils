@@ -346,7 +346,7 @@ export const patchNotes = new Map([
     ],
     ["0.4.0", "GalaxiteUtils has been updated to v0.4.0!\n" +
         "- New module: Attempt Counter (for Parkour Builders)\n" +
-        "  - This includes displays for the current session's attempts and all-time attempts!" +
+        "  - This includes displays for the current session's attempts and all-time attempts!\n" +
         "- New module: Auto-Modules (for Chronos, The Entity, and Alien Blast)\n" +
         "- You can now bind a button to copy the information of the current server you're in within the Global Settings module\n" +
         "- Chat Editor is no longer always active\n" +
