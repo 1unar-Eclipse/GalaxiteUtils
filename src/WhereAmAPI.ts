@@ -16,7 +16,7 @@ export enum GameName {
     PARKOUR_HUB,
     PARKOUR_BUILD,
     PARKOUR_PLAY,
-    THE_ENITTY,
+    THE_ENTITY,
     MY_FARM_LIFE,
     ALIEN_BLAST
 }
@@ -217,7 +217,7 @@ const nameToGame = new Map([
     
     ["Playground", GameName.PLAYGROUND],
     ["AlienBlast", GameName.ALIEN_BLAST],
-    ["Spooky", GameName.THE_ENITTY],
+    ["Spooky", GameName.THE_ENTITY],
     ["Farming", GameName.MY_FARM_LIFE],
 
     ["ParkourLobby", GameName.PARKOUR_HUB],

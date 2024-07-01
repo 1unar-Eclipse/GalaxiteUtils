@@ -60,7 +60,7 @@ function tryDisableModules() {
     let environmentChanger = mmg.getModuleByName("EnvironmentChanger")!;
 
     if(en_toggle.getValue()) {
-        if(api.game == GameName.THE_ENITTY)
+        if(api.game == GameName.THE_ENTITY)
             toggles.setEnabled(false);
         else
             toggles.setEnabled(true);

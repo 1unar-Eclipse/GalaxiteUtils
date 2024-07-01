@@ -193,7 +193,7 @@ function getSplash(): string {
  */
 export const gxuSplashes = [
     // Gay splashes
-    "\xA7cHap\xA76py \xA7ePri\xA7ade \xA79Mon\xA75th!", // hate that i'll need to remove this after june :(
+    // "\xA7cHap\xA76py \xA7ePri\xA7ade \xA79Mon\xA75th!", // hate that i'll need to remove this after june :(
     "\xA76w\xA7po\xA7em\xA7fe\xA7un\xA7d,\xA75,", // lesbian
     "\xA73gay\xA7s ga\xA7by h\xA7fomo\xA79sex\xA71ual \xA75gay", // gay
     "\xA7cWhy \xA75not \xA79both?", // bi
