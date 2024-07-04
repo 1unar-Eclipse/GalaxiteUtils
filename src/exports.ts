@@ -152,9 +152,7 @@ export function notOnGalaxite(): boolean {
     // return true if you are on anything BUT Galaxite. this way I can just do `if(notOnGalaxite()) return;` on every client.on()
     return (game.getFeaturedServer() != "Galaxite");
 }
-/**
-* Returns `true` if the player is a Galaxite nerd; `false` if they aren't.
-*/
+
 const galaxiteNerds = [
     "ThatJadon 26",
     "Eclipse2421",
@@ -163,6 +161,9 @@ const galaxiteNerds = [
     "A2K Delta133",
     "SpinaRosam"
 ];
+/**
+* Returns `true` if the player is a Wiki Team member; `false` if they aren't.
+*/
 export function nerdRadar(): boolean {
     // If the person is a Galaxite nerd (a wiki team member), return as true
     return galaxiteNerds.includes(game.getLocalPlayer()!.getName());
