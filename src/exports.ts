@@ -161,6 +161,7 @@ const galaxiteNerds = [
     "A2K Delta133",
     "SpinaRosam"
 ];
+
 /**
 * Returns `true` if the player is a Wiki Team member; `false` if they aren't.
 */
@@ -188,6 +189,42 @@ function getSplash(): string {
         Math.floor(Math.random() * gxuSplashes.length)
     ];
 }
+
+/**
+ * A collection of parameters used for scoring Chronos events.
+ */
+export interface Scores {
+    kill: number,
+    death: number,
+    eliminationBonus: number,
+    bountyCompletion: number, // \uE148
+    bountyShutdown: number, // \uE14A
+    otherEliminatedPlayer: number,
+    timeLeaderAtTimeFreeze: number,
+    top5: number,
+    top4: number,
+    top3: number, // Also known as podium
+    top2: number,
+    winner: number
+};
+
+/**
+ * The default parameters used for Chronos scoring.
+ */
+export const defaultWeights: Scores = {
+    kill: 0,
+    death: 0,
+    eliminationBonus: 0,
+    bountyCompletion: 0,
+    bountyShutdown: 0,
+    otherEliminatedPlayer: 1,
+    timeLeaderAtTimeFreeze: 0,
+    top5: 0,
+    top4: 0,
+    top3: 0,
+    top2: 0,
+    winner: 0
+};
 
 /**
  * A collection of splash texts.
