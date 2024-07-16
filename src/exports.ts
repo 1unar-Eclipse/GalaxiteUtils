@@ -184,21 +184,43 @@ export function sendGXUMessage(...messages: any[]) {
     });
 }
 
+/**
+ * Gets the current player nickname.
+ */
 function getSplash(): string {
     return gxuSplashes[
         Math.floor(Math.random() * gxuSplashes.length)
     ];
 }
 
+export function getNickname(): string {
+    return client
+        .getModuleManager()
+        .getModuleByName("Nickname")
+        ?.getSettings()[2] // This is the actual nickname
+        .getValue();
+}
+
 /**
  * A collection of parameters used for scoring Chronos events.
  */
 export interface Scores {
+    /**
+     * A list of comments that can be freely edited by the tournament host.
+     */
+    comments: string[],
+    /**
+     * A multiplier 
+     */
+    multiplier: number,
+    basePoints: number,
     kill: number,
     death: number,
     eliminationBonus: number,
-    bountyCompletion: number, // \uE148
-    bountyShutdown: number, // \uE14A
+    bountyCompletionKill: number, // \uE148
+    bountyCompletionDeath: number
+    bountyShutdownKill: number, // \uE14A
+    bountyShutdownDeath: number,
     otherEliminatedPlayer: number,
     timeLeaderAtTimeFreeze: number,
     top5: number,
@@ -212,11 +234,22 @@ export interface Scores {
  * The default parameters used for Chronos scoring.
  */
 export const defaultWeights: Scores = {
+    comments: [
+        "- Don't add any further properties or delete any existing ones. This will cause the plugin to reset the weights file. Set any properties you don't want to 0.",
+        "  - You can edit these comments! Feel free to use them to explain your weighting.",
+        "- All weights are ADDED to player score. For something to take away points, make that a negative number!",
+        "- `top3` is analogous to podium placement. In general, `topX` is added to everyone at the time there are that many players left.",
+        "- `winner` is the final survivor."
+    ],
+    multiplier: 1,
+    basePoints: 0,
     kill: 0,
     death: 0,
     eliminationBonus: 0,
-    bountyCompletion: 0,
-    bountyShutdown: 0,
+    bountyCompletionKill: 0,
+    bountyCompletionDeath: 0,
+    bountyShutdownKill: 0,
+    bountyShutdownDeath: 0,
     otherEliminatedPlayer: 1,
     timeLeaderAtTimeFreeze: 0,
     top5: 0,
