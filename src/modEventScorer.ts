@@ -97,7 +97,7 @@ let playerDatabase: {[index: string]: EventPlayer} = {};
 let messageIndex: number = 0;
 let scoresText: string = "";
 function gameStart() {
-    sendGXUMessage("Scores are being tracked! DO NOT change your nickname!")
+    sendGXUMessage("Scores are being tracked! Make sure your nickname is not the same as anyone else's name!")
     active = true;
     messageIndex = 1;
 
