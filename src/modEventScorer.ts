@@ -112,17 +112,17 @@ function gameStart() {
             lastAppearanceIndex: 0,
             probableSpectator: false
         };
+        /*
+        playerDatabase looks like:
+        {
+            "playerName": {EventPlayer},
+            "playerName2": {EventPlayer2},
+            ...
+        }
+        */
 
-        rgxCreationString += `${playerName}${index == 0 ? "" : "|"}`; // read as "[player name] OR"
+        rgxCreationString += `${index == 0 ? "" : "|"}${playerName}`; // read as "(OR) [player name]"
     });
-    /*
-    playerDatabase looks like:
-    {
-        "playerName": {EventPlayer},
-        "playerName2": {EventPlayer2},
-        ...
-    }
-    */
     playerRegex = new RegExp(rgxCreationString, "gm");
 }
 
