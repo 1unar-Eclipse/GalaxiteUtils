@@ -127,7 +127,7 @@ function gameStart() {
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
-const timeFreezeCheck = /\uE0BD \xA7aTime slows down and begins to freeze! Kills no longer give time!/
+const timeFreezeCheck = /\uE0BD Time slows down and begins to freeze! Kills no longer give time!/
 const gameEndCheck = /\uE0BD [.*] Is The Chronos Champion!/;
 const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
