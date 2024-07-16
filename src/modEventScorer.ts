@@ -90,7 +90,7 @@ api.on("whereami-update", () => {
 let playersAtGameStart: string[];
 let winner: string = "";
 let playerRegex: RegExp;
-let playerDatabase: {[index: string]: EventPlayer};
+let playerDatabase: {[index: string]: EventPlayer} = {};
 /**
  * Used for determing when into a game something happened. Higher means later on.
  */
@@ -172,7 +172,7 @@ client.on("receive-chat", m => {
     }
 
     // Death message case
-    if(deathMessage) {
+    if(deathMessage && playerRegex) {
         const matches = playerRegex.exec(message); // Get the players who appear in the message
         if(!matches) return;
 
