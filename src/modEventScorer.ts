@@ -248,7 +248,7 @@ function endGame(): void {
     // Handle placement
     let placementOrder: string[] = [];
     let databaseKVPsForPlacement = getEntries(playerDatabaseNoSpectators);
-    databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement)
+    databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement, false)
     // Note: databaseKVPsForPlacement.length is the total amount of valid players
     // -> .length - i is the amount of other players
     databaseKVPsForPlacement.forEach(([playerName, playerData], i, kvp) => { // From last place to first place
@@ -279,7 +279,7 @@ function endGame(): void {
 function getCurrentScores(): string {
     let formattedScores: string = "";
 
-    sortScores(getEntries(playerDatabase)).forEach(([playerName, playerData]) => {
+    sortScores(getEntries(playerDatabase), true).forEach(([playerName, playerData]) => {
         formattedScores += `${playerName}: ${playerData.score}\n`
     });
 
@@ -316,10 +316,15 @@ function fixNickname(text: string): string {
     return text.replace(getNickname(), game.getLocalPlayer()!.getName()); // Will always be called while there is a local player
 }
 
-function sortScores(arr: ([string, EventPlayer])[]) {
+function sortScores(arr: ([string, EventPlayer])[], sortByPoints: boolean) {
     return arr.sort(([playerName0, playerData0], [playerName1, playerData1]) => {
         // Return n < 0 if first < second, = 0 if equal, > 0 if first > second
-        return(playerData0.eliminatedIndex - playerData1.eliminatedIndex);
+        if(sortByPoints) {
+            return -(playerData0.score - playerData1.score); // negative so highest score appears first
+        }
+        else {
+            return(playerData0.eliminatedIndex - playerData1.eliminatedIndex);
+        }
     });
 }
 
