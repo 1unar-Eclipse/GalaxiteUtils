@@ -306,6 +306,9 @@ client.on("key-press", k => {
             sendGXUMessage("Score config loaded!")
         }
     }
+    if(k.keyCode == KeyCode.I) {
+        sendGXUMessage(playerDatabase);
+    }
 });
 
 // Utility
