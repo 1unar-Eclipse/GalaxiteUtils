@@ -299,6 +299,7 @@ client.on("key-press", k => {
     if(notOnGalaxite()) return;
     if(!eventScorer.isEnabled) return;
     if(!k.isDown) return;
+    if(game.isInUI()) return;
 
     if(k.keyCode == optionReloadKey.getValue()) {
         if(loadWeightFile()) {
