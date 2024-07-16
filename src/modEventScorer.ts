@@ -95,6 +95,7 @@ let playerDatabase: {[index: string]: EventPlayer};
  * Used for determing when into a game something happened. Higher means later on.
  */
 let messageIndex: number = 0;
+let scoresText: string = "";
 function gameStart() {
     sendGXUMessage("Scores are being tracked! DO NOT change your nickname!")
     active = true;
@@ -160,8 +161,6 @@ client.on("receive-chat", m => {
         if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
         const timeLeader = timeFreezeMatch[0];
         playerDatabase[timeLeader].score += weights.timeLeaderAtTimeFreeze; // The player who is in the title
-
-        return;
     }
 
     // Game end case
@@ -216,13 +215,16 @@ client.on("receive-chat", m => {
             sendGXUMessage("Error in Chronos Scorer: Invalid amount of players in event message");
         }
     }
+
+    // Update score text
+    scoresText = getCurrentScores();
 });
 
 // Game end
 function endGame(): void {
     // Re-assign eliminations
     const databaseKVPsForElims = getEntries(playerDatabase); // 2d array. Given [n][m]: [n] is an index; [m = 0] is the player name, [m = 1] is their information
-    let playerDatabaseNoSpectators: {[index: string]: EventPlayer}; // I don't know how to delete an entry so I'm rebuilding it from the start
+    let playerDatabaseNoSpectators: {[index: string]: EventPlayer} = {}; // I don't know how to delete an entry so I'm rebuilding it from the start
 
     // Verify elimination timing
     databaseKVPsForElims.forEach(([playerName, playerData]) => {
@@ -231,7 +233,7 @@ function endGame(): void {
         }
         if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
             if(playerName == winner) {
-                playerDatabase[playerName].eliminatedIndex = Number.MAX_SAFE_INTEGER; // funny
+                playerDatabase[playerName].eliminatedIndex = messageIndex + 10;
             }
             else {
                 playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
@@ -242,6 +244,28 @@ function endGame(): void {
 
     // Handle placement
     let placementOrder: string[] = [];
+    let databaseKVPsForPlacement = getEntries(playerDatabaseNoSpectators);
+    databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement)
+    // Note: databaseKVPsForPlacement.length is the total amount of valid players
+    // -> .length - i is the amount of other players
+    databaseKVPsForPlacement.forEach(([playerName, playerData], i, kvp) => { // From last place to first place
+        placementOrder[i] = playerName;
+        
+        kvp.forEach(([playerNameJ, playerDataJ], j) => { // Give bonus points to other players
+            assignPlacementScores: {
+                if(j <= i) {
+                    break assignPlacementScores;
+                }
+                // Survival points
+                playerDatabaseNoSpectators[playerNameJ].score += weights.otherEliminatedPlayer;
+
+                // Placement points
+                playerDatabaseNoSpectators[playerNameJ].score += weights.placement[
+                    databaseKVPsForPlacement.length - i
+                ] ?? 0;
+            }
+        });
+    });
 
     // Send a message with the current scores
     sendGXUMessage("This game's standings:\n" + getCurrentScores());
@@ -249,16 +273,22 @@ function endGame(): void {
 
 function getCurrentScores(): string {
     let formattedScores: string = "";
-    return(formattedScores);
+
+    sortScores(getEntries(playerDatabase)).forEach(([playerName, playerData]) => {
+        formattedScores += `${playerName}: ${playerData.score}\n`
+    });
+
+    return(formattedScores.trim());
 }
 
 // Render
+
 chronosScorer.on("text", (p, e) => {
     if(notOnGalaxite()) return "";
     if(!chronosScorer.isEnabled()) return "";
     if(!active) return "";
 
-    return(getCurrentScores())
+    return(scoresText)
 });
 
 // Reload
@@ -277,6 +307,13 @@ client.on("key-press", k => {
 // Utility
 const getEntries = Object.entries;
 
+function sortScores(arr: ([string, EventPlayer])[]) {
+    return arr.sort(([playerName0, playerData0], [playerName1, playerData1]) => {
+        // Return n < 0 if first < second, = 0 if equal, > 0 if first > second
+        return(playerData0.eliminatedIndex - playerData1.eliminatedIndex);
+    });
+}
+
 function loadWeightFile(): boolean {
     // Read the weight file
     try {
@@ -286,7 +323,7 @@ function loadWeightFile(): boolean {
     catch (error) {
         weights = defaultWeights;
         resetWeightFile();
-        sendGXUMessage("Error in Chronos Scorer: Attempted to parse invalid weight config (the file has additionally been reset). Don't add more properties!");
+        sendGXUMessage("Error in Event Scorer: Attempted to parse invalid weight config (the file has additionally been reset). Don't add more properties!");
         return false;
     }
 }
