@@ -172,6 +172,7 @@ client.on("receive-chat", m => {
             playerDatabase[deadPlayer].score += weights.death;
             if(elimination) {
                 playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
+                sendGXUMessage(`${deadPlayer} got eliminated`);
             }
         }
         else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
@@ -185,14 +186,17 @@ client.on("receive-chat", m => {
             if(bountyKill) {
                 playerDatabase[killer].score += weights.bountyCompletionKill;
                 playerDatabase[deadPlayer].score += weights.bountyCompletionDeath;
+                sendGXUMessage(`${killer} bounty kill on ${deadPlayer}`);
             }
             if(bountyShutdown) {
                 playerDatabase[killer].score += weights.bountyShutdownKill;
                 playerDatabase[deadPlayer].score += weights.bountyShutdownDeath;
+                sendGXUMessage(`${killer} bounty shutdown on ${deadPlayer}`);
             }
             if(elimination) {
                 playerDatabase[killer].score += weights.eliminationBonus;
                 playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
+                sendGXUMessage(`${killer} elimination on ${deadPlayer}`);
             }
         }
         else {
@@ -290,7 +294,7 @@ client.on("key-press", k => {
         }
     }
     if(k.keyCode == KeyCode.I) {
-        sendGXUMessage(playerDatabase);
+        sendGXUMessage(getEntries(playerDatabase).toString());
     }
 });
 
