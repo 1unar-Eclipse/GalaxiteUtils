@@ -103,7 +103,7 @@ function gameStart() {
 
     // Initialize player names
     playersAtGameStart = world.getPlayers();
-    let rgxCreationString = getNickname(); // More is added later on
+    let rgxCreationString = ""; // More is added later on
 
     playersAtGameStart.forEach((playerName) => {
         playerDatabase[playerName] = {
@@ -113,8 +113,7 @@ function gameStart() {
             probableSpectator: false
         };
 
-        rgxCreationString += `|${playerName}`; // read as "OR [player name]"
-
+        rgxCreationString += `${playerName}|`; // read as "[player name] OR"
     });
     /*
     playerDatabase looks like:
@@ -124,7 +123,8 @@ function gameStart() {
         ...
     }
     */
-   playerRegex = new RegExp(rgxCreationString, "gm");
+    rgxCreationString += getNickname(); // I hate this. This messes with so much.
+    playerRegex = new RegExp(rgxCreationString, "gm");
 }
 
 // E0AD is a special arrow symbol used before every death message
@@ -272,7 +272,9 @@ function endGame(): void {
     });
 
     // Send a message with the current scores
-    sendGXUMessage("This game's standings:\n" + getCurrentScores());
+    if(eventScorer.isEnabled()) {
+        sendGXUMessage("This game's standings:\n" + getCurrentScores());
+    }
 }
 
 function getCurrentScores(): string {

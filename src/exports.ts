@@ -194,11 +194,12 @@ function getSplash(): string {
 }
 
 export function getNickname(): string {
-    return client
+    return(client
         .getModuleManager()
         .getModuleByName("Nickname")
         ?.getSettings()[2] // This is the actual nickname
-        .getValue();
+        .getValue()
+    );
 }
 
 /**
