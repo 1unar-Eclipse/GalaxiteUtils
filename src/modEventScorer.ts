@@ -184,7 +184,6 @@ client.on("receive-chat", m => {
 
         if(matches.length == 1) { // One player - always a death or elimination message
             const deadPlayer = matches[0];
-            sendGXUMessage(`Detected death or elimination: killed player is ${deadPlayer}`);
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
             playerDatabase[deadPlayer].score += weights.death;
@@ -195,7 +194,6 @@ client.on("receive-chat", m => {
         else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
             const killer = matches[0];
             const deadPlayer = matches[1];
-            sendGXUMessage(`Detected kill: ${killer} killed ${deadPlayer}`);
             playerDatabase[killer].lastAppearanceIndex = messageIndex;
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
