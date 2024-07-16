@@ -204,26 +204,55 @@ export function getNickname(): string {
 /**
  * A collection of parameters used for scoring Chronos events.
  */
-export interface Scores {
+export interface ChronosScores {
     /**
      * A list of comments that can be freely edited by the tournament host.
      */
     comments: string[],
+    /**
+     * Each player's starting points.
+     */
     basePoints: number,
+    /**
+     * Points given when a player kills another player.
+     */
     kill: number,
+    /**
+     * Points given when someone dies for any reason.
+     */
     death: number,
+    /**
+     * Points given when someone eliminates another player.
+     */
     eliminationBonus: number,
+    /**
+     * Points given to the bounty completer when they finish a bounty.
+     */
     bountyCompletionKill: number, // \uE148
+    /**
+     * Points given to the killed player in a bounty completion.
+     */
     bountyCompletionDeath: number
+    /**
+     * Points given to the bounty shutdowner when a bounty gets shut down.
+     */
     bountyShutdownKill: number, // \uE14A
+    /**
+     * Points given to the killed player in a bounty shutdown.
+     */
     bountyShutdownDeath: number,
+    /**
+     * Points given to all other players when someone is eliminated. (Survival points)
+     */
     otherEliminatedPlayer: number, // survival
+    /**
+     * Points given to the current Time Leader when time freezes.
+     */
     timeLeaderAtTimeFreeze: number,
-    top5: number,
-    top4: number,
-    top3: number, // Also known as podium
-    top2: number,
-    winner: number
+    /**
+     * An array indicating point bonuses for reaching any placement threshold.
+     */
+    placement: number[]
 };
 
 export interface EventPlayer {
@@ -236,13 +265,15 @@ export interface EventPlayer {
 /**
  * The default parameters used for Chronos scoring.
  */
-export const defaultWeights: Scores = {
+export const defaultWeights: ChronosScores = {
     comments: [
         "- Don't add any further properties or delete any existing ones. This will cause the plugin to reset the weights file. Set any properties you don't want to 0.",
         "  - You can edit these comments! Feel free to use them to explain your weighting.",
         "- All weights are ADDED to player score. For something to take away points, make that a negative number!",
-        "- `top3` is analogous to podium placement. In general, `topX` is added to everyone at the time there are that many players left.",
-        "- `winner` is the final survivor."
+        "- The `placement` array goes from #1 down, and it's applied to all remaining players when that threshold is reached.",
+        "  - Values after what you define are always considered 0.",
+        "  - So, for a 5-point bonus for being in the top 3, you would set it to [0, 0, 5].",
+        "  - For no placement bonus, you can simply have an empty array!",
     ],
     basePoints: 0,
     kill: 0,
@@ -254,11 +285,11 @@ export const defaultWeights: Scores = {
     bountyShutdownDeath: 0,
     otherEliminatedPlayer: 1,
     timeLeaderAtTimeFreeze: 0,
-    top5: 0,
-    top4: 0,
-    top3: 0,
-    top2: 0,
-    winner: 0
+    placement: [
+        0,
+        0,
+        0
+    ]
 };
 
 /**

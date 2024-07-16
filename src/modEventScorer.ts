@@ -1,7 +1,7 @@
 // Chronos Scorer: Helper for scoring Chronos Solos events.
 // TODO: Reload key, sort players by elimination index
 
-import { notOnGalaxite, Scores, defaultWeights, sendGXUMessage, getNickname, EventPlayer } from "./exports";
+import { notOnGalaxite, ChronosScores, defaultWeights, sendGXUMessage, getNickname, EventPlayer } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 const clipboard = require("clipboard");
@@ -41,7 +41,7 @@ Key points:
 */
 
 // Initialize the scores file if it doesn't exist
-let weights: Scores;
+let weights: ChronosScores;
 if(!fs.exists(weightsLocation)) {
     resetWeightFile();
 }
@@ -261,18 +261,33 @@ chronosScorer.on("text", (p, e) => {
     return(getCurrentScores())
 });
 
+// Reload
+client.on("key-press", k => {
+    if(notOnGalaxite()) return;
+    if(!chronosScorer.isEnabled) return;
+    if(!k.isDown) return;
+
+    if(k.keyCode == optionReloadKey.getValue()) {
+        if(loadWeightFile()) {
+            sendGXUMessage("Score config loaded!")
+        }
+    }
+});
+
 // Utility
 const getEntries = Object.entries;
 
-function loadWeightFile() {
+function loadWeightFile(): boolean {
     // Read the weight file
     try {
-        weights = JSON.parse(util.bufferToString(fs.read(weightsLocation))) as Scores;
+        weights = JSON.parse(util.bufferToString(fs.read(weightsLocation))) as ChronosScores;
+        return true;
     }
     catch (error) {
         weights = defaultWeights;
         resetWeightFile();
         sendGXUMessage("Error in Chronos Scorer: Attempted to parse invalid weight config (the file has additionally been reset). Don't add more properties!");
+        return false;
     }
 }
 
