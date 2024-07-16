@@ -158,23 +158,24 @@ client.on("receive-chat", m => {
 
     // Time freeze case
     if(timeFreeze) {
-        const timeFreezeMatch = playerRegex.exec(lastTimeLeaderTitle); // Get the player from the time leader title
+        const timeFreezeMatch = lastTimeLeaderTitle.match(playerRegex); // Get the player from the time leader title
         if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
         const timeLeader = timeFreezeMatch[0];
+        sendGXUMessage(`Detected time freeze: Time Leader is ${timeLeader}`);
         playerDatabase[timeLeader].score += weights.timeLeaderAtTimeFreeze; // The player who is in the title
     }
 
     // Game end case
     if(gameEnd) {
-        const matches = gameEndCheck.exec(message);
+        const matches = message.match(gameEndCheck);
         if(!matches) return;
-
         winner = matches[0];
+        sendGXUMessage(`Detected game end: Winner is ${winner}`);
     }
 
     // Death message case
     if(deathMessage) {
-        const matches = playerRegex.exec(message); // Get the players who appear in the message
+        const matches = message.match(playerRegex); // Get the players who appear in the message
         if(!matches) return;
 
         // Various properties
@@ -184,6 +185,7 @@ client.on("receive-chat", m => {
 
         if(matches.length == 1) { // One player - always a death or elimination message
             const deadPlayer = matches[0];
+            sendGXUMessage(`Detected death or elimination: killed player is ${deadPlayer}`);
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
             playerDatabase[deadPlayer].score += weights.death;
@@ -193,8 +195,9 @@ client.on("receive-chat", m => {
         }
         else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
             const killer = matches[0];
-            playerDatabase[killer].lastAppearanceIndex = messageIndex;
             const deadPlayer = matches[1];
+            sendGXUMessage(`Detected kill: ${killer} killed ${deadPlayer}`);
+            playerDatabase[killer].lastAppearanceIndex = messageIndex;
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
             playerDatabase[killer].score += weights.kill;
