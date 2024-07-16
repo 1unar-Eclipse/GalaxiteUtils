@@ -105,7 +105,7 @@ function gameStart() {
     playersAtGameStart = world.getPlayers();
     let rgxCreationString = ""; // More is added later on
 
-    playersAtGameStart.forEach((playerName) => {
+    playersAtGameStart.forEach((playerName, index) => {
         playerDatabase[playerName] = {
             score: weights.basePoints,
             eliminatedIndex: 0,
@@ -113,7 +113,7 @@ function gameStart() {
             probableSpectator: false
         };
 
-        rgxCreationString += `${playerName}|`; // read as "[player name] OR"
+        rgxCreationString += `${playerName}${index == 0 ? "" : "|"}`; // read as "[player name] OR"
     });
     /*
     playerDatabase looks like:
@@ -123,7 +123,6 @@ function gameStart() {
         ...
     }
     */
-    rgxCreationString += getNickname(); // I hate this. This messes with so much.
     playerRegex = new RegExp(rgxCreationString, "gm");
 }
 
@@ -139,7 +138,7 @@ client.on("receive-chat", m => {
     if(!active) return;
 
     // Store the message without any of the bloat
-    const message = m.message.replace(formatReplacer, "").trim();
+    const message = fixNickname(m.message).replace(formatReplacer, "").trim();
 
     // 1. Verify that a message is a system message
     // note: Check against systemMessageCheck and timeFreezeCheck - everything else is probably a player message
@@ -158,7 +157,7 @@ client.on("receive-chat", m => {
 
     // Time freeze case
     if(timeFreeze) {
-        const timeFreezeMatch = lastTimeLeaderTitle.match(playerRegex); // Get the player from the time leader title
+        const timeFreezeMatch = fixNickname(lastTimeLeaderTitle).match(playerRegex); // Get the player from the time leader title
         if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
         const timeLeader = timeFreezeMatch[0];
         sendGXUMessage(`Detected time freeze: Time Leader is ${timeLeader}`);
@@ -312,6 +311,10 @@ client.on("key-press", k => {
 
 // Utility
 const getEntries = Object.entries;
+
+function fixNickname(text: string): string {
+    return text.replace(getNickname(), game.getLocalPlayer()!.getName()); // Will always be called while there is a local player
+}
 
 function sortScores(arr: ([string, EventPlayer])[]) {
     return arr.sort(([playerName0, playerData0], [playerName1, playerData1]) => {
