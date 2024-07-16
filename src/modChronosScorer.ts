@@ -1,6 +1,6 @@
 // Chronos Scorer: Helper for scoring Chronos Solos events.
 
-import { notOnGalaxite, Scores, defaultWeights, sendGXUMessage, getNickname } from "./exports";
+import { notOnGalaxite, Scores, defaultWeights, sendGXUMessage, getNickname, EventPlayer } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 const clipboard = require("clipboard");
@@ -55,8 +55,12 @@ client.on("title", e => {
     if(notOnGalaxite()) return;
     if(api.serverName != "ChronosSolo") return;
 
-    // Store time leader title to avoid using 2 title events
-    if(e.type == "actionbar" && e.text.includes("Time Leader: \xa74")) {
+    // Store time leader title to avoid using 2 title events. This will make sense later.
+    if(
+        active &&
+        e.type == "actionbar"
+        && e.text.includes("Time Leader: \xA74")
+    ) {
         lastTimeLeaderTitle = e.text;
     }
 
@@ -83,6 +87,7 @@ api.on("whereami-update", () => {
 
 // Game start
 let playersAtGameStart: string[];
+let winner: string = "";
 let playerRegex: RegExp;
 let playerDatabase: {[index: string]: EventPlayer};
 /**
@@ -92,7 +97,7 @@ let messageIndex: number = 0;
 function gameStart() {
     sendGXUMessage("Scores are being tracked! DO NOT change your nickname!")
     active = true;
-    messageIndex = 0;
+    messageIndex = 1;
 
     // Initialize player names
     playersAtGameStart = world.getPlayers();
@@ -102,7 +107,8 @@ function gameStart() {
         playerDatabase[playerName] = {
             score: weights.basePoints,
             eliminatedIndex: 0,
-            lastAppearanceIndex: 0
+            lastAppearanceIndex: 0,
+            probableSpectator: false
         };
 
         rgxCreationString += `|${playerName}`; // read as "OR [player name]"
@@ -120,9 +126,10 @@ function gameStart() {
 }
 
 // E0AD is a special arrow symbol used before every death message
-const systemMessageCheck = /\uE0AD/;
-const timeFreezeCheck = /\uE0BD \xa7aTime slows down and begins to freeze! Kills no longer give time!/
-const formatReplacer = /\xa7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
+const deathMessageCheck = /\uE0AD/;
+const timeFreezeCheck = /\uE0BD \xA7aTime slows down and begins to freeze! Kills no longer give time!/
+const gameEndCheck = /\uE0BD [.*] Is The Chronos Champion!/;
+const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
 // Interpret game messages
 client.on("receive-chat", m => {
@@ -134,9 +141,10 @@ client.on("receive-chat", m => {
     // 1. Verify that a message is a system message
     // note: Check against systemMessageCheck and timeFreezeCheck - everything else is probably a player message
     // note: \uE0AD for main messages, or \uE0BD for time freeze
-    const system = systemMessageCheck.test(message);
+    const deathMessage = deathMessageCheck.test(message);
     const timeFreeze = timeFreezeCheck.test(message);
-    if(!(system || timeFreeze)) return;
+    const gameEnd = gameEndCheck.test(message);
+    if(!(deathMessage || timeFreeze || gameEnd)) return;
 
     // Since this message is being considered, add to the message index
     messageIndex += 1;
@@ -147,59 +155,94 @@ client.on("receive-chat", m => {
 
     // Time freeze case
     if(timeFreeze) {
-        let timeFreezeMatch = playerRegex.exec(lastTimeLeaderTitle); // Get the player from the time leader title
+        const timeFreezeMatch = playerRegex.exec(lastTimeLeaderTitle); // Get the player from the time leader title
         if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
-
-        playerDatabase[timeFreezeMatch[0]].score += weights.timeLeaderAtTimeFreeze; // The player who is in the title
+        const timeLeader = timeFreezeMatch[0];
+        playerDatabase[timeLeader].score += weights.timeLeaderAtTimeFreeze; // The player who is in the title
 
         return;
     }
 
-    // Death message case
-    const matches = playerRegex.exec(message); // Get the players who appear in the message
-    if(!matches) return;
+    // Game end case
+    if(gameEnd) {
+        const matches = gameEndCheck.exec(message);
+        if(!matches) return;
 
-    // Various properties
-    const elimination: boolean = message.includes("\uE136"),
-        bountyKill: boolean = message.includes("\uE148"),
-        bountyShutdown: boolean = message.includes("\uE14A");
-
-    if(matches.length == 1) { // One player - always a death or elimination message
-        const deadPlayer = matches[0];
-        playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
-
-        playerDatabase[deadPlayer].score += weights.death;
-        if(elimination) {
-            playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
-        }
+        winner = matches[0];
     }
-    else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
-        const killer = matches[0];
-        playerDatabase[killer].lastAppearanceIndex = messageIndex;
-        const deadPlayer = matches[1];
-        playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
-        playerDatabase[killer].score += weights.kill;
-        playerDatabase[deadPlayer].score += weights.death;
-        if(bountyKill) {
-            playerDatabase[killer].score += weights.bountyCompletionKill;
-            playerDatabase[deadPlayer].score += weights.bountyCompletionDeath;
+    // Death message case
+    if(deathMessage) {
+        const matches = playerRegex.exec(message); // Get the players who appear in the message
+        if(!matches) return;
+
+        // Various properties
+        const elimination: boolean = message.includes("\uE136"),
+            bountyKill: boolean = message.includes("\uE148"),
+            bountyShutdown: boolean = message.includes("\uE14A");
+
+        if(matches.length == 1) { // One player - always a death or elimination message
+            const deadPlayer = matches[0];
+            playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
+
+            playerDatabase[deadPlayer].score += weights.death;
+            if(elimination) {
+                playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
+            }
         }
-        if(bountyShutdown) {
-            playerDatabase[killer].score += weights.bountyShutdownKill;
-            playerDatabase[deadPlayer].score += weights.bountyShutdownDeath;
+        else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
+            const killer = matches[0];
+            playerDatabase[killer].lastAppearanceIndex = messageIndex;
+            const deadPlayer = matches[1];
+            playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
+
+            playerDatabase[killer].score += weights.kill;
+            playerDatabase[deadPlayer].score += weights.death;
+            if(bountyKill) {
+                playerDatabase[killer].score += weights.bountyCompletionKill;
+                playerDatabase[deadPlayer].score += weights.bountyCompletionDeath;
+            }
+            if(bountyShutdown) {
+                playerDatabase[killer].score += weights.bountyShutdownKill;
+                playerDatabase[deadPlayer].score += weights.bountyShutdownDeath;
+            }
+            if(elimination) {
+                playerDatabase[killer].score += weights.eliminationBonus;
+                playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
+            }
         }
-        if(elimination) {
-            playerDatabase[killer].score += weights.eliminationBonus;
-            playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
+        else {
+            sendGXUMessage("Error in Chronos Scorer: Invalid amount of players in event message");
         }
     }
 });
 
 // Game end
 function endGame(): void {
-    // getEntries(playerDatabase) will be helpful
+    // Re-assign eliminations
+    const databaseKVPsForElims = getEntries(playerDatabase); // 2d array. Given [n][m]: [n] is an index; [m = 0] is the player name, [m = 1] is their information
+    let playerDatabaseNoSpectators: {[index: string]: EventPlayer}; // I don't know how to delete an entry so I'm rebuilding it from the start
 
+    // Verify elimination timing
+    databaseKVPsForElims.forEach(([playerName, playerData]) => {
+        if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex == 0) { // Both not set - probably spectator
+            playerDatabase[playerName].probableSpectator = true;
+        }
+        if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
+            if(playerName == winner) {
+                playerDatabase[playerName].eliminatedIndex = Number.MAX_SAFE_INTEGER; // funny
+            }
+            else {
+                playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
+            }
+            playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
+        }
+    });
+
+    // Handle placement
+    let placementOrder: string[] = [];
+
+    // Send a message with the current scores
     sendGXUMessage("This game's standings:\n" + getCurrentScores());
 }
 
@@ -212,6 +255,7 @@ function getCurrentScores(): string {
 chronosScorer.on("text", (p, e) => {
     if(notOnGalaxite()) return "";
     if(!chronosScorer.isEnabled()) return "";
+    if(!active) return "";
 
     return(getCurrentScores())
 });
@@ -233,10 +277,4 @@ function loadWeightFile() {
 
 function resetWeightFile() {
     fs.write(weightsLocation, util.stringToBuffer(JSON.stringify(defaultWeights, null, 2)));
-}
-
-interface EventPlayer {
-    score: number,
-    eliminatedIndex: number,
-    lastAppearanceIndex: number
 }

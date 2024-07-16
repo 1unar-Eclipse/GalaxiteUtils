@@ -209,10 +209,6 @@ export interface Scores {
      * A list of comments that can be freely edited by the tournament host.
      */
     comments: string[],
-    /**
-     * A multiplier 
-     */
-    multiplier: number,
     basePoints: number,
     kill: number,
     death: number,
@@ -221,7 +217,7 @@ export interface Scores {
     bountyCompletionDeath: number
     bountyShutdownKill: number, // \uE14A
     bountyShutdownDeath: number,
-    otherEliminatedPlayer: number,
+    otherEliminatedPlayer: number, // survival
     timeLeaderAtTimeFreeze: number,
     top5: number,
     top4: number,
@@ -229,6 +225,13 @@ export interface Scores {
     top2: number,
     winner: number
 };
+
+export interface EventPlayer {
+    score: number,
+    eliminatedIndex: number,
+    lastAppearanceIndex: number,
+    probableSpectator: boolean
+}
 
 /**
  * The default parameters used for Chronos scoring.
@@ -241,7 +244,6 @@ export const defaultWeights: Scores = {
         "- `top3` is analogous to podium placement. In general, `topX` is added to everyone at the time there are that many players left.",
         "- `winner` is the final survivor."
     ],
-    multiplier: 1,
     basePoints: 0,
     kill: 0,
     death: 0,

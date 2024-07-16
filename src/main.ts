@@ -8,6 +8,7 @@ let modAutoGG = require("modAutoGG");
 let modAutoModule = require("modAutoModule");
 let modChatDebloat = require("modChatDebloat");
 let modChatEditor = require("modChatEditor");
+let modChronosScorer = require("modChronosScorer");
 // let modEntitySpeedrunTimer = require("modEntitySpeedrunTimer");
 let modConfirmClick = require("modExtraThingsPrevent");
 let modPKBAttempts = require("modPKBAttempts");
