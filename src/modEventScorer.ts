@@ -6,25 +6,25 @@ import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 const clipboard = require("clipboard");
 
-let chronosScorer = new TextModule(
-    "chronosscorer",
-    "GXU: Chronos Scoring Helper",
-    "Keeps track of points in games of Chronos. (All parameters are stored in weights.json)",
+let eventScorer = new TextModule(
+    "eventscorer",
+    "GXU: Event Scoring Helper",
+    "Keeps track of points in games. (All parameters are stored in weights.json)",
     KeyCode.None
 );
-let optionUseInPubs = chronosScorer.addBoolSetting(
+let optionUseInPubs = eventScorer.addBoolSetting(
     "pubs",
     "Use in Public Games",
     "Whether to keep track of scores in public games.",
     false
 );
-let optionReloadKey = chronosScorer.addKeySetting(
+let optionReloadKey = eventScorer.addKeySetting(
     "reloadkey",
     "Reload Key",
     "Pressing this key will reload the current score weights.\n(This will NOT retroactively alter points in the middle of a game!)",
     KeyCode.U
 )
-client.getModuleManager().registerModule(chronosScorer);
+client.getModuleManager().registerModule(eventScorer);
 
 const weightsLocation: string = "weights.json";
 
@@ -284,9 +284,9 @@ function getCurrentScores(): string {
 
 // Render
 
-chronosScorer.on("text", (p, e) => {
+eventScorer.on("text", (p, e) => {
     if(notOnGalaxite()) return "";
-    if(!chronosScorer.isEnabled()) return "";
+    if(!eventScorer.isEnabled()) return "";
     if(!active) return "";
 
     return(scoresText)
@@ -295,7 +295,7 @@ chronosScorer.on("text", (p, e) => {
 // Reload
 client.on("key-press", k => {
     if(notOnGalaxite()) return;
-    if(!chronosScorer.isEnabled) return;
+    if(!eventScorer.isEnabled) return;
     if(!k.isDown) return;
 
     if(k.keyCode == optionReloadKey.getValue()) {
