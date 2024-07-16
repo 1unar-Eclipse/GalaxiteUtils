@@ -136,6 +136,7 @@ const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting
 // Interpret game messages
 client.on("receive-chat", m => {
     if(notOnGalaxite()) return;
+    if(!active) return;
 
     // Store the message without any of the bloat
     const message = m.message.replace(formatReplacer, "").trim();
@@ -172,7 +173,7 @@ client.on("receive-chat", m => {
     }
 
     // Death message case
-    if(deathMessage && playerRegex) {
+    if(deathMessage) {
         const matches = playerRegex.exec(message); // Get the players who appear in the message
         if(!matches) return;
 
