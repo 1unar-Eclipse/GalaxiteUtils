@@ -1,4 +1,5 @@
 // Chronos Scorer: Helper for scoring Chronos Solos events.
+// TODO: Reload key, sort players by elimination index
 
 import { notOnGalaxite, Scores, defaultWeights, sendGXUMessage, getNickname, EventPlayer } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
