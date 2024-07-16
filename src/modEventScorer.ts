@@ -50,20 +50,10 @@ loadWeightFile();
 
 // Main hooks
 let active: boolean = false;
-let lastTimeLeaderTitle: string; // Used for `timeLeaderAtTimeFreeze`
 
 client.on("title", e => {
     if(notOnGalaxite()) return;
     if(api.serverName != "ChronosSolo") return;
-
-    // Store time leader title to avoid using 2 title events. This will make sense later.
-    if(
-        active &&
-        e.type == "actionbar"
-        && e.text.includes("Time Leader: \xA74")
-    ) {
-        lastTimeLeaderTitle = e.text;
-    }
 
     // Check for correct title contents
     if(!(e.type == "title" && e.text == "Go!")) return;
@@ -101,8 +91,9 @@ function gameStart() {
     active = true;
     messageIndex = 1;
 
-    // Initialize player names
+    // Initialize
     playersAtGameStart = world.getPlayers();
+    playerDatabase = {};
     let rgxCreationString = ""; // More is added later on
 
     playersAtGameStart.forEach((playerName, index) => {
@@ -128,8 +119,7 @@ function gameStart() {
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
-const timeFreezeCheck = /\uE0BD Time slows down and begins to freeze! Kills no longer give time!/
-const gameEndCheck = /\uE0BD [.*] Is The Chronos Champion!/;
+const gameEndCheck = /(?!\uE0BD )(?:[a-z][a-z0-9 _-]+)(?= Is The Chronos Champion!)/i;
 const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
 // Interpret game messages
@@ -144,9 +134,11 @@ client.on("receive-chat", m => {
     // note: Check against systemMessageCheck and timeFreezeCheck - everything else is probably a player message
     // note: \uE0AD for main messages, or \uE0BD for time freeze
     const deathMessage = deathMessageCheck.test(message);
-    const timeFreeze = timeFreezeCheck.test(message);
     const gameEnd = gameEndCheck.test(message);
-    if(!(deathMessage || timeFreeze || gameEnd)) return;
+    if(!(deathMessage || gameEnd)) return;
+    if(gameEnd) {
+        sendGXUMessage("Important message!");
+    }
 
     // Since this message is being considered, add to the message index
     messageIndex += 1;
@@ -154,15 +146,6 @@ client.on("receive-chat", m => {
     // 2. Interpret the contents of the message
     // note: look for the bounty kill (\uE148), bounty shutdown (\uE14A), and elimination (\uE136) symbols
     // note: Consider the matches of playerRegex
-
-    // Time freeze case
-    if(timeFreeze) {
-        const timeFreezeMatch = fixNickname(lastTimeLeaderTitle).match(playerRegex); // Get the player from the time leader title
-        if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
-        const timeLeader = timeFreezeMatch[0];
-        sendGXUMessage(`Detected time freeze: Time Leader is ${timeLeader}`);
-        playerDatabase[timeLeader].score += weights.timeLeaderAtTimeFreeze; // The player who is in the title
-    }
 
     // Game end case
     if(gameEnd) {

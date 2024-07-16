@@ -247,19 +247,27 @@ export interface ChronosScores {
      */
     otherEliminatedPlayer: number, // survival
     /**
-     * Points given to the current Time Leader when time freezes.
-     */
-    timeLeaderAtTimeFreeze: number,
-    /**
      * An array indicating point bonuses for reaching any placement threshold.
      */
     placement: number[]
 };
 
 export interface EventPlayer {
+    /**
+     * A player's current score.
+     */
     score: number,
+    /**
+     * A number representing how far into the game a player was eliminated (higher is later).
+     */
     eliminatedIndex: number,
+    /**
+     * A number representing a player's last appearance in the game (higher is later).
+     */
     lastAppearanceIndex: number,
+    /**
+     * Set to `true` if the player never appeared anywhere.
+     */
     probableSpectator: boolean
 }
 
@@ -285,7 +293,6 @@ export const defaultWeights: ChronosScores = {
     bountyShutdownKill: 0,
     bountyShutdownDeath: 0,
     otherEliminatedPlayer: 1,
-    timeLeaderAtTimeFreeze: 0,
     placement: [
         0,
         0,
