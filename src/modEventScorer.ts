@@ -276,9 +276,9 @@ function getCurrentScores(): string {
 eventScorer.on("text", (p, e) => {
     if(notOnGalaxite()) return "";
     if(!eventScorer.isEnabled()) return "";
-    if(!active) return "";
+    if(!(api.serverName == "ChronosSolo")) return "";
 
-    return(scoresText)
+    return scoresText;
 });
 
 // Reload
