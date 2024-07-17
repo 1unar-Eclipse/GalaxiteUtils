@@ -280,9 +280,12 @@ export const defaultWeights: ChronosScores = {
         "  - You can edit these comments! Feel free to use them to explain your weighting.",
         "- All weights are ADDED to player score. For something to take away points, make that a negative number!",
         "- The `placement` array goes from #1 down, and it's applied to all remaining players when that threshold is reached.",
+        "  - Placement points that exceed the amount of players are not applied at all.", 
         "  - Values after what you define are always considered 0.",
         "  - So, for a 5-point bonus for being in the top 3, you would set it to [0, 0, 5].",
+        "  - If you want only fifth to receive 10 points, you can set it to [0, 0, 0, -10, 10] - the player in fifth place cannot receive the placement points for fourth.",
         "  - For no placement bonus, you can simply have an empty array!",
+        "- There is no weight for a player being eliminated because, for the same effect, you can give a bonus to only the winner."
     ],
     basePoints: 0,
     kill: 0,

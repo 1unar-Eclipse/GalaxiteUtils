@@ -219,13 +219,16 @@ function endGame(): void {
         if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex == 0) { // Both not set - probably spectator
             playerDatabase[playerName].probableSpectator = true;
         }
-        if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
+        else if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
             if(playerName == winner) {
                 playerDatabase[playerName].eliminatedIndex = messageIndex + 10;
             }
             else {
                 playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
             }
+            playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
+        }
+        else {
             playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
         }
     });
