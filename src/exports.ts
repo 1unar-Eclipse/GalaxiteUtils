@@ -193,13 +193,13 @@ function getSplash(): string {
     ];
 }
 
+const nicknameReference = client
+    .getModuleManager()
+    .getModuleByName("Nickname")
+    ?.getSettings()[2]!; // This is the actual nickname
+
 export function getNickname(): string {
-    return(client
-        .getModuleManager()
-        .getModuleByName("Nickname")
-        ?.getSettings()[2] // This is the actual nickname
-        .getValue()
-    );
+    return(nicknameReference.getValue());
 }
 
 /**
