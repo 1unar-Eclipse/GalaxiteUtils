@@ -198,6 +198,9 @@ const nicknameReference = client
     .getModuleByName("Nickname")
     ?.getSettings()[2]!; // This is the actual nickname
 
+/**
+ * Gets the player's current nickname.
+ */
 export function getNickname(): string {
     return(nicknameReference.getValue());
 }
