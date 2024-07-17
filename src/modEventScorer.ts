@@ -234,14 +234,11 @@ function endGame(): void {
     });
 
     // Handle placement
-    let placementOrder: string[] = [];
     let databaseKVPsForPlacement = getEntries(playerDatabaseNoSpectators);
     databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement, false)
     // Note: databaseKVPsForPlacement.length is the total amount of valid players
     // -> .length - i is the amount of other players
     databaseKVPsForPlacement.forEach(([playerName, playerData], i, kvp) => { // From last place to first place
-        placementOrder[i] = playerName;
-        
         kvp.forEach(([playerNameJ, playerDataJ], j) => { // Give bonus points to other players
             assignPlacementScores: {
                 if(j <= i) {
