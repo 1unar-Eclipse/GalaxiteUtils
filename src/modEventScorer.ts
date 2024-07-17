@@ -59,13 +59,8 @@ client.on("title", e => {
     if(!(e.type == "title" && e.text == "Go!")) return;
 
     // Check for valid use
-    if(optionUseInPubs.getValue()) {
+    if(optionUseInPubs.getValue() || api.privacy == "Private") {
         gameStart();
-    }
-    else {
-        if(api.privacy == "Private") {
-            gameStart()
-        }
     }
 });
 api.on("whereami-update", () => {
@@ -135,6 +130,7 @@ client.on("receive-chat", m => {
     // note: \uE0AD for main messages, or \uE0BD for time freeze
     const deathMessage = deathMessageCheck.test(message);
     const gameEnd = gameEndCheck.test(message);
+
     if(!(deathMessage || gameEnd)) return;
 
     // Since this message is being considered, add to the message index
