@@ -115,7 +115,7 @@ function gameStart() {
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
-const gameEndCheck = /(?!\uE0BD )(?:[a-zA-Z][a-zA-Z0-9 _-]+)(?= Is The Chronos Champion!)/;
+const gameEndCheck = /(?!\uE0BD )[a-zA-Z][a-zA-Z0-9 _-]+(?= Is The Chronos Champion!)/;
 const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
 // Interpret game messages
