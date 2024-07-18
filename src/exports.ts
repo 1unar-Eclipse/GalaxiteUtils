@@ -351,11 +351,11 @@ export const gxuSplashes = [
     "HiveUtils active..?",
     "CubeCraftUtils active..?",
     "PixelParadiseUtils disactive.",
-    "Made with 99.5% pure TypeScript!",
+    "Made with 99.6% pure TypeScript!",
     "These aren't funny aren't they",
     "Open-source!",
     "Now with patch notes!",
-    "if(notOnGalaxite())return;",
+    "if(notOnGalaxite()) return;",
     "PC-exclusive!",
     "It's ironic that a plugin with 2 modules dedicated to trimming chat added splash texts",
     "Currently Latite's largest plugin!",
@@ -372,6 +372,7 @@ export const gxuSplashes = [
     "Sends /whereami!", // Global Settings
     'don\'t look at "Open Latite Folder"\\Plugins\\GalaxiteUtils\\ParkourAttempts.json, worst mistake of my life', // Parkour Builders Attempts
     "Hundreds of lines of code just to store a command on screen smh just code better", // WhereAmIHUD
+    "Helpful for keeping track of your tournaments!", // Event Scorer
 
     // Galaxite jokes
     "pve game",
