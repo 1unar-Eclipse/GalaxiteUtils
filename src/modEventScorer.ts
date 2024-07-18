@@ -73,7 +73,7 @@ api.on("whereami-update", () => {
 
 // Game start
 let playersAtGameStart: string[];
-let winner: string = "";
+// let winner: string = "";
 let playerRegex: RegExp;
 let playerDatabase: {[index: string]: ChronosPlayer} = {};
 /**
@@ -116,7 +116,7 @@ function gameStart() {
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
-const gameEndCheck = /(?!\uE0BD )[a-zA-Z][a-zA-Z0-9 _-]+(?= Is The Chronos Champion!)/;
+// const gameEndCheck = /(?!\uE0BD )[a-zA-Z][a-zA-Z0-9 _-]+(?= Is The Chronos Champion!)/;
 const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
 // Interpret game messages
@@ -126,13 +126,12 @@ client.on("receive-chat", m => {
 
     // Store the message without any of the bloat
     const message = fixNickname(m.message).replace(formatReplacer, "").trim();
-    sendGXUMessage(message);
 
     // 1. Verify that a message is a system message
     const deathMessage = deathMessageCheck.test(message);
-    const gameEnd = gameEndCheck.test(message);
+    // const gameEnd = gameEndCheck.test(message);
 
-    if(!(deathMessage || gameEnd)) return;
+    if(!(deathMessage /* || gameEnd */)) return;
 
     // Since this message is being considered, add to the message index
     messageIndex += 1;
@@ -140,15 +139,6 @@ client.on("receive-chat", m => {
     // 2. Interpret the contents of the message
     // note: look for the bounty kill (\uE148), bounty shutdown (\uE14A), and elimination (\uE136) symbols
     // note: Consider the matches of playerRegex
-
-    // Game end case
-    if(gameEnd) {
-        sendGXUMessage("Game end detected");
-        const matches = message.match(gameEndCheck);
-        if(!matches) return;
-        winner = matches[0];
-        sendGXUMessage(`Winner is ${winner}`);
-    }
 
     // Death message case
     if(deathMessage) {
@@ -162,7 +152,7 @@ client.on("receive-chat", m => {
 
         if(matches.length == 1) { // One player - always a death or elimination message
             const deadPlayer = matches[0];
-            playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
+            playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex + 0.5;
 
             playerDatabase[deadPlayer].score += weights.death;
             if(elimination) {
@@ -172,7 +162,7 @@ client.on("receive-chat", m => {
         else if(matches.length == 2) { // 2 players - matches[0] kills matches[1]
             const killer = matches[0];
             const deadPlayer = matches[1];
-            playerDatabase[killer].lastAppearanceIndex = messageIndex;
+            playerDatabase[killer].lastAppearanceIndex = messageIndex + 0.5;
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
             playerDatabase[killer].score += weights.kill;
@@ -222,12 +212,7 @@ function endGame(): void {
             playerDatabase[playerName].probableSpectator = true;
         }
         else if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
-            if(playerName == winner) {
-                playerDatabase[playerName].eliminatedIndex = messageIndex + 10;
-            }
-            else {
-                playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
-            }
+            playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
             playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
         }
         else {
