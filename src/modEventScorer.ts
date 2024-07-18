@@ -277,7 +277,7 @@ client.on("key-press", k => {
 
     if(k.keyCode == optionReloadKey.getValue()) {
         if(loadWeightFile()) {
-            sendGXUMessage("Score config loaded!")
+            sendGXUMessage("Score config loaded!");
         }
     }
 });
