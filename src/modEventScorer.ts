@@ -110,11 +110,12 @@ function gameStart() {
         rgxCreationString += `${index == 0 ? "" : "|"}${playerName}`; // read as "(OR) [player name]"
     });
     playerRegex = new RegExp(rgxCreationString, "gm");
+    scoresText = getCurrentScores();
 }
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
-const gameEndCheck = /(?!\uE0BD )(?:[a-z][a-z0-9 _-]+)(?= Is The Chronos Champion!)/i;
+const gameEndCheck = /(?!\uE0BD )(?:[a-zA-Z][a-zA-Z0-9 _-]+)(?= Is The Chronos Champion!)/;
 const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
 
 // Interpret game messages
@@ -124,10 +125,9 @@ client.on("receive-chat", m => {
 
     // Store the message without any of the bloat
     const message = fixNickname(m.message).replace(formatReplacer, "").trim();
+    sendGXUMessage(message);
 
     // 1. Verify that a message is a system message
-    // note: Check against systemMessageCheck and timeFreezeCheck - everything else is probably a player message
-    // note: \uE0AD for main messages, or \uE0BD for time freeze
     const deathMessage = deathMessageCheck.test(message);
     const gameEnd = gameEndCheck.test(message);
 
@@ -142,10 +142,11 @@ client.on("receive-chat", m => {
 
     // Game end case
     if(gameEnd) {
+        sendGXUMessage("Game end detected");
         const matches = message.match(gameEndCheck);
         if(!matches) return;
         winner = matches[0];
-        sendGXUMessage(`Detected game end: Winner is ${winner}`);
+        sendGXUMessage(`Winner is ${winner}`);
     }
 
     // Death message case
