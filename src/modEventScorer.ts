@@ -222,7 +222,7 @@ function endGame(): void {
 
     // Handle placement
     let databaseKVPsForPlacement = getEntries(playerDatabaseNoSpectators);
-    databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement, false)
+    databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement, false);
     // Note: databaseKVPsForPlacement.length is the total amount of valid players
     // -> .length - i is the amount of other players
     databaseKVPsForPlacement.forEach(([playerName, playerData], i, kvp) => { // From last place to first place
@@ -251,8 +251,8 @@ function endGame(): void {
 function getCurrentScores(): string {
     let formattedScores: string = "";
 
-    sortScores(getEntries(playerDatabase), true).forEach(([playerName, playerData]) => {
-        formattedScores += `${playerName}: ${playerData.score}\n`
+    sortScores(getEntries(playerDatabase), true).forEach(([playerName, playerData], i) => {
+        formattedScores += `${i + 1}. ${playerName}: ${playerData.score}\n`
     });
 
     return(formattedScores.trim());
