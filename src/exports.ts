@@ -231,8 +231,10 @@ export interface ChronosScores {
     eliminationBonus: number,
     /**
      * Points given to the bounty completer when they finish a bounty.
+     * 
+     * To preotect against Feedback Loop, this can decay
      */
-    bountyCompletionKill: number, // \uE148
+    bountyCompletionKill: number[], // \uE148
     /**
      * Points given to the killed player in a bounty completion.
      */
@@ -255,7 +257,7 @@ export interface ChronosScores {
     placement: number[]
 };
 
-export interface EventPlayer {
+export interface ChronosPlayer {
     /**
      * A player's current score.
      */
@@ -268,6 +270,10 @@ export interface EventPlayer {
      * A number representing a player's last appearance in the game (higher is later).
      */
     lastAppearanceIndex: number,
+    /**
+     * A number representing the amount of bounties a player has completed. This is capped at the length of the config's `bountyCompletionKill` array.
+     */
+    bountyCompletions: number,
     /**
      * Set to `true` if the player never appeared anywhere.
      */
@@ -282,19 +288,26 @@ export const defaultWeights: ChronosScores = {
         "- Don't add any further properties or delete any existing ones. This will cause the plugin to reset the weights file. Set any properties you don't want to 0.",
         "  - You can edit these comments! Feel free to use them to explain your weighting.",
         "- All weights are ADDED to player score. For something to take away points, make that a negative number!",
+        "- Weight for bounty completions can decay by extending the array.",
+        "  - The final defined value is used for all subsequent bounty completions.",
+        "  - This is primarily to still reward completing bounties, but prevent farming the reward by using Feedback Loop or buying a lot of bounties at the start of a game.",
+        "  - These values are not cumulative! If it's set to [ 60, 40, 20, 0 ], the first bounty will give 60 points, second 40, and so on.",
+        "  - While you can make the array empty, it isn't recommended for the sake of clarity.",
         "- The `placement` array goes from #1 down, and it's applied to all remaining players when that threshold is reached.",
         "  - Placement points that exceed the amount of players are not applied at all.", 
         "  - Values after what you define are always considered 0.",
         "  - So, for a 5-point bonus for being in the top 3, you would set it to [0, 0, 5].",
         "  - If you want only fifth to receive 10 points, you can set it to [0, 0, 0, -10, 10] - the player in fifth place cannot receive the placement points for fourth.",
         "  - For no placement bonus, you can simply have an empty array!",
-        "- There is no weight for a player being eliminated because, for the same effect, you can give a bonus to only the winner."
+        "- There is no weight for a player being eliminated because, for the same effect, you can give a bonus to only the winner.",
     ],
     basePoints: 0,
     kill: 0,
     death: 0,
     eliminationBonus: 0,
-    bountyCompletionKill: 0,
+    bountyCompletionKill: [
+        0
+    ],
     bountyCompletionDeath: 0,
     bountyShutdownKill: 0,
     bountyShutdownDeath: 0,

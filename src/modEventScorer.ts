@@ -1,7 +1,7 @@
 // Chronos Scorer: Helper for scoring Chronos Solos events.
 // TODO: Reload key, sort players by elimination index
 
-import { notOnGalaxite, ChronosScores, defaultWeights, sendGXUMessage, getNickname, EventPlayer } from "./exports";
+import { notOnGalaxite, ChronosScores, defaultWeights, sendGXUMessage, getNickname, ChronosPlayer } from "./exports";
 import { api, GameName } from "./WhereAmAPI";
 const fs = require("filesystem");
 const clipboard = require("clipboard");
@@ -75,7 +75,7 @@ api.on("whereami-update", () => {
 let playersAtGameStart: string[];
 let winner: string = "";
 let playerRegex: RegExp;
-let playerDatabase: {[index: string]: EventPlayer} = {};
+let playerDatabase: {[index: string]: ChronosPlayer} = {};
 /**
  * Used for determing when into a game something happened. Higher means later on.
  */
@@ -96,6 +96,7 @@ function gameStart() {
             score: weights.basePoints,
             eliminatedIndex: 0,
             lastAppearanceIndex: 0,
+            bountyCompletions: 0,
             probableSpectator: false
         };
         /*
@@ -177,7 +178,18 @@ client.on("receive-chat", m => {
             playerDatabase[killer].score += weights.kill;
             playerDatabase[deadPlayer].score += weights.death;
             if(bountyKill) {
-                playerDatabase[killer].score += weights.bountyCompletionKill;
+                // Add bounty points. Bounty completions is set to 0 by default, so this is done first to work with 0-indexing.
+                // This may cause an error if the config is changed mid-event. However, people really shouldn't do that.
+                playerDatabase[killer].score += weights.bountyCompletionKill[playerDatabase[killer].bountyCompletions];
+                // Increment the player's bounty completions, as long as the current config allows for it.
+                if(weights.bountyCompletionKill.length - 1 > playerDatabase[killer].bountyCompletions) { // -1 because zero indexed
+                    playerDatabase[killer].bountyCompletions += 1;
+                }
+                else { // bounty completions >= length
+                    playerDatabase[killer].bountyCompletions = weights.bountyCompletionKill.length;
+                }
+
+                // Handle the other player
                 playerDatabase[deadPlayer].score += weights.bountyCompletionDeath;
             }
             if(bountyShutdown) {
@@ -202,7 +214,7 @@ client.on("receive-chat", m => {
 function endGame(): void {
     // Re-assign eliminations
     const databaseKVPsForElims = getEntries(playerDatabase); // 2d array. Given [n][m]: [n] is an index; [m = 0] is the player name, [m = 1] is their information
-    let playerDatabaseNoSpectators: {[index: string]: EventPlayer} = {}; // I don't know how to delete an entry so I'm rebuilding it from the start
+    let playerDatabaseNoSpectators: {[index: string]: ChronosPlayer} = {}; // I don't know how to delete an entry so I'm rebuilding it from the start
 
     // Verify elimination timing
     databaseKVPsForElims.forEach(([playerName, playerData]) => {
@@ -283,9 +295,6 @@ client.on("key-press", k => {
             sendGXUMessage("Score config loaded!")
         }
     }
-    if(k.keyCode == KeyCode.I) {
-        sendGXUMessage(getEntries(playerDatabase).toString());
-    }
 });
 
 // Utility
@@ -295,7 +304,7 @@ function fixNickname(text: string): string {
     return text.replace(getNickname(), game.getLocalPlayer()!.getName()); // Will always be called while there is a local player
 }
 
-function sortScores(arr: ([string, EventPlayer])[], sortByPoints: boolean) {
+function sortScores(arr: ([string, ChronosPlayer])[], sortByPoints: boolean) {
     return arr.sort(([playerName0, playerData0], [playerName1, playerData1]) => {
         // Return n < 0 if first < second, = 0 if equal, > 0 if first > second
         if(sortByPoints) {
