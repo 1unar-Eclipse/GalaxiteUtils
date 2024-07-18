@@ -26,7 +26,7 @@ let optionReloadKey = eventScorer.addKeySetting(
 )
 client.getModuleManager().registerModule(eventScorer);
 
-const weightsLocation: string = "weights.json";
+const weightsLocation: string = "chronosWeights.json";
 
 /*
 Key points:
