@@ -127,8 +127,7 @@ client.on("key-press", k => {
     if(!optionUseCopyWhereAmI.getValue()) return;
     if(k.keyCode != optionCopyWhereAmI.getValue()) return;
 
-    let whereami = (
-        `\`\`\`Username: ${api.username}` +
+    let whereami = `\`\`\`Username: ${api.username}` +
         `\nServerUUID: ${api.serverUUID}` +
         `\nPodName: ${api.podName}` +
         `\nServerName: ${api.serverName}` +
@@ -139,8 +138,7 @@ client.on("key-press", k => {
         ((api.parkourUUID)
         ? `\nParkourUUID: ${api.parkourUUID}`
         : "") +
-        "```"
-    );
+        "```";
     clipboard.set(whereami);
     sendGXUMessage("Copied the current server information to clipboard!");
 });
