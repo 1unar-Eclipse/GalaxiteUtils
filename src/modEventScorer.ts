@@ -204,7 +204,7 @@ client.on("receive-chat", m => {
 function endGame(): void {
     // Re-assign eliminations
     const databaseKVPsForElims = getEntries(playerDatabase); // 2d array. Given [n][m]: [n] is an index; [m = 0] is the player name, [m = 1] is their information
-    let playerDatabaseNoSpectators: {[index: string]: ChronosPlayer} = {}; // I don't know how to delete an entry so I'm rebuilding it from the start
+    let playerDatabaseFinal: {[index: string]: ChronosPlayer} = {}; // I don't know how to delete an entry so I'm rebuilding it from the start
 
     // Verify elimination timing
     databaseKVPsForElims.forEach(([playerName, playerData]) => {
@@ -213,30 +213,31 @@ function endGame(): void {
         }
         else if(playerData.eliminatedIndex == 0 && playerData.lastAppearanceIndex != 0) { // Only last appearance set - presumably disconnected after last appearance
             playerDatabase[playerName].eliminatedIndex = playerData.lastAppearanceIndex;
-            playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
+            playerDatabaseFinal[playerName] = playerDatabase[playerName];
         }
         else {
-            playerDatabaseNoSpectators[playerName] = playerDatabase[playerName];
+            playerDatabaseFinal[playerName] = playerDatabase[playerName];
         }
     });
 
     // Handle placement
-    let databaseKVPsForPlacement = getEntries(playerDatabaseNoSpectators);
+    let databaseKVPsForPlacement = getEntries(playerDatabaseFinal);
     databaseKVPsForPlacement = sortScores(databaseKVPsForPlacement, false);
     // Note: databaseKVPsForPlacement.length is the total amount of valid players
     // -> .length - i is the amount of other players
-    databaseKVPsForPlacement.forEach(([playerName, playerData], i, kvp) => { // From last place to first place
-        kvp.forEach(([playerNameJ, playerDataJ], j) => { // Give bonus points to other players
+    databaseKVPsForPlacement.forEach(([playerName, playerData], playerComparedAgainstIndex, kvp) => { // From last place to first place
+        kvp.forEach(([playerNameScored, playerDataScored], playerIndexScored) => { // Give bonus points to other players
             assignPlacementScores: {
-                if(j <= i) {
+                if(playerIndexScored <= playerComparedAgainstIndex) { // if comparing to self or a lower-placed player, stop
                     break assignPlacementScores;
                 }
                 // Survival points
-                playerDatabaseNoSpectators[playerNameJ].score += weights.otherEliminatedPlayer;
+                playerDatabaseFinal[playerNameScored].score += weights.otherEliminatedPlayer;
 
                 // Placement points
-                playerDatabaseNoSpectators[playerNameJ].score += weights.placement[
-                    databaseKVPsForPlacement.length - i
+                playerDatabaseFinal[playerNameScored].score += weights.placement[
+                    // placement[0] is winner, [1] is 2nd, [2] is 3rd...
+                    databaseKVPsForPlacement.length - playerComparedAgainstIndex
                 ] ?? 0;
             }
         });
@@ -264,6 +265,7 @@ eventScorer.on("text", (p, e) => {
     if(notOnGalaxite()) return "";
     if(!eventScorer.isEnabled()) return "";
     if(!(api.serverName == "ChronosSolo")) return "";
+    if(!active) return "";
 
     return scoresText;
 });
