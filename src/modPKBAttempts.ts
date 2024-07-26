@@ -129,7 +129,6 @@ function incrementGlobalAttempts(by: number) {
 }
 
 // The rendering half
-
 pkbAttempts.on("text", (p, e) => {
     if(p || e)
         return appendDetails(10, 73);
