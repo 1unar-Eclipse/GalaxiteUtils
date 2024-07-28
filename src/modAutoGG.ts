@@ -91,11 +91,15 @@ function sendGG() {
     }
 }
 
+let firstError: boolean = false;
 function sendMessage(message: string) {
     try {
         game.sendChatMessage(message);
     } catch (error) {
-        sendGXUMessage("Error in AutoGG: there is currently no permission to send messages");
+        if(firstError) {
+            sendGXUMessage("Error in AutoGG: there is currently no permission to send messages");
+            firstError = false;
+        }
     }
 }
 
