@@ -91,7 +91,7 @@ function sendGG() {
     }
 }
 
-let firstError: boolean = false;
+let firstError: boolean = true;
 function sendMessage(message: string) {
     try {
         game.sendChatMessage(message);
