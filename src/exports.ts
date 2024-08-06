@@ -252,7 +252,31 @@ export interface ChronosScores {
     /**
      * An array indicating point bonuses for reaching any placement threshold.
      */
-    placement: number[]
+    placement: number[],
+    /**
+     * Points given to players at the end of the game for each second they were Time Leader (floored).
+     */
+    timeLeaderPerSecond: number,
+    /**
+     * Points given to the Time Leader as soon as time freezes.
+     */
+    timeLeaderAtTimeFreeze: number,
+    /**
+     * Points given to the Time Leader when they get a kill.
+     */
+    killWhileTimeLeader: number,
+    /**
+     * Points given to the Time Leader when they die for any reason.
+     */
+    deathWhileTimeLeader: number,
+    /**
+     * Points given to a player that kills the Time Leader.
+     */
+    killAgainstTimeLeader: number,
+    /**
+     * Points given to a player that dies to the Time Leader.
+     */
+    deathAgainstTimeLeader: number,
 };
 
 export interface ChronosPlayer {
@@ -275,8 +299,12 @@ export interface ChronosPlayer {
     /**
      * Set to `true` if the player never appeared anywhere.
      */
-    probableSpectator: boolean
-}
+    probableSpectator: boolean,
+    /**
+     * The duration that a player was Time Leader.
+     */
+    secondsAsTimeLeader: number
+};
 
 /**
  * The default parameters used for Chronos scoring.
@@ -298,6 +326,7 @@ export const defaultWeights: ChronosScores = {
         "  - If you want only fifth to receive 10 points, you can set it to [0, 0, 0, -10, 10] - the player in fifth place cannot receive the placement points for fourth.",
         "  - For no placement bonus, you can simply have an empty array!",
         "- There is no weight for a player being eliminated because, for the same effect, you can give a bonus to only the winner.",
+        "- All keys that do not exist have a property of 0."
     ],
     basePoints: 0,
     kill: 0,
@@ -314,7 +343,13 @@ export const defaultWeights: ChronosScores = {
         0,
         0,
         0
-    ]
+    ],
+    timeLeaderPerSecond: 0,
+    timeLeaderAtTimeFreeze: 0,
+    killWhileTimeLeader: 0,
+    deathWhileTimeLeader: 0,
+    killAgainstTimeLeader: 0,
+    deathAgainstTimeLeader: 0
 };
 
 /**
@@ -498,5 +533,12 @@ export const patchNotes = new Map([
         "  - Currently only supports Chronos Solos\n" +
         "- Removed one now-outdated splash\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
-        "(press your chat button to view full patch notes)"]
+        "(press your chat button to view full patch notes)"
+    ],
+    ["0.4.6", "GalaxiteUtils has been updated to v0.4.6!\n" +
+        "- AutoGG now stores whether it can be used for the session\n" +
+        "- Chronos in EventScorer can now keep track of Time Leader-based events\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
+    ]
 ]);

@@ -18,6 +18,12 @@ let optionUseInPubs = eventScorer.addBoolSetting(
     "Whether to keep track of scores in public games.",
     false
 );
+let optionAssumeSpectator = eventScorer.addBoolSetting(
+    "assumespectator",
+    "Assume Spectator",
+    "Makes the logic always assume you are a spectator in games played. This allows for certain additional parameters to be utilized.",
+    false
+);
 let optionReloadKey = eventScorer.addKeySetting(
     "reloadkey",
     "Reload Key",
@@ -50,6 +56,7 @@ loadWeightFile();
 
 // Main hooks
 let active: boolean = false;
+let spectator: boolean = true;
 
 client.on("title", e => {
     if(notOnGalaxite()) return;
@@ -93,11 +100,12 @@ function gameStart() {
 
     playersAtGameStart.forEach((playerName, index) => {
         playerDatabase[playerName] = {
-            score: weights.basePoints,
+            score: getProp("basePoints"),
             eliminatedIndex: 0,
             lastAppearanceIndex: 0,
             bountyCompletions: 0,
-            probableSpectator: false
+            probableSpectator: false,
+            secondsAsTimeLeader: 0
         };
         /*
         playerDatabase looks like:
@@ -116,8 +124,25 @@ function gameStart() {
 
 // E0AD is a special arrow symbol used before every death message
 const deathMessageCheck = /\uE0AD/;
+const timeLeaderTitleExtractor = /(?!Time Leader: \xA74)[a-z][\w -]+/; // This functions, but I have to get [1] and not [0]
+const timeFreezeCheck = /\uE0BD Time slows down and begins to freeze! Kills no longer give time!/;
 // const gameEndCheck = /(?!\uE0BD )[a-zA-Z][a-zA-Z0-9 _-]+(?= Is The Chronos Champion!)/;
-const formatReplacer = /\xA7.|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
+const formatReplacer = /\xA7[.!4]|\[\+\d+\]/g; // Replaces both Minecraft formatting and the Chronos time on kill indicator
+const timeLeaderChatExtractor = /(?:\xA74)[.+]/
+
+// Time Leader interpreter
+let lastTimeLeader: string = "";
+let lastTitleTimestamp: number = 0;
+client.on("title", e => {
+    // Store time leader title to avoid using 2 title events. This will make sense later.
+    if(
+        active &&
+        e.type == "actionbar"
+        && e.text.includes("Time Leader: \xA74")
+    ) {
+        lastTimeLeader = e.text;
+    }
+});
 
 // Interpret game messages
 client.on("receive-chat", m => {
@@ -129,9 +154,10 @@ client.on("receive-chat", m => {
 
     // 1. Verify that a message is a system message
     const deathMessage = deathMessageCheck.test(message);
+    const timeFreeze = timeFreezeCheck.test(message);
     // const gameEnd = gameEndCheck.test(message);
 
-    if(!(deathMessage /* || gameEnd */)) return;
+    if(!(deathMessage || timeFreeze /* || gameEnd */)) return;
 
     // Since this message is being considered, add to the message index
     messageIndex += 1;
@@ -139,6 +165,15 @@ client.on("receive-chat", m => {
     // 2. Interpret the contents of the message
     // note: look for the bounty kill (\uE148), bounty shutdown (\uE14A), and elimination (\uE136) symbols
     // note: Consider the matches of playerRegex
+
+    // Time freeze case
+    if(timeFreeze) {
+        const timeFreezeMatch = fixNickname(lastTimeLeader).match(playerRegex); // Get the player from the time leader title
+        if(!timeFreezeMatch) return; // If there somehow is no match, stop processing
+        const timeLeader = timeFreezeMatch[0];
+        sendGXUMessage(`Detected time freeze: Time Leader is ${timeLeader}`);
+        playerDatabase[timeLeader].score += getProp("timeLeaderAtTimeFreeze"); // The player who is in the title
+    }
 
     // Death message case
     if(deathMessage) {
@@ -154,7 +189,7 @@ client.on("receive-chat", m => {
             const deadPlayer = matches[0];
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex + 0.5;
 
-            playerDatabase[deadPlayer].score += weights.death;
+            playerDatabase[deadPlayer].score += getProp("death");
             if(elimination) {
                 playerDatabase[deadPlayer].eliminatedIndex = messageIndex;
             }
@@ -165,12 +200,12 @@ client.on("receive-chat", m => {
             playerDatabase[killer].lastAppearanceIndex = messageIndex + 0.5;
             playerDatabase[deadPlayer].lastAppearanceIndex = messageIndex;
 
-            playerDatabase[killer].score += weights.kill;
-            playerDatabase[deadPlayer].score += weights.death;
+            playerDatabase[killer].score += getProp("kill");
+            playerDatabase[deadPlayer].score += getProp("death");
             if(bountyKill) {
                 // Add bounty points. Bounty completions is set to 0 by default, so this is done first to work with 0-indexing.
                 // This may cause an error if the config is changed mid-event. However, people really shouldn't do that.
-                playerDatabase[killer].score += weights.bountyCompletionKill[playerDatabase[killer].bountyCompletions];
+                playerDatabase[killer].score += getProp("bountyCompletionKill")[playerDatabase[killer].bountyCompletions]; // ?????
                 // Increment the player's bounty completions, as long as the current config allows for it.
                 if(weights.bountyCompletionKill.length - 1 > playerDatabase[killer].bountyCompletions) { // -1 because zero indexed
                     playerDatabase[killer].bountyCompletions += 1;
@@ -319,4 +354,11 @@ function loadWeightFile(): boolean {
 
 function resetWeightFile() {
     fs.write(weightsLocation, util.stringToBuffer(JSON.stringify(defaultWeights, null, 2)));
+}
+
+/**
+ * Returns the supplied `weight`'s value for the key `property`, or `0` if this does not exist.
+ */
+export function getProp<K extends keyof ChronosScores> (property: K): ChronosScores[K] {
+    return weights[property] ?? 0;
 }
