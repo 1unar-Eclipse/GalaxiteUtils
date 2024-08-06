@@ -1,7 +1,7 @@
 // Chat Editor: Allows for various changes to the in-game chat.
 // CompactBadges file name kept for legacy compatibility.
 
-import { notOnGalaxite } from "./exports";
+import { getNickname, notOnGalaxite } from "./exports";
 
 let chatEditor = new Module(
     "compactBadges",
@@ -57,6 +57,14 @@ let optionClassicPrestigeIcons = chatEditor.addBoolSetting(
 );
 optionClassicPrestigeIcons.setCondition("hideprestige", false);
 optionHidePrestigeIcons.setCondition("classicprestige", false);
+let optionOverrideNameColor = chatEditor.addColorSetting(
+    "overridenamecolor",
+    "Name Color Override",
+    "Changes your name color on your screen. The closest Minecraft color to the input color will be used in chat.\n" +
+    "If there is any transparency, this setting is assumed to be disabled.\n" +
+    "Check https://minecraft.wiki/w/Formatting_codes#Color_codes for a list of colors!",
+    new Color(0, 0, 0, 0)
+);
 client.getModuleManager().registerModule(chatEditor);
 
 // respectively: elite & ultra, elite, player, vip, ultra, influencer
@@ -115,12 +123,71 @@ const classicServerMap = new Map([
     ["\uE0BF ", "\xa78[\xa75PARTY\xa78]\xa7r "], // party
 ]);
 
+const minecraftColors: (Color | null)[] = [
+    col("000000"), // black
+    col("0000AA"), // dark blue
+    col("00AA00"), // dark green
+    col("00AAAA"), // dark aqua
+    col("AA0000"), // dark red
+    col("AA00AA"), // dark purple
+    col("FFAA00"), // gold/orange
+    col("C6C6C6"), // gray
+    col("555555"), // dark gray
+    col("5555FF"), // blue
+    col("55FF55"), // green
+    col("55FFFF"), // aqua
+    col("FF5555"), // red
+    col("FF55FF"), // light purple (pink)
+    col("FFFF55"), // yellow
+    col("FFFFFF"), // white
+    col("DDD605"), // minecoin
+    col("E3D4D1"), // quartz
+    col("CECACA"), // iron
+    col("443A3B"), // netherite
+    null,          // index k is not a color
+    null,          // index l is not a color
+    col("971607"), // redstone
+    col("B4684D"), // copper
+    col("DEB12D"), // gold
+    col("47A036"), // emerald
+    col("2CBAA8"), // diamond
+    col("21497B"), // lapis
+    col("9A5CC6"), // amethyst
+];
+
 client.on("receive-chat", c => {
     if(notOnGalaxite()) return;
     if(c.cancel) return;
     if(!chatEditor.isEnabled()) return;
 
     let editedMessage = c.message; // cache a message to edit and resend later
+
+    // NAME COLOR
+    if(optionOverrideNameColor.getValue().a == 1) { // if there is no transparency in the color (treated as an enabled setting)
+        if(!rgxBadges.test(editedMessage)) return; // name color should only be changed on player-sent messages
+        const rgxPlayerName = new RegExp(game.getLocalPlayer()!.getName() + "|" + getNickname());
+        if(!rgxPlayerName.test(editedMessage)) return;
+
+        // Find the best color
+        let bestIndex: number = 7; // gray by default just in case
+        let bestDistance: number = 4; // Max sum of squares is 3. This guarantees that it will be set on the first iteration.
+        const playerColor: Color = optionOverrideNameColor.getValue();
+        minecraftColors.forEach((color, index) => {
+            if(!color) return;
+            let distance = sumOfSquares(color.r - playerColor.r, color.g - playerColor.g, color.b - playerColor.b);
+            if(distance < bestDistance) {
+                bestDistance = distance;
+                bestIndex = index;
+            }
+        });
+
+        // Apply the color
+        editedMessage = editedMessage.replace(rgxPlayerName, `\xA7${
+            minecraftColors[bestIndex]
+        }${
+            rgxPlayerName.exec(editedMessage)![0]
+        }`);
+    }
 
     // PRESTIGES
     if(optionClassicPrestigeIcons.getValue()) { // classic
@@ -185,3 +252,24 @@ client.on("receive-chat", c => {
     if(c.cancel)
         clientMessage(editedMessage.trim()); // if the message was changed, cancel the source message and resend the edited one
 });
+
+let singleColor = new Color();
+
+/**
+ * Returns the color represented by the hex code.
+ */
+function col(hex: string): Color {
+    singleColor.r = parseInt(hex.slice(0, 2), 16) / 255;
+    singleColor.g = parseInt(hex.slice(2, 4), 16) / 255;
+    singleColor.b = parseInt(hex.slice(4, 6), 16) / 255;
+    singleColor.a = 1;
+    return singleColor;
+}
+
+function sumOfSquares(...nums: number[]): number {
+    let sum = 0;
+    nums.forEach((value) => {
+        sum += Math.pow(value, 2);
+    });
+    return sum;
+}
