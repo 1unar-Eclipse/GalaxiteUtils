@@ -536,6 +536,7 @@ export const patchNotes = new Map([
         "(press your chat button to view full patch notes)"
     ],
     ["0.4.6", "GalaxiteUtils has been updated to v0.4.6!\n" +
+        "- Chat Editor can now let you choose your own name color\n" +
         "- AutoGG now stores whether it can be used for the session\n" +
         "- Chronos in EventScorer can now keep track of Time Leader-based events\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
