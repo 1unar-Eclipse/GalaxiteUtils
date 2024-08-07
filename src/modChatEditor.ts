@@ -123,6 +123,9 @@ const classicServerMap = new Map([
     ["\uE0BF ", "\xa78[\xa75PARTY\xa78]\xa7r "], // party
 ]);
 
+// this is up here because otherwise i get a use before declaration error
+let singleColor = new Color();
+
 const minecraftColors: (Color | null)[] = [
     col("000000"), // black
     col("0000AA"), // dark blue
@@ -253,7 +256,7 @@ client.on("receive-chat", c => {
         clientMessage(editedMessage.trim()); // if the message was changed, cancel the source message and resend the edited one
 });
 
-let singleColor = new Color();
+
 
 /**
  * Returns the color represented by the hex code.
