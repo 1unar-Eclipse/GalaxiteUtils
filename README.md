@@ -10,25 +10,27 @@ Don't want to say GG after every game? Want to show your viewers what perk you'r
 ***
 ## Module list
 - **AutoGG:** Automatically sends "gg" to the chat whenever a game ends.
+- **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
+  - Toggle Sprint in Parkour Builders, The Entity, and Alien Blast, and Environment Changer in Parkour Builders.
 - **Chat Debloat:** Removes some spammy hub messages if you so choose.
-- **Chat Editor:** Don't like the graphics? Want short badges? This lets you have those and more!
-- **Confirm Extra Things:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
+- **Chat Editor:** Don't like the graphics? Want short badges? Want a name color Galaxite doesn't give you? This lets you have those and more!
+- **Confirm Extra Things and Shops:** Makes you need to double-click to use Extra Things, so you don't accidentally use it in combat and die.
+- **Event Scorer:** Keeps track of everything that happens in games and scores them automatically!
+  - Currently only supports Chronos Solos.
+- **Parkour Builders: Attempt Counter:** Insert Geometry Dash soundbyte here
 - **WhereAmIHUD:** Automatically runs `/whereami` on joining any game, and keeps whatever details you want on screen too!
 - There are also update notifications built-in, so you'll always know how to stay up-to-date!
 
 ## Details
 
 ### Future Plans
-- **Auto-Modules:** Allows you to automatically disable certain modules that may conflict with a game.
-  - Toggle Sprint in The Entity and Alien Blast, and Coordinates in Chronos.
 - **The Entity: Speedrun Timer:** Tracks how long a run takes, and in the future, full splits!
 - **Kit UI:** Shows what perk, engine, or kit you're using, as well as what loot modifiers are in your Rush game.
-- **Parkour Builders: Attempt Counter:** Insert Geometry Dash soundbyte here
 - **Mythic Chest Timers:** For Rush and Chronos, automatically know when mythic chests will arrive!
 - **Team UI:** Because Galaxite doesn't have this natively for some reason.
 
 ### Notes
-`/whereami` will be ran a lot, even without the module on. This is since it gives a pretty good amount of information; it's one of the key ways for the plugin to know the game.
+`/whereami` will be ran a lot! This is since it gives a pretty good amount of information; it's one of the key ways for the plugin to know the game.
 
 ### Issues
 I'm expecting a lot of desync-related bugs, so please include steps to reproduce anything weird you may find. Otherwise, just be clear.
