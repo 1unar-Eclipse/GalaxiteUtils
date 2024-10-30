@@ -127,7 +127,8 @@ client.on("key-press", k => {
     if(!optionUseCopyWhereAmI.getValue()) return;
     if(k.keyCode != optionCopyWhereAmI.getValue()) return;
 
-    let whereami = `\`\`\`Username: ${api.username}` +
+    let whereami: string = `\`\`\`yaml` +
+        `\nUsername: ${api.username}` +
         `\nServerUUID: ${api.serverUUID}` +
         `\nPodName: ${api.podName}` +
         `\nServerName: ${api.serverName}` +
@@ -545,7 +546,7 @@ export const patchNotes = new Map([
     ],
     ["0.4.7", "GalaxiteUtils has been updated to v0.4.7!\n" +
         "- You can now override your name color using Chat Editor (even to be RGB, if you \xA7oreally\xA7r want to be fancy)\n" +
-        "- Removed some old and now outdated files\n" +
+        "- Copying WhereAmI information now copies the information as a yaml for better formatting\n" +
         "- Fixed an uncaught error in AutoGG\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
