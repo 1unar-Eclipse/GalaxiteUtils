@@ -59,7 +59,7 @@ let attemptDatabase: any;
 let attemptDirectory = "ParkourAttempts.json";
 
 if(!fs.exists(attemptDirectory)) {
-    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify({} as any, () => {}, 4)));
+    fs.write(attemptDirectory, util.stringToBuffer(JSON.stringify({} as any, null, 4)));
 }
 attemptDatabase = JSON.parse(util.bufferToString(fs.read(attemptDirectory)));
 
