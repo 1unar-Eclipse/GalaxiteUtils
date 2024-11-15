@@ -186,12 +186,12 @@ const chronosPerkMap = new Map([
     // DEFENSE
     ["Tank", "\uE401"], // classic armor icon
     ["Health Scavenger", "\uE4A5"], // health pop-in
-    ["Medicine", "\uE501"], // apple
+    ["Medicine", "\uE201"], // apple
     ["Blinding Forcefield", "\uE4A0"], // blindness icon
     ["Weakening Arrows", "\uE413"], // gray bow
     ["Vampire", "\uE40B"], // playground vampire icon
     ["Heavy Duty", "\uE42F"], // still anvil
-    ["Hunker Down", "\uE547"], // statue
+    ["Hunker Down", "\uE247"], // statue
     ["Armour Specialist", "\uE40A"], // netherite armor
     ["Smoke Bomb", "\uE4A7"], // mirror / empty window
     ["Soul Collector", "\uE44B"], // soul
