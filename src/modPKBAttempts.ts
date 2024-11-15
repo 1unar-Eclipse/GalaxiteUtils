@@ -66,7 +66,7 @@ attemptDatabase = JSON.parse(util.bufferToString(fs.read(attemptDirectory)));
 /* Notes on what to do:
 - The player MUST be in a server with a ParkourUUID for attempts to be displayed. I'm electing to keep the same attempt amount even if the player "restarts" the parkour, unlike Geometry Dash.
   - Can be done with `if(!api.parkourUUID) return;`
-- An attempt looks like `\uE0AD {playerName} \uE137`
+- An attempt looks like `\uE3AD {playerName} \uE137`
 - Update the JSON file on every attempt. This may kill the drive, but it is more accurate in case the user rage-quits.
   - Also, I'm pretty sure this stuff is put into RAM first for a bit anyway.
 
@@ -99,7 +99,7 @@ client.on("receive-chat", m => {
     if(!api.parkourUUID) return;
 
     const rgxDeathMessage = new RegExp(
-        `\uE0AD (${
+        `\uE3AD (${
             game.getLocalPlayer()?.getName()
         }|${
             client.getModuleManager().getModuleByName("Nickname")?.getSettings()[2].getValue()

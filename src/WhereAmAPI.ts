@@ -116,7 +116,7 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
         let cancel: boolean = false;
 
         if(message.includes("ServerUUID:") && message.includes("\n")) { // Check for message (users can't send \n)
-            let formattedMessage = message.replace("\uE0BC \xA7c", ""); // Cache message
+            let formattedMessage = message.replace("\uE6BC \xA7c", ""); // Cache message
             let entries = formattedMessage.split("\n\xA7c") ?? ""; // Split up the response at this substring, in the process splitting by line and removing color
             let whereAmIPairs: string[][] = [];
             for(let i = 0; i < entries.length; i++) { // For each entry:

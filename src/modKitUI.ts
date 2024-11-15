@@ -8,10 +8,10 @@ Hyper Racers: Engine + track name
 Kit PvP: Icon + kit name
 
 Cues:
-- Chronos: \uE0BD \xA7a\xA7lPerk Equipped - \xA7r\xA7lName:
-- Chronos (Random Perk): \uE0BD \xA7a\xA7lRandom Perk Equipped - \xA7r\xA7lName:
-- Hyper Racers: \uE0BD \xA7a\xA7lEngine Equipped - \xA7r\xA7lName:
-- Kit PvP: \uE0BD \xA7a(icon) Name\xA7f kit selected!
+- Chronos: \uE3BD \xA7a\xA7lPerk Equipped - \xA7r\xA7lName:
+- Chronos (Random Perk): \uE3BD \xA7a\xA7lRandom Perk Equipped - \xA7r\xA7lName:
+- Hyper Racers: \uE3BD \xA7a\xA7lEngine Equipped - \xA7r\xA7lName:
+- Kit PvP: \uE3BD \xA7a(icon) Name\xA7f kit selected!
 
 - Core Wars (dynamic!):
 - Rush (long): 
@@ -64,9 +64,9 @@ client.getModuleManager().registerModule(perkUI);
 let perk: string = "";
 let perkIcon: string = "";
 let random: boolean = false;
-const rgxChronosPerk = /(?:\uE0BD \xA7a\xA7l(?:Random |)Perk Equipped - \xA7r\xA7l)([^:]+)/; // i can just check for "random" in the message as well
-const rgxHyperRacersEngine = /(?:\uE0BD \xA7a\xA7lEngine Equipped - \xA7r\xA7l)([^:]+)/;
-const rgxKitPVPKit = /(?:\uE0BD \xA7a)(.)([^ ]+)/; // match 0 is the icon, 1 is the kit. there is always a space after the kit name, and they are never 2 words
+const rgxChronosPerk = /(?:\uE3BD \xA7a\xA7l(?:Random |)Perk Equipped - \xA7r\xA7l)([^:]+)/; // i can just check for "random" in the message as well
+const rgxHyperRacersEngine = /(?:\uE3BD \xA7a\xA7lEngine Equipped - \xA7r\xA7l)([^:]+)/;
+const rgxKitPVPKit = /(?:\uE3BD \xA7a)(.)([^ ]+)/; // match 0 is the icon, 1 is the kit. there is always a space after the kit name, and they are never 2 words
 
 client.on("receive-chat", m => {
     if(notOnGalaxite()) return;
@@ -101,13 +101,13 @@ client.on("receive-chat", m => {
     }
     else sendGXUMessage("No match!");
 
-    const rgxPlaygroundExitMessage = new RegExp(`\uE0AA (${
+    const rgxPlaygroundExitMessage = new RegExp(`\uE3AA (${
             game.getLocalPlayer()!.getName()
         }|${
             client.getModuleManager().getModuleByName("Nickname")?.getSettings()[2].getValue()
         })`
     );
-    if(rgxPlaygroundExitMessage.test(m.message) || m.message.startsWith("\uE0BD \xA7c")) {// remove kit pvp kit
+    if(rgxPlaygroundExitMessage.test(m.message) || m.message.startsWith("\uE3BD \xA7c")) {// remove kit pvp kit
         sendGXUMessage("Kit PVP exit message!")
         perk = "";
         perkIcon = "";
@@ -134,7 +134,7 @@ perkUI.on("text", () => {
     switch(api.game) {
         case GameName.CHRONOS: {
             if(!optionChronos.getValue()) return "";
-            return ((`${random ? "\uE1EB" : ""} ${optionChronosIcon.getValue() ? perkIcon : ""} ${perk}`).trim()); // random symbol if random, icon if enabled, perk name
+            return ((`${random ? "\uE4EB" : ""} ${optionChronosIcon.getValue() ? perkIcon : ""} ${perk}`).trim()); // random symbol if random, icon if enabled, perk name
         }
         case GameName.HYPER_RACERS: {
             if(!optionHyperRacers.getValue()) return "";
@@ -161,76 +161,76 @@ perkUI.on("text", () => {
 // }
 
 /**
- * random is `\uE1EB`
+ * random is `\uE4EB`
  */
 const chronosPerkMap = new Map([
     ["", ""],
     // OFFENSE
-    ["Bow Start", "\uE115"], // tier 3 bow
-    ["Prepare Shot", "\uE1C0"], // battery
-    ["Sonic Snowballs", "\uE1C4"], // sonic snowball
-    ["Daredevil", "\uE184"], // faded dark red player
-    ["Solid Snowballs", "\uE119"], // snowball
-    ["Glass Cannon", "\uE12B"], // playground glass cannon graphic
-    ["Sniper", "\uE14D"], // playground sniper graphic
-    ["Airstrike", "\uE12D"], // firework rocket
-    ["Sword Specialist", "\uE112"], // netherite sword
-    ["Assassin", "\uE1A2"], // playground assassin graphic
-    ["Revenger", "\uE136"], // red skull
-    ["Fireballs", "\uE11A"], // fire death icon
-    ["Poison Arrows", "\uE114"], // tier 2 bow
-    ["Bandit Boss", "\uE103"], // that code guy
-    ["Levitation Arrows", "\uE11B"], // broken bone
-    ["Time Siphon", "\uE138"], // hourglass
+    ["Bow Start", "\uE415"], // tier 3 bow
+    ["Prepare Shot", "\uE4C0"], // battery
+    ["Sonic Snowballs", "\uE4C4"], // sonic snowball
+    ["Daredevil", "\uE484"], // faded dark red player
+    ["Solid Snowballs", "\uE419"], // snowball
+    ["Glass Cannon", "\uE42B"], // playground glass cannon graphic
+    ["Sniper", "\uE44D"], // playground sniper graphic
+    ["Airstrike", "\uE42D"], // firework rocket
+    ["Sword Specialist", "\uE412"], // netherite sword
+    ["Assassin", "\uE4A2"], // playground assassin graphic
+    ["Revenger", "\uE436"], // red skull
+    ["Fireballs", "\uE41A"], // fire death icon
+    ["Poison Arrows", "\uE414"], // tier 2 bow
+    ["Bandit Boss", "\uE403"], // that code guy
+    ["Levitation Arrows", "\uE41B"], // broken bone
+    ["Time Siphon", "\uE438"], // hourglass
 
     // DEFENSE
-    ["Tank", "\uE101"], // classic armor icon
-    ["Health Scavenger", "\uE1A5"], // health pop-in
-    ["Medicine", "\uE201"], // apple
-    ["Blinding Forcefield", "\uE1A0"], // blindness icon
-    ["Weakening Arrows", "\uE113"], // gray bow
-    ["Vampire", "\uE10B"], // playground vampire icon
-    ["Heavy Duty", "\uE12F"], // still anvil
-    ["Hunker Down", "\uE247"], // statue
-    ["Armour Specialist", "\uE10A"], // netherite armor
-    ["Smoke Bomb", "\uE1A7"], // mirror / empty window
-    ["Soul Collector", "\uE14B"], // soul
-    ["Ancient", "\uE1D2"], // silver clock
-    ["Shielder", "\uE1A8"], // shield
-    ["Shattered Glass", "\uE129"], // cactus death icon
-    ["Scaredy Cat", "\uE1DF"], // engine
-    ["Trapper", "\uE12A"], // explosion death icon
+    ["Tank", "\uE401"], // classic armor icon
+    ["Health Scavenger", "\uE4A5"], // health pop-in
+    ["Medicine", "\uE501"], // apple
+    ["Blinding Forcefield", "\uE4A0"], // blindness icon
+    ["Weakening Arrows", "\uE413"], // gray bow
+    ["Vampire", "\uE40B"], // playground vampire icon
+    ["Heavy Duty", "\uE42F"], // still anvil
+    ["Hunker Down", "\uE547"], // statue
+    ["Armour Specialist", "\uE40A"], // netherite armor
+    ["Smoke Bomb", "\uE4A7"], // mirror / empty window
+    ["Soul Collector", "\uE44B"], // soul
+    ["Ancient", "\uE4D2"], // silver clock
+    ["Shielder", "\uE4A8"], // shield
+    ["Shattered Glass", "\uE429"], // cactus death icon
+    ["Scaredy Cat", "\uE4DF"], // engine
+    ["Trapper", "\uE42A"], // explosion death icon
 
     // UTILITY
-    ["Mobility", "\uE19A"], // kart
-    ["Backpack", "\uE1C2"], // open lock
-    ["Builder", "\uE147"], // block
-    ["Falcon", "\uE14F"], // feather
-    ["Vault Raider", "\uE1C1"], // lock
-    ["Scout", "\uE1A4"], // speed icon
-    ["Sticky Arrows", "\uE1A3"], // snail
-    ["Stealth Jet", "\uE1AC"], // particles
-    ["Time Hoarder", "\uE139"], // gold clock
-    ["Ninja", "\uE190"], // person
-    ["Gravity Spheres", "\uE11C"], // bubbles
-    ["Dasher", "\uE12C"], // trident
-    ["Sparrow", "\uE193"], // dropship icon
-    ["Soulbound", "\uE1A1"], // blue death icon
-    ["Ghost", "\uE1AB"], // ghost nameplate icon
-    ["Recon", "\uE1F7"], // red exclamation mark
-    ["Lucky", "\uE1EC"], // present
+    ["Mobility", "\uE49A"], // kart
+    ["Backpack", "\uE4C2"], // open lock
+    ["Builder", "\uE447"], // block
+    ["Falcon", "\uE44F"], // feather
+    ["Vault Raider", "\uE4C1"], // lock
+    ["Scout", "\uE4A4"], // speed icon
+    ["Sticky Arrows", "\uE4A3"], // snail
+    ["Stealth Jet", "\uE4AC"], // particles
+    ["Time Hoarder", "\uE439"], // gold clock
+    ["Ninja", "\uE490"], // person
+    ["Gravity Spheres", "\uE41C"], // bubbles
+    ["Dasher", "\uE42C"], // trident
+    ["Sparrow", "\uE493"], // dropship icon
+    ["Soulbound", "\uE4A1"], // blue death icon
+    ["Ghost", "\uE4AB"], // ghost nameplate icon
+    ["Recon", "\uE4F7"], // red exclamation mark
+    ["Lucky", "\uE4EC"], // present
 
-    // BOUNTY - bounty char is \uE148
-    ["Feedback Loop", "\uE148\uE19C"], // add player
-    ["Contract of Blessing", "\uE148\uE1BD"], // gold plus
-    ["Contract of Protection", "\uE148\uE10C"], // absorption heart
-    ["Contract of Rewarding", "\uE148\uE1EC"], // present
+    // BOUNTY - bounty char is \uE448
+    ["Feedback Loop", "\uE448\uE49C"], // add player
+    ["Contract of Blessing", "\uE448\uE4BD"], // gold plus
+    ["Contract of Protection", "\uE448\uE40C"], // absorption heart
+    ["Contract of Rewarding", "\uE448\uE4EC"], // present
 
-    // TEAM - general team icon is \uE146
-    ["Warper", "\uE146\uE14E"], // ender pearl
-    ["Frontline", "\uE146\uE111"], // diamond sword
-    ["Healer", "\uE146\uE10B"], // red heart
-    ["Avenger", "\uE146\uE136"], // red skull
-    ["Mayday", "\uE146\uE1A4"], // speed icon
-    ["Freezer", "\uE146\uE1C5"], // ice slider
+    // TEAM - general team icon is \uE446
+    ["Warper", "\uE446\uE44E"], // ender pearl
+    ["Frontline", "\uE446\uE411"], // diamond sword
+    ["Healer", "\uE446\uE40B"], // red heart
+    ["Avenger", "\uE446\uE436"], // red skull
+    ["Mayday", "\uE446\uE4A4"], // speed icon
+    ["Freezer", "\uE446\uE4C5"], // ice slider
 ]);

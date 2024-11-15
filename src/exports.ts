@@ -234,7 +234,7 @@ export interface ChronosScores {
      * 
      * To preotect against Feedback Loop, this can decay
      */
-    bountyCompletionKill: number[], // \uE148
+    bountyCompletionKill: number[], // \uE448
     /**
      * Points given to the killed player in a bounty completion.
      */
@@ -242,7 +242,7 @@ export interface ChronosScores {
     /**
      * Points given to the bounty shutdowner when a bounty gets shut down.
      */
-    bountyShutdownKill: number, // \uE14A
+    bountyShutdownKill: number, // \uE44A
     /**
      * Points given to the killed player in a bounty shutdown.
      */
@@ -435,7 +435,7 @@ export const gxuSplashes = [
     "What's a meta, anyway?",
     "Does not help with escaping the Entity",
     "Sonic Snowballs were such a good item Mojang added them officially",
-    "\uE1E4", // this is the unused ph coin icon, which looks like an amogus
+    "\uE4E4", // this is the unused ph coin icon, which looks like an amogus
     "5D Parkour Builders with Multiverse Time Travel",
     "Allays are just Orbi's kids stop hiding the truth Mojang",
     "Problem: white flour (and whole wheat flour) have virtually no nutrition in comparison to actual wheat.",
@@ -550,6 +550,11 @@ export const patchNotes = new Map([
         "- AutoGG now stores whether it can be used for the session\n" +
         "- Copying WhereAmI information now copies the information as a yaml for better formatting\n" +
         "- Fixed an uncaught error in AutoGG\n" +
+        "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
+        "(press your chat button to view full patch notes)"
+    ],
+    ["0.4.6h1", "GalaxiteUtils has been updated to v0.4.6h1!\n" +
+        "- Fixed most chat parsing failing due to a recent Galaxite update\n" +
         "\nRemember to report any bugs you find! Ping @1unar_Eclipse on the Galaxite or Latite Discord or open an issue at https://github.com/1unar-Eclipse/GalaxiteUtils.\n" +
         "(press your chat button to view full patch notes)"
     ],
