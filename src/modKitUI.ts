@@ -179,12 +179,12 @@ const chronosPerkMap = new Map([
     ["Revenger", "\uE436"], // red skull
     ["Fireballs", "\uE41A"], // fire death icon
     ["Poison Arrows", "\uE414"], // tier 2 bow
-    ["Bandit Boss", "\uE403"], // that code guy
+    ["Bandit Boss", "\uE103"], // that code guy
     ["Levitation Arrows", "\uE41B"], // broken bone
     ["Time Siphon", "\uE438"], // hourglass
 
     // DEFENSE
-    ["Tank", "\uE401"], // classic armor icon
+    ["Tank", "\uE101"], // classic armor icon
     ["Health Scavenger", "\uE4A5"], // health pop-in
     ["Medicine", "\uE201"], // apple
     ["Blinding Forcefield", "\uE4A0"], // blindness icon
