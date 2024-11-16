@@ -1,6 +1,6 @@
 // WhereAmAPI: Backend system that automatically sends and interprets /whereami responses, so it doesn't need to be handled module-by-module.
 
-import { EventEmitter } from "./EventEmitter";
+import { EventEmitter } from "../lib/EventEmitter";
 import { notOnGalaxite, optionWhereAmIDelay, optionHideResponses, sendGXUMessage } from "./exports";
 
 export enum GameName {

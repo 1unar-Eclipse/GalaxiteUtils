@@ -1,0 +1,16 @@
+[
+	"EventEmitter.ts",
+	"exports.ts",
+	"modAutoGG.ts",
+	"modAutoModule.ts",
+	"modChatDebloat.ts",
+	"modChatEditor.ts",
+	"modCompactBadges.ts",
+	"modEventScorer.ts",
+	"modExtraThingsPrevent.ts",
+	"modGlobalMessages.ts",
+	"modPKBAttempts.ts",
+	"modWhereAmIHUD.ts",
+	"WhereAmIHUDOptions.ts",
+	"WhereAmAPI.ts"
+]
