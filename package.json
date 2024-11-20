@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && copy .\\src\\plugin.json ..\\..\\GalaxiteUtils\\plugin.json"
+    "build": "tsc && copy .\\src\\plugin.json .\\out\\plugin.json"
   },
   "devDependencies": {
     "tslib": "^2.6.0",
