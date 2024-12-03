@@ -18,7 +18,8 @@ export enum GameName {
     PARKOUR_PLAY,
     THE_ENTITY,
     MY_FARM_LIFE,
-    ALIEN_BLAST
+    ALIEN_BLAST,
+    FROST_FIGHT
 }
 
 /**
@@ -116,7 +117,7 @@ class WhereAmAPI extends EventEmitter<GalaxiteEvents> {
         let cancel: boolean = false;
 
         if(message.includes("ServerUUID:") && message.includes("\n")) { // Check for message (users can't send \n)
-            let formattedMessage = message.replace("\uE6BC \xA7c", ""); // Cache message
+            let formattedMessage = message.replace("\uE3BC \xA7c", ""); // Cache message
             let entries = formattedMessage.split("\n\xA7c") ?? ""; // Split up the response at this substring, in the process splitting by line and removing color
             let whereAmIPairs: string[][] = [];
             for(let i = 0; i < entries.length; i++) { // For each entry:
@@ -222,7 +223,9 @@ const nameToGame = new Map([
 
     ["ParkourLobby", GameName.PARKOUR_HUB],
     ["ParkourBuild", GameName.PARKOUR_BUILD],
-    ["ParkourPlay", GameName.PARKOUR_PLAY]
+    ["ParkourPlay", GameName.PARKOUR_PLAY],
+
+    ["FrostFight", GameName.FROST_FIGHT]
 ]);
 
 /**

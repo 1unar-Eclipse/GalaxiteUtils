@@ -61,7 +61,9 @@ let formatMap = new Map([ // make the map for the formatservername option
 
     ["ParkourLobby", "Parkour Builders (Lobby)"],
     ["ParkourBuild", "Parkour Builders (Building)"],
-    ["ParkourPlay", "Parkour Builders (Playing)"]
+    ["ParkourPlay", "Parkour Builders (Playing)"],
+
+    ["FrostFight", "Frost Fight"]
 ]);
 
 // Cache new line (very important) (i use it a lot here)
