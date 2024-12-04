@@ -1,4 +1,4 @@
-import { notOnGalaxite } from "../../util/globals/notOnGalaxite";
+import { notOnGalaxite } from "../../util/functions/notOnGalaxite";
 import { api } from "../GXAPI";
 
 declare module "../Events" {
@@ -8,7 +8,7 @@ declare module "../Events" {
 }
 
 client.on("app-suspended", (ev) => {
-	if(notOnGalaxite) return;
+	if(notOnGalaxite()) return;
 
 	api.emit("LAT:app-suspended", ev);
 }, 1);

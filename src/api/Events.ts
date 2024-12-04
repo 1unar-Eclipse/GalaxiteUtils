@@ -26,7 +26,7 @@ There is an order to which events will fire as a consequence of hooks being buil
 // TODO: Global setting to change priority
 
 /**
- * This interface lists every single event and arguments passed to the event.
+ * This interface lists every single event and arguments passed to event hooks.
  */
 export interface Events {
 	/* First chunk of events */

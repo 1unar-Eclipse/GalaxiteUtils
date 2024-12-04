@@ -1,6 +1,6 @@
 // Maintains the notOnGalaxite variable
 
-export let notOnGalaxite: boolean = false;
+let notOnGalaxiteBool: boolean = false;
 
 client.on("join-game", (ev: LatiteEvent): void => {
 	set();
@@ -16,7 +16,11 @@ client.on("leave-game", (ev: LatiteEvent): void => {
 }, 2);
 
 function set(): void {
-	notOnGalaxite = (game.getFeaturedServer() !== "Galaxite");
+	notOnGalaxiteBool = (game.getFeaturedServer() !== "Galaxite");
+}
+
+export function notOnGalaxite(): boolean {
+	return notOnGalaxiteBool;
 }
 
 // /**
