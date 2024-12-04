@@ -7,7 +7,7 @@ declare module "../Events" {
 	}
 }
 
-client.on("app-suspended", (ev) => {
+client.on("app-suspended", (ev: LatiteEvent): void => {
 	if(notOnGalaxite()) return;
 
 	api.emit("LAT:app-suspended", ev);

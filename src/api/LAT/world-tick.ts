@@ -7,7 +7,7 @@ declare module "../Events" {
 	}
 }
 
-client.on("world-tick", (ev) => {
+client.on("world-tick", (ev: LatiteEvent): void => {
 	if(notOnGalaxite()) return;
 
 	api.emit("LAT:world-tick", ev);
